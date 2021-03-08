@@ -57,9 +57,20 @@ app.get('/', async (req, res) => {
   }
 });
 
-app.get('/help', async (req, res) => {
+app.get('/about', async (req, res) => {
   try {
     res.render('help');
+  } catch (e) {
+    syzoj.log(e);
+    res.render('error', {
+      err: e
+    });
+  }
+});
+
+app.get('/course', async (req, res) => {   //  课程模块 dev
+  try {
+    res.render('course');
   } catch (e) {
     syzoj.log(e);
     res.render('error', {
