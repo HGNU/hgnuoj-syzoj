@@ -8,9 +8,10 @@
 }
 </style>
 <div class="padding">
-<div class="ui grid">
+<div class="ui two column stackable grid">
     <div class="row">
         <div class="five wide column">
+        
             <div class="ui card" style="width: 100%; " id="user_card">
                 <div class="blurring dimmable image" id="avatar_container">
                     <% if (show_user.allowedEdit) { %>
@@ -35,15 +36,7 @@
                     <a style="float: right; "><i class="star icon"></i>积分 <%= show_user.rating %></a>
                 </div>
             </div>
-
-        </div>
-        <div class="eleven wide column">
             <div class="ui grid">
-                <div class="row">
-                    <div class="sixteen wide column">
-                        <div class="ui grid">
-                            <div class="eight wide column">
-                                <div class="ui grid">
                                     <div class="row">
                                         <div class="column">
                                            <h4 class="ui top attached block header">用户名</h4>
@@ -83,29 +76,26 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="eight wide column">
-                                <div class="ui grid">
-                                  <div class="row">
-                                      <div class="column">
-                                          <h4 class="ui top attached block header">统计</h4>
-                                          <div class="ui bottom attached segment">
-                                            <div id="pie_chart_legend"></div>
-                                            <div style="width: 260px; height: 260px; margin-left: 33.5px; "><canvas style="width: 260px; height: 260px; " id="pie_chart"></canvas></div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
+        </div>
+        <div class="eleven wide column">
+            <div class="ui grid">
+              <div class="row">
+                  <div class="column">
+                      <h4 class="ui top attached block header">统计</h4>
+                      <div class="ui bottom attached segment">
+                        <div id="pie_chart_legend"></div>
+                        <div style="width: 260px; height: 260px; margin-left: 33.5px; "><canvas style="width: 260px; height: 260px; " id="pie_chart"></canvas></div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div class="ui grid">
                 <div class="row">
                     <div class="column">
-                        <h4 class="ui top attached block header">帖子</h4>
+                        <h4 class="ui top attached block header">公告</h4>
                         <div class="ui bottom attached <% if (!show_user.articles.length) { %>center aligned <% } %>segment">
-													  <% if (!show_user.articles.length) { %>该用户从未发表帖子<% } else { %>
+													  <% if (!show_user.articles.length) { %>仅管理员可发布公告<% } else { %>
                             <table class="ui very basic table">
                                 <thead>
                                     <tr>

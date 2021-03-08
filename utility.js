@@ -139,6 +139,8 @@ module.exports = {
     });
   },
   gravatar(email, size) {
+    //   console.log(email);
+    
     return gravatar.url(email, { s: size, d: 'mm' }).replace('//www.gravatar.com/avatar', syzoj.config.gravatar_url);
   },
   async parseTestdata(dir, submitAnswer) {
