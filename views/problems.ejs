@@ -104,6 +104,7 @@ if (typeof tags !== 'undefined') tagIDs = tags.map(x => x.id);
         <th class="one wide"><%- createSortableTitle('ac_num', '通过', false) %></th>
         <th class="one wide"><%- createSortableTitle('submit_num', '提交', false) %></th>
         <th class="one wide">通过率</th>
+        <!-- <th class="one wide"><%- createSortableTitle('pass_rate', '通过率', false) %></th> -->
       </tr>
     </thead>
     <tbody>
@@ -151,6 +152,7 @@ if (typeof tags !== 'undefined') tagIDs = tags.map(x => x.id);
             <td><%= problem.ac_num %></td>
             <td><%= problem.submit_num %></td>
             <td><%= problem.submit_num != 0 ? (((problem.ac_num / problem.submit_num * 100) || 0).toFixed(2) + '%') : '-' %></td>
+            <!-- <td><%= problem.pass_rate %></td> -->
         </tr>
         <% } %>
     <% } %>

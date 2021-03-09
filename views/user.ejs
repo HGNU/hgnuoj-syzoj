@@ -23,7 +23,46 @@
                         </div>
                     </div>
                     <% } %>
-                    <img style="margin-top: -100%; " src="<%= syzoj.utils.gravatar(show_user.email, 1000) %>">
+                    
+                    <% // 判断用户邮箱是否为QQ邮箱，是则调用qq头像
+                        var qmail = show_user.email;
+                        function isAllNaN(str) {
+                            for (var i = 0; i < str.length; i++) {
+                                if(isNaN(str.charAt(i))) {
+                                    console.log("不都是整数");
+                                    return 0;
+                                }
+                            }
+                            console.log("都是整数");
+                            return 1;
+                        }
+                        
+                        function checkQQmail(qmail){
+                            var number;
+                            if(qmail.substring(qmail.indexOf('@'), ) == "@qq.com"){
+                                number = qmail.substring(0,qmail.indexOf('@'));
+                                
+                                console.log(isNaN(number));
+                                if(isAllNaN(number)){
+                                    return number;
+                                }else{
+                                    return 0;
+                                }
+                                
+                            }else{
+                                return 0;
+                            }
+                        }
+                        checkQQmail(qmail);
+                        
+                        if(checkQQmail(qmail)!=0){ %>
+                            <img style="margin-top: -100%; " src="http://q1.qlogo.cn/g?b=qq&nk=<%=checkQQmail(qmail);  %>&s=640">
+                        <% }else{ %>
+                        <img style="margin-top: -100%; " src="<%= syzoj.utils.gravatar(show_user.email, 1000) %>">
+                        <% }
+                    %>
+                    
+                    
                 </div>
                 <div class="content">
                     <div class="header"><%= show_user.username %><% if (show_user.nameplate) { %><%- show_user.nameplate %><% } %> <% if (show_user.sex == 1) { %><i class="man icon"></i><% } else if (show_user.sex == -1) { %><i class="woman icon"></i><% } %></div>

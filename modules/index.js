@@ -59,7 +59,7 @@ app.get('/', async (req, res) => {
 
 app.get('/about', async (req, res) => {
   try {
-    res.render('help');
+    res.render('about');
   } catch (e) {
     syzoj.log(e);
     res.render('error', {
