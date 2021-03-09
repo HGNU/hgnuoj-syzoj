@@ -33,14 +33,14 @@ let subtaskType = {
           <% for (let testcase of subtask.cases) { %>
             <% if (problem.type === 'submit-answer') { %>
               <tr class="center aligned">
-                <td style="width: 33%; "><%= testcase.input || '-' %></td>
+                <td style="width: 33%;  "><%= testcase.input || '-' %></td>
                 <td style="width: 33%; "><%= testcase.output || '-' %></td>
                 <td style="width: 33%; "><%= testcase.answer || '-' %></td>
               </tr>
             <% } else { %>
               <tr class="center aligned">
-                <td style="width: 50%; "><%= testcase.input || '-' %></td>
-                <td style="width: 50%; "><%= testcase.output || '-' %></td>
+                <td style="width: 50%; white-space: break-spaces; word-break: break-all;"><%= testcase.input || '-' %></td>
+                <td style="width: 50%; white-space: break-spaces; word-break: break-all;"><%= testcase.output || '-' %></td>
               </tr>
             <% } %>
           <% } %>

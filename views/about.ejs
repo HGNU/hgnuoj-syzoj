@@ -1,7 +1,20 @@
 <% this.title = '关于' %>
 <% include header %>
 <div class="padding">
-    <h1 class="ui center aligned header">关于</h1>
+    <style>
+        p,li{
+            line-height:1.7em
+        }
+        li{
+            list-style: square;
+        }
+        .todo-list ul li{
+            
+            // margin: 5px 0  
+            
+        }
+    </style>
+    <!-- <h1 class="ui center aligned header">关于</h1> -->
     <div style="font-content">
         <h2 class="ui header">特别鸣谢</h2>
         <p>
@@ -10,6 +23,7 @@
             <a href="https://support.qq.com/products/313501" target="_blank">HGNO OJ 问题反馈</a>
         </p>
         <h2 class="ui header">关于HGNU OJ</h2>
+        <p>
             本项目由黄冈师范学院ACM团队运行与维护。</br>
             团队主页：<a href="https://hgnu.github.io" target="_blank">HGNU.github.io</a><br>
             Github: <a href="https://github.com/HGNU" target="_blank">HGNU</a><br>
@@ -17,11 +31,12 @@
             QQ群: （待添加）<br>
             工作室：逸夫楼301A <br>
             <a href="//github.com/HGNU/hgnuoj" target="_blank">HGNU OJ</a> Based on <a href="//github.com/syzoj/syzoj" target="_blank">SYZOJ</a><br>
-            
-        <h2 class="ui header">关于黄冈师范学院ACM团队</h2>
+        </p>    
+        <h2 class="ui header">HGNU ACM TEAM</h2>
         <h4>2021年ACM团队成员</h4>
-        <strong>一队</strong>： 队长：王树淳(guke)&nbsp;&nbsp;&nbsp;队员：聂庆(Dormir)、王国斌(kaygb)&nbsp;&nbsp;&nbsp;指导老师：魏银珍<br>
-        <strong>二队</strong>： 队长：杨旭龙(BATTLEHAWK)&nbsp;&nbsp;&nbsp;队员：金家耀(BK-201)、宋文宇(oliverkir)&nbsp;&nbsp;&nbsp;指导老师：肖飞<br>
+        <p>
+            <strong>一队</strong>： 队长：王树淳(guke)&nbsp;&nbsp;&nbsp;队员：聂庆(Dormir)、王国斌(kaygb)&nbsp;&nbsp;&nbsp;指导老师：魏银珍<br>
+            <strong>二队</strong>： 队长：杨旭龙(BATTLEHAWK)&nbsp;&nbsp;&nbsp;队员：金家耀(BK-201)、宋文宇(oliverkir)&nbsp;&nbsp;&nbsp;指导老师：肖飞<br>
         </p>
         <h4>如何加入ACM团队？</h4>
         <ul>
@@ -29,100 +44,206 @@
         <li style="margin-bottom:5px">如果你并不拥有较高的算法能力，<strong>但是想进行算法训练、花大部分时间与精力在算法比赛上，</strong>也欢迎你发送你的班级、学号、姓名到ACM团队邮箱。</li>
         <li>本OJ正处于并将长期处于活跃的开发阶段，如果你<b>熟悉node.js</b>想参与到开发，或者是<b>有质量较高的算法题</b>想导入到OJ，也欢迎你联系ACM团队。</li>
         </ul>
-            
         
-        <!-- <h1 class="ui center aligned header">系统使用帮助</h1> -->
         
-        <!-- C++ 使用 <code>clang++</code> 或 <code>g++</code> 编译，命令形如 &nbsp;<code>clang++/g++ source_file.cpp -o exec_file -O2 -lm -DONLINE_JUDGE -mx32 -std=c++03</code>（对于 C++ 11 和 C++ 17，替换命令中的 <code>-std=</code> 参数）；
-            <br> C 使用 <code>clang</code> 编译，命令为 &nbsp;<code>clang source_file.c -o exec_file -O2 -lm -DONLINE_JUDGE -mx32</code>；
-            <br> Pascal 使用 <code>fpc</code> 编译，命令为 &nbsp;<code>fpc source_file.pas -O2</code>。
-            <br> Java 编译时会自动检测您的代码中 <code>public class</code>，如果您的代码中没有 <code>public class</code>，请将入口类命名为 <code>Main</code>。
-            <br> C# 使用 Mono 平台的编译器与运行环境。
-            <br> 
-            -->
-            
-            <!-- <p>旧版的 <code>data_rule.txt</code> 已经停止使用，新加入的题目请使用新的 <code>data.yml</code> 配置文件。关于 YAML，详见 <a href="https://zh.wikipedia.org/wiki/YAML">YAML 的 Wikipedia 词条</a>。</p> -->
-            
-            <!--
-<h4>传统</h4>
-<p>对于传统题目，<code>data.yml</code> 的格式如下：</p>
-<div class="ui existing segment"><pre style="margin-top: 0; margin-bottom: 0; "><code class="lang-yaml"><span class="pl-l-Scalar-Plain">subtasks</span><span class="pl-p-Indicator">:</span>
-  <span class="pl-p-Indicator">-</span> <span class="pl-l-Scalar-Plain">score</span><span class="pl-p-Indicator">:</span> <span class="pl-l-Scalar-Plain">30</span>              <span class="pl-c1"># 这个子任务的分数（注意，所有子任务的总分必须为 100）</span>
-    <span class="pl-l-Scalar-Plain">type</span><span class="pl-p-Indicator">:</span> <span class="pl-l-Scalar-Plain">sum</span>              <span class="pl-c1"># 子任务类型，可选的值有 sum、min 和 mul.</span>
-    <span class="pl-l-Scalar-Plain">cases</span><span class="pl-p-Indicator">:</span> <span class="pl-p-Indicator">[</span><span class="pl-nv">1</span><span class="pl-p-Indicator">,</span> <span class="pl-nv">2</span><span class="pl-p-Indicator">,</span> <span class="pl-nv">3</span><span class="pl-p-Indicator">]</span>       <span class="pl-c1"># 测试点编号可为数字</span>
-  <span class="pl-p-Indicator">-</span> <span class="pl-l-Scalar-Plain">score</span><span class="pl-p-Indicator">:</span> <span class="pl-l-Scalar-Plain">30</span>              <span class="pl-c1"># 另一个子任务</span>
-    <span class="pl-l-Scalar-Plain">type</span><span class="pl-p-Indicator">:</span> <span class="pl-l-Scalar-Plain">mul</span>
-    <span class="pl-l-Scalar-Plain">cases</span><span class="pl-p-Indicator">:</span> <span class="pl-p-Indicator">[</span><span class="pl-s">'4'</span><span class="pl-p-Indicator">,</span> <span class="pl-s">'5'</span><span class="pl-p-Indicator">,</span> <span class="pl-s">'6'</span><span class="pl-p-Indicator">]</span> <span class="pl-c1"># 测试点编号也可为字符串</span>
-
-<span class="pl-l-Scalar-Plain">inputFile</span><span class="pl-p-Indicator">:</span> <span class="pl-s">'dat#.in'</span>   <span class="pl-c1"># 测试数据包中的输入文件</span>
-<span class="pl-l-Scalar-Plain">outputFile</span><span class="pl-p-Indicator">:</span> <span class="pl-s">'dat#.ans'</span> <span class="pl-c1"># 测试数据包中的输出文件</span>
-<span class="pl-c1"># 上述文件名中的 # 字符将被替换为测试点编号</span>
-
-<span class="pl-c1"># 可选 - Special Judge</span>
-<span class="pl-l-Scalar-Plain">specialJudge</span><span class="pl-p-Indicator">:</span>
-  <span class="pl-l-Scalar-Plain">language</span><span class="pl-p-Indicator">:</span> <span class="pl-l-Scalar-Plain">cpp</span>
-  <span class="pl-l-Scalar-Plain">fileName</span><span class="pl-p-Indicator">:</span> <span class="pl-l-Scalar-Plain">spj.cpp</span>
-
-<span class="pl-c1"># 可选 - 附加源文件</span>
-<span class="pl-c1"># 例如，给选手提供一个 C++ 头文件，选手可以引用它，调用您提供的代码。</span>
-<span class="pl-c1"># 常用于封装交互库</span>
-<span class="pl-l-Scalar-Plain">extraSourceFiles</span><span class="pl-p-Indicator">:</span>
-  <span class="pl-p-Indicator">-</span> <span class="pl-l-Scalar-Plain">language</span><span class="pl-p-Indicator">:</span> <span class="pl-l-Scalar-Plain">cpp</span>
-    <span class="pl-l-Scalar-Plain">files</span><span class="pl-p-Indicator">:</span> <span class="pl-c1"># 这是一个数组</span>
-     <span class="pl-p-Indicator">-</span> <span class="pl-l-Scalar-Plain">name</span><span class="pl-p-Indicator">:</span> <span class="pl-l-Scalar-Plain">itlib_cpp.h</span>     <span class="pl-c1"># 数据包中的文件名</span>
-       <span class="pl-l-Scalar-Plain">dest</span><span class="pl-p-Indicator">:</span> <span class="pl-l-Scalar-Plain">interaction.h</span>   <span class="pl-c1"># 目标文件名，在编译时被放置在与选手程序的同一目录下</span>
-  <span class="pl-p-Indicator">-</span> <span class="pl-l-Scalar-Plain">language</span><span class="pl-p-Indicator">:</span> <span class="pl-l-Scalar-Plain">c</span> <span class="pl-c1"># 给不同的语言提供不同的附加源文件</span>
-    <span class="pl-l-Scalar-Plain">files</span><span class="pl-p-Indicator">:</span>
-      <span class="pl-p-Indicator">-</span> <span class="pl-l-Scalar-Plain">name</span><span class="pl-p-Indicator">:</span> <span class="pl-l-Scalar-Plain">itlib_c.h</span>
-        <span class="pl-l-Scalar-Plain">dest</span><span class="pl-p-Indicator">:</span> <span class="pl-l-Scalar-Plain">interaction.h</span>
-</code></pre></div>
--->
-
-<!--
-<h4>子任务</h4>
-<p>子任务是一组测试点的集合，一个子任务的分数由其包含的测试点的分数计算而来，具体的计算方式根据子任务类型而定：</p>
-<ul>
-<li><code>sum</code>：测试点分数按百分比相加；</li>
-<li><code>mul</code>：测试点分数按百分比相乘；</li>
-<li><code>min</code>：取各测试点最低分。</li>
-</ul>
--->
-
-<!--
-<h4>Special Judge</h4>
-<p>Special Judge 用于<strong>传统</strong>或<strong>提交答案</strong>题目。</p>
-<p>如果您没有编写 <code>data.yml</code>，请在数据包中添加 <code>spj_LANG.xxx</code>，其中 <code>xxx</code> 为任意后缀名，<code>LANG</code> 为所用语言的简称。</p>
-<p>Special Judge 程序运行时，其目录下会有四个文件 <code>input</code>、<code>user_out</code>、<code>answer</code>、<code>code</code>，分别对应该测试点的输入文件、用户输出、该测试点的输出文件、用户的代码（对于非提交答案题目）。</p>
-<p>Special Judge 程序运行完成后，应将该测试点的得分输出到标准输出（<code>stdout</code>）中（范围为 <code>0</code> 到 <code>100</code>，将自动折合为测试点分数），并将提供给用户的额外信息输出到标准错误输出（<code>stderr</code>）中。</p>
-<h4>语言简称</h4>
-<p>配置数据时，描述 Special Judge 或交互器的语言时使用语言的简称，它们是 <code>c</code>、<code>cpp</code>、<code>cpp11</code>、<code>cpp17</code>、<code>cpp11-clang</code>、<code>cpp17-clang</code>、<code>csharp</code>、<code>haskell</code>、<code>java</code>、<code>nodejs</code>、<code>pascal</code>、<code>python2</code>、<code>python3</code>、<code>ruby</code>。</p>
     </div>
-</div>
--->
+    
 
-<h2>TODO</h2>
-<ul>
-<li>评测界面题目名称显示优化</li>
-<li>测试数据界面文件名称显示优化</li>
-<li>题目管理界面文件名称显示优化</li>
-<li>题目编辑界面样例加上输入样例、输出样例文本框</li>
-<li>题目编辑界面样例加上样例数量功能</li>
-<li>题目界面输入样例与输出样例添加复制功能</li>
-<li>题库界面加上标签聚合与搜索功能</li>
-<li>题库增加根据通过率排名</li>
-<li>删除排名界面边框</li>
-<li>添加查看评测机状态功能</li>
-<li>个人主页添加日历-做题数功能</li>
-<li>个人主页添加头像自应用QQ头像功能</li>
-<li>公告添加置顶功能</li>
-<li>比赛添加报名、密码进入功能</li>
-<li>开发专题（课程）功能</li>
-<li>专题添加密码进入功能</li>
-<li>添加专题题目不在题库界面显示的功能</li>
-<li>添加专题评测不允许查看别人评测的功能</li>
-<li>专题添加刷题量排名</li>
-<li>优化移动端评测界面</li>
-</ul>
+    
+    <hr style="margin:20px 0">
+    
+
+    
+    <div class="ui two column stackable grid">
+    
+        <div class="eight column">
+            <h2>UPDATE</h2>
+            <style>
+                .layui-timeline ul,
+                .layui-timeline li {
+                    /*做时间轴的线*/
+                    margin: 0;
+                    padding: 0;
+                }
+        
+                .layui-timeline {
+                    padding-left: 5px;
+                }
+        
+                .layui-timeline-item {
+                    position: relative;
+                    padding-bottom: 20px;
+                }
+        
+                .layui-timeline li {
+                    list-style: none;
+                }
+        
+                .layui-timeline-item:first-child::before {
+                    display: block;
+                }
+        
+                .layui-timeline-item:last-child::before {
+                    content: '';
+                    position: absolute;
+                    left: 5px;
+                    top: 0;
+                    z-index: 0;
+                    width: 0;
+                    height: 100%;
+                }
+                .layui-timeline-item::before {
+                    content: '';
+                    position: absolute;
+                    left: 5px;
+                    top: 0;
+                    z-index: 0;
+                    width: 1px;
+                    height: 100%;
+                }
+        
+                .layui-timeline-item::before,
+                hr {
+                    background-color: #e6e6e6;
+                }
+        
+                .layui-timeline-axis {
+                    position: absolute;
+                    left: -5px;
+                    top: 0;
+                    z-index: 10;
+                    width: 20px;
+                    height: 20px;
+                    line-height: 20px;
+                    background-color: #fff;
+                    color: #5FB878;
+                    border-radius: 50%;
+                    text-align: center;
+                    cursor: pointer;
+                }
+        
+                .layui-icon {
+                    font-family: layui-icon !important;
+                    font-size: 16px;
+                    font-style: normal;
+                }
+        
+                .layui-timeline-content {
+                    padding-left: 25px;
+                }
+        
+                .layui-text {
+                    line-height: 22px;
+                    font-size: 14px;
+                    color: #666;
+                }
+        
+                .layui-timeline-title {
+                    position: relative;
+                    margin-bottom: 10px;
+                }
+            </style>
+            <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+            <ul class="layui-timeline">
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">○</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2021年3月9日</h3>
+                        优化评测界面，去除评测编号，将状态移至最前<br>
+                        优化评测界面，将长题目分多行显示<br>
+                        优化题目测试数据界面，将长题目分多行显示<br>
+                        优化题目管理界面，将长题目分多行显示<br>
+                        优化排名界面，去除排名界面边框<br>
+                        优化以上移动端界面<br>
+                        优化头像，将头像与注册时QQ邮箱的QQ号自动关联<br>
+                        新增服务器状态（仅内网用户可查看）<br>
+                        优化关于界面<br>
+                        优化部分题目标签<br>
+                        优化移动端标签显示<br>
+                        新增若干bug<br>
+                        <br>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">○</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2021年3月8日</h3>
+                        新增回到顶部按钮<br>
+                        新增课程专题界面<br>
+                        新增课程专题模块<br>
+                        <br>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">○</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2021年3月7日</h3>
+                        修改题目列表自适应，添加移动端滑动<br>
+                        评测记录页面自适应<br>
+                        <br>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">○</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2021年3月6日</h3>
+                        移动端首页和菜单栏自适应<br>
+                        <br>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">○</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2021年3月3日</h3>
+                        升级评测机Python版本为3.9.2<br>
+                        <br>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">○</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">2021年3月2日</h3>
+                        修复Java无法编译的问题<br>
+                        <br>
+                    </div>
+                </li>
+            </ul>
+    
+        </div>
+
+        <div class="eight column todo-list">
+            <h2>TODO</h2>
+            
+            <ul>
+            <li><del>评测界面题目名称显示优化</del></li>
+            <li><del>测试数据界面文件名称显示优化</del></li>
+            <li><del>题目管理界面文件名称显示优化</del></li>
+            <li>题目编辑界面样例加上输入样例、输出样例文本框</li>
+            <li>题目编辑界面样例加上样例数量功能</li>
+            <li>题目界面输入样例与输出样例添加复制功能</li>
+            <li>题库界面加上标签聚合与搜索功能</li>
+            <li>题库增加根据通过率排名</li>
+            <li><del>删除排名界面边框</del></li>
+            <li>添加查看评测机状态功能</li>
+            <li>个人主页添加日历-做题数功能</li>
+            <li><del>个人主页添加头像自应用QQ头像功能</del></li>
+            <li>公告添加置顶功能</li>
+            <li>比赛添加报名、密码进入功能</li>
+            <li>开发专题（课程）功能</li>
+            <li>专题添加密码进入功能</li>
+            <li>添加专题题目不在题库界面显示的功能</li>
+            <li>添加专题评测不允许查看别人评测的功能</li>
+            <li>专题添加刷题量排名</li>
+            <li>优化移动端评测界面</li>
+            </ul>
+                    
+        </div>
+    
+    </div>
+
+
+
+
 
 
 

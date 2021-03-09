@@ -70,7 +70,7 @@ function getIcon(filename) {
             <% if (testdata.files) for (let file of testdata.files) { %>
             <% i++; %>
             <tr>
-              <td class="left aligned"><i class="<%= getIcon(file.filename) %> icon"></i> <%= file.filename %></td>
+              <td class="left aligned" style="white-space: break-spaces; word-break: break-all;"><i class="<%= getIcon(file.filename) %> icon"></i> <%= file.filename %></td>
               <td><%= syzoj.utils.formatSize(file.size) %></td>
               <td>
                 <a style="color: #000; " href="<%= syzoj.utils.makeUrl(['problem', problem.id, 'testdata', 'download', file.filename]) %>">

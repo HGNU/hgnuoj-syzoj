@@ -68,9 +68,9 @@ app.get('/about', async (req, res) => {
   }
 });
 
-app.get('/course', async (req, res) => {   //  课程模块 dev
+app.get('/courses', async (req, res) => {   //  课程模块 dev
   try {
-    res.render('course');
+    res.render('courses');
   } catch (e) {
     syzoj.log(e);
     res.render('error', {

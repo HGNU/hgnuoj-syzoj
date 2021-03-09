@@ -1,4 +1,6 @@
+
 <% this.title = show_user.username + ' - 用户'; %>
+
 <% include header %>
 <style>
 #avatar_container:before {
@@ -67,7 +69,13 @@
                 <div class="content">
                     <div class="header"><%= show_user.username %><% if (show_user.nameplate) { %><%- show_user.nameplate %><% } %> <% if (show_user.sex == 1) { %><i class="man icon"></i><% } else if (show_user.sex == -1) { %><i class="woman icon"></i><% } %></div>
                     <div class="meta">
-                        <a class="group"><%= show_user.is_admin ? '管理员' : '普通用户' %></a>
+                        <a class="group">
+                        
+                        <%= show_user.is_admin ? '管理员' : '普通用户' %>
+                    
+                           
+                        
+                        </a>
                     </div>
                 </div>
                 <div class="extra content">
