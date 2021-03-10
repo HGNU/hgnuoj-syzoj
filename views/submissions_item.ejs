@@ -61,11 +61,11 @@ Vue.component('submission-item', {
 
 <script id="submissionItemTemplate" type="text/x-template">
 <tr>
-  <!-- <% if (active === 'submissions') { %>
+  <% if (active === 'submissions') { %>
   <td><a :href="submissionLink"><b>#{{ data.info.submissionId }}</b></a></td>
   <% } else { %>
   <td><b>#{{ data.info.submissionId }}</b></td>
-  <% } %> -->
+  <% } %>
   
   <% if (active === 'submissions') { %>
   <td><a :href="submissionLink"><b><status-label :status="statusString" :progress="progress"></status-label></b></a></td>

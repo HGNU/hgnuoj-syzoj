@@ -237,37 +237,58 @@ app.get('/problem/:id', async (req, res) => {
 });
 
 app.get('/problem/:id/export', async (req, res) => {
-  try {
+    
+      try {
     let id = parseInt(req.params.id);
     let problem = await Problem.findById(id);
     if (!problem || !problem.is_public) throw new ErrorMessage('无此题目。');
 
     let obj = {
-      title: problem.title,
-      description: problem.description,
-      input_format: problem.input_format,
-      output_format: problem.output_format,
-      example: problem.example,
-      limit_and_hint: problem.limit_and_hint,
-      time_limit: problem.time_limit,
-      memory_limit: problem.memory_limit,
-      have_additional_file: problem.additional_file_id != null,
-      file_io: problem.file_io,
-      file_io_input_name: problem.file_io_input_name,
-      file_io_output_name: problem.file_io_output_name,
-      type: problem.type,
-      tags: []
+      title: "已禁止导出题目，如需导出题目请联系 HGNU ACM TEAM。"
     };
 
-    let tags = await problem.getTags();
+    // let tags = await problem.getTags();
 
-    obj.tags = tags.map(tag => tag.name);
+    // obj.tags = tags.map(tag => tag.name);
 
-    res.send({ success: true, obj: obj });
+    res.send({ success: false, obj: obj });
   } catch (e) {
     syzoj.log(e);
     res.send({ success: false, error: e });
   }
+    
+    // 以下代码为允许导出题目
+//   try {
+//     let id = parseInt(req.params.id);
+//     let problem = await Problem.findById(id);
+//     if (!problem || !problem.is_public) throw new ErrorMessage('无此题目。');
+
+//     let obj = {
+//       title: problem.title,
+//       description: problem.description,
+//       input_format: problem.input_format,
+//       output_format: problem.output_format,
+//       example: problem.example,
+//       limit_and_hint: problem.limit_and_hint,
+//       time_limit: problem.time_limit,
+//       memory_limit: problem.memory_limit,
+//       have_additional_file: problem.additional_file_id != null,
+//       file_io: problem.file_io,
+//       file_io_input_name: problem.file_io_input_name,
+//       file_io_output_name: problem.file_io_output_name,
+//       type: problem.type,
+//       tags: []
+//     };
+
+//     let tags = await problem.getTags();
+
+//     obj.tags = tags.map(tag => tag.name);
+
+//     res.send({ success: true, obj: obj });
+//   } catch (e) {
+//     syzoj.log(e);
+//     res.send({ success: false, error: e });
+//   }
 });
 
 app.get('/problem/:id/edit', async (req, res) => {
