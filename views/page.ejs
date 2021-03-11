@@ -6,18 +6,33 @@
     </a>
     <%
     let leftCnt = paginate.currPage - 2, rightCnt = paginate.pageCnt - paginate.currPage, omitLeft, omitRight;
-    if (leftCnt + rightCnt > 15) {
-      if (leftCnt <= 7) {
-        rightCnt = 14 - leftCnt;
+    if (leftCnt + rightCnt > 3) {
+      if (leftCnt <= 1) {
+        rightCnt = 2 - leftCnt;
         omitRight = true;
-      } else if (rightCnt <= 7) {
-        leftCnt = 14 - rightCnt;
+      } else if (rightCnt <= 1) {
+        leftCnt = 2 - rightCnt;
         omitLeft = true;
       } else {
-        rightCnt = leftCnt = 7;
+        rightCnt = leftCnt = 1;
         omitLeft = omitRight = true;
       }
-    } %>
+    } 
+    
+    //if (leftCnt + rightCnt > 15) {
+    //  if (leftCnt <= 7) {
+    //    rightCnt = 14 - leftCnt;
+    //    omitRight = true;
+    //  } else if (rightCnt <= 7) {
+    //    leftCnt = 14 - rightCnt;
+    //    omitLeft = true;
+    //  } else {
+    //    rightCnt = leftCnt = 7;
+    //    omitLeft = omitRight = true;
+    //  }
+    //} 
+    
+    %>
 
     <% if (paginate.currPage !== 1) { %>
     <a class="item" href="<%= syzoj.utils.makeUrl(req, Object.assign({}, req.query, { page: 1 })) %>"><%= 1 %></a>

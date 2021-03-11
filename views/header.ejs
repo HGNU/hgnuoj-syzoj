@@ -12,7 +12,7 @@
     <link href="<%- selfLib('math.css') %>" rel="stylesheet">
     <link href="<%- selfLib('style.css') %>?20181212" rel="stylesheet">
     <link href="<%- lib('morris.js/0.5.1/morris.css') %>" rel="stylesheet">
-    <link href="http://www.hgnu.edu.cn/_upload/tpl/00/6b/107/template107/images/favicon.ico" rel="shortcut icon">
+    <link href="//acm-m.eas1.cn/images/2021/03/10/image.png" rel="shortcut icon">
     <% if (useLocalLibs || !syzoj.config.google_fonts || !['like-google-fonts', 'like-local', 'built-in'].includes(syzoj.config.google_fonts.type)) { %>
       <link href="<%- syzoj.utils.makeUrl(['google-fonts', 'fira-mono.css']) %>" rel="stylesheet">
       <link href="<%- syzoj.utils.makeUrl(['google-fonts', 'lato.css']) %>" rel="stylesheet">
@@ -116,9 +116,28 @@
             <a class="zsy-pc item<% if (active.startsWith('ranklist')) { %> active<% } %>" href="/ranklist"><i class="signal icon"></i> 排名</a>
             <a class="zsy-pc item<% if (active.startsWith('discussion') || active.startsWith('article')) { %> active<% } %>" href="/discussion/global"><i class="comments icon"></i> 公告</a>
             <a class="zsy-pc item<% if (active.startsWith('about')) { %> active<% } %>" href="/about"><i class="help circle icon"></i> 关于</a>
+            
+            
             <% if (typeof contest !== 'undefined' && contest && contest.id) { %>
               <a id="back_to_contest" class="item" href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><i class="arrow left icon"></i> 返回比赛</a>
             <% } %>
+            <div class="zsy-pc item" id="tp-weather-widget"></div>
+            
+            
+<script>
+  (function(a,h,g,f,e,d,c,b){b=function(){d=h.createElement(g);c=h.getElementsByTagName(g)[0];d.src=e;d.charset="utf-8";d.async=1;c.parentNode.insertBefore(d,c)};a["SeniverseWeatherWidgetObject"]=f;a[f]||(a[f]=function(){(a[f].q=a[f].q||[]).push(arguments)});a[f].l=+new Date();if(a.attachEvent){a.attachEvent("onload",b)}else{a.addEventListener("load",b,false)}}(window,document,"script","SeniverseWeatherWidget","//cdn.sencdn.com/widget2/static/js/bundle.js?t="+parseInt((new Date().getTime() / 100000000).toString(),10)));
+  window.SeniverseWeatherWidget('show', {
+    flavor: "slim",
+    location: "WX4FBXXFKE4F",
+    geolocation: true,
+    language: "auto",
+    unit: "c",
+    theme: "auto",
+    token: "c647fb34-a2bd-40e2-8b7d-ff06ad5f9094",
+    hover: "enabled",
+    container: "tp-weather-widget"
+  })
+</script>
             <div class="right menu">
               <% if (user) { %>
               <a href="#" style="color: inherit; ">
