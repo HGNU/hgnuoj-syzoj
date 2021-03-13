@@ -140,12 +140,35 @@
 </script>
             <div class="right menu">
               <% if (user) { %>
-              <a href="#" style="color: inherit; ">
+              <a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>" style="color: inherit; ">
               <div class="ui simple dropdown item">
                 <%= user.username %><% if (user.nameplate) { %><%- user.nameplate %><% } %> <i class="dropdown icon"></i>
                 <div class="menu">
-                  <a class="item" href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><i class="user icon"></i>我的主页</a>
                   <a class="item" href="<%= syzoj.utils.makeUrl(['user', user.id, 'edit']) %>"><i class="edit icon"></i>修改资料</a>
+            <a class="settheme item" name="dark-official">深色模式</a>
+            <a class="settheme item" name="light-official">切换回原主题</a>
+        <script>
+    $(".settheme").click(function(){
+        localStorage.setItem("theme",$(this).attr('name'))
+        settheme(localStorage.getItem("theme"))
+    })
+</script>
+<script data-cfasync="false">
+      //script for the theme shop
+      function settheme(themeName){
+        $('.wfyzoj-theme').remove()
+        if(themeName === "dark-official"){
+          $('head').append('<link rel="stylesheet" class="wfyzoj-theme" href="https://cdn.jsdelivr.net/gh/wfyzoj/themes@master/Dark.min.css" type="text/css">')
+        }
+        $('head').append('<link href="<%- selfLib("style.css") %>?20181212" rel="stylesheet">')
+      }
+    
+      if(localStorage.getItem("theme")===null){
+        localStorage.setItem("theme","light-official")
+      }
+    
+      settheme(localStorage.getItem("theme"))
+    </script>  
                   <% if (user.is_admin) { %>
                     <a class="item" href="<%= syzoj.utils.makeUrl(['admin', 'info']) %>"><i class="settings icon"></i>后台管理</a>
                     <div class="ui basic modal" id="modal-restart">

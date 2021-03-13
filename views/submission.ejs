@@ -128,7 +128,12 @@
 <script src="<%- lib('socket.io/2.2.0/socket.io.js') %>"></script>
 <script src="<%- lib('jsondiffpatch/0.2.5/jsondiffpatch.min.js') %>"></script>
 
-<% include submissions_item %>
+<% include submissions_item
+// codediv 为显示在单条评测记录的代码 .codediv add by kaygb
+%>
+
+
+
 
 <script type="text/x-template" id="codeBoxTemplate">
     <div style="margin-top: 0px; margin-bottom: 14px; " v-if="content != null && content !== ''">
@@ -136,7 +141,7 @@
            <strong v-html="title"></strong>
            <a v-if="download" style="color: #000; " :href="download"><i class="download icon"></i></a>
         </p>
-        <div class="ui existing segment">
+        <div class="ui existing segment codediv">
           <slot></slot>
           <pre v-if="!noEscape" style="margin-top: 0; margin-bottom: 0; "><code>{{ content }}</code></pre>
           <pre v-if="noEscape" style="margin-top: 0; margin-bottom: 0; "><code v-html="content"></code></pre>

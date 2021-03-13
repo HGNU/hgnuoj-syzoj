@@ -157,7 +157,9 @@ app.get('/submission/:id', async (req, res) => {
     const judge = await JudgeState.findById(id);
     if (!judge) throw new ErrorMessage("提交记录 ID 不正确。");
     const curUser = res.locals.user;
-    if (!await judge.isAllowedVisitBy(curUser)) throw new ErrorMessage('您没有权限进行此操作。');
+    
+    // 这里控制用户在比赛中不可查看别人的代码 by kaygb 不对 by guke
+    if (!await judge.isAllowedVisitBy(curUser)) throw new ErrorMessage('您没有权限进行此操作。'); 
 
     let contest;
     if (judge.type === 1) {
@@ -188,12 +190,13 @@ app.get('/submission/:id', async (req, res) => {
       judge.code = await syzoj.utils.highlight(judge.code, syzoj.languages[judge.language].highlight);
     }
 
-    displayConfig.showRejudge = await judge.problem.isAllowedEditBy(res.locals.user);
+    // displayConfig.showRejudge = await judge.problem.isAllowedEditBy(res.locals.user);
+    displayConfig.showRejudge = true;
     res.render('submission', {
       info: getSubmissionInfo(judge, displayConfig),
       roughResult: getRoughResult(judge, displayConfig, false),
-      code: (judge.problem.type !== 'submit-answer') ? judge.code.toString("utf8") : '',
-      formattedCode: judge.formattedCode ? judge.formattedCode.toString("utf8") : null,
+       code: (judge.problem.type !== 'submit-answer') ? judge.code.toString("utf8") : '',
+       formattedCode: judge.formattedCode ? judge.formattedCode.toString("utf8") : null,
       preferFormattedCode: res.locals.user ? res.locals.user.prefer_formatted_code : true,
       detailResult: processOverallResult(judge.result, displayConfig),
       socketToken: (judge.pending && judge.task_id != null) ? jwt.sign({
