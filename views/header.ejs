@@ -7,10 +7,23 @@
     <meta name="viewport" content="width=1200">
     <title><%= title %> - <%= syzoj.config.title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <script>
+        // 判断上次使用是否选择暗黑模式
+            if(localStorage.getItem("darkmode")===null){
+                localStorage.setItem("darkmode","false");
+              }
+            if (localStorage.getItem("darkmode") === "true") {
+                setDark("true");
+                localStorage.setItem('darkmode', "true");
+            }else{
+                setDark("false");
+                localStorage.setItem('darkmode', "false");
+            }
+    </script>
     <link href="<%- lib('semantic-ui/2.4.1/semantic.min.css') %>" rel="stylesheet">
     <link href="<%- selfLib('tomorrow.css') %>" rel="stylesheet">
     <link href="<%- selfLib('math.css') %>" rel="stylesheet">
-    <link href="<%- selfLib('style.css') %>?20181212" rel="stylesheet">
+    <!-- <link href="<%- selfLib('style.css') %>?20181212" rel="stylesheet">-->
     <link href="<%- lib('morris.js/0.5.1/morris.css') %>" rel="stylesheet">
     <link href="//acm-m.eas1.cn/images/2021/03/10/image.png" rel="shortcut icon">
     <% if (useLocalLibs || !syzoj.config.google_fonts || !['like-google-fonts', 'like-local', 'built-in'].includes(syzoj.config.google_fonts.type)) { %>
@@ -34,6 +47,7 @@
       <link href="<%- this.builtInCdnUrl %>/google-fonts/open-sans.css" rel="stylesheet">
       <link href="<%- this.builtInCdnUrl %>/google-fonts/exo-2.css" rel="stylesheet">
     <% } %>
+
     <script data-cfasync="false" src="<%- lib('jquery/3.3.1/jquery.min.js') %>"></script>
     <% if (syzoj.config.google_analytics && syzoj.config.google_analytics !== 'UA-XXXXXXXX-X') { %>
     <script>
@@ -73,6 +87,7 @@
             }
         }
     </style>
+    
     
 
 </head>
@@ -121,54 +136,48 @@
             <% if (typeof contest !== 'undefined' && contest && contest.id) { %>
               <a id="back_to_contest" class="item" href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><i class="arrow left icon"></i> 返回比赛</a>
             <% } %>
+            
+                              
+            
             <div class="zsy-pc item" id="tp-weather-widget"></div>
             
             
-<script>
-  (function(a,h,g,f,e,d,c,b){b=function(){d=h.createElement(g);c=h.getElementsByTagName(g)[0];d.src=e;d.charset="utf-8";d.async=1;c.parentNode.insertBefore(d,c)};a["SeniverseWeatherWidgetObject"]=f;a[f]||(a[f]=function(){(a[f].q=a[f].q||[]).push(arguments)});a[f].l=+new Date();if(a.attachEvent){a.attachEvent("onload",b)}else{a.addEventListener("load",b,false)}}(window,document,"script","SeniverseWeatherWidget","//cdn.sencdn.com/widget2/static/js/bundle.js?t="+parseInt((new Date().getTime() / 100000000).toString(),10)));
-  window.SeniverseWeatherWidget('show', {
-    flavor: "slim",
-    location: "WX4FBXXFKE4F",
-    geolocation: true,
-    language: "auto",
-    unit: "c",
-    theme: "auto",
-    token: "c647fb34-a2bd-40e2-8b7d-ff06ad5f9094",
-    hover: "enabled",
-    container: "tp-weather-widget"
-  })
-</script>
+            
+            
+            
+            
+            <script>
+            
+                // 天气
+              (function(a,h,g,f,e,d,c,b){b=function(){d=h.createElement(g);c=h.getElementsByTagName(g)[0];d.src=e;d.charset="utf-8";d.async=1;c.parentNode.insertBefore(d,c)};a["SeniverseWeatherWidgetObject"]=f;a[f]||(a[f]=function(){(a[f].q=a[f].q||[]).push(arguments)});a[f].l=+new Date();if(a.attachEvent){a.attachEvent("onload",b)}else{a.addEventListener("load",b,false)}}(window,document,"script","SeniverseWeatherWidget","//cdn.sencdn.com/widget2/static/js/bundle.js?t="+parseInt((new Date().getTime() / 100000000).toString(),10)));
+              window.SeniverseWeatherWidget('show', {
+                flavor: "slim",
+                location: "WX4FBXXFKE4F",
+                geolocation: true,
+                language: "auto",
+                unit: "c",
+                theme: "auto",
+                token: "c647fb34-a2bd-40e2-8b7d-ff06ad5f9094",
+                hover: "enabled",
+                container: "tp-weather-widget"
+              })
+            </script>
             <div class="right menu">
               <% if (user) { %>
-              <a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>" style="color: inherit; ">
+              <a href="#" style="color: inherit; ">
               <div class="ui simple dropdown item">
                 <%= user.username %><% if (user.nameplate) { %><%- user.nameplate %><% } %> <i class="dropdown icon"></i>
                 <div class="menu">
+                  <a class="item" href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><i class="user icon"></i>个人资料</a>
                   <a class="item" href="<%= syzoj.utils.makeUrl(['user', user.id, 'edit']) %>"><i class="edit icon"></i>修改资料</a>
-            <a class="settheme item" name="dark-official">深色模式</a>
-            <a class="settheme item" name="light-official">切换回原主题</a>
-        <script>
-    $(".settheme").click(function(){
-        localStorage.setItem("theme",$(this).attr('name'))
-        settheme(localStorage.getItem("theme"))
-    })
-</script>
-<script data-cfasync="false">
-      //script for the theme shop
-      function settheme(themeName){
-        $('.wfyzoj-theme').remove()
-        if(themeName === "dark-official"){
-          $('head').append('<link rel="stylesheet" class="wfyzoj-theme" href="https://cdn.jsdelivr.net/gh/wfyzoj/themes@master/Dark.min.css" type="text/css">')
-        }
-        $('head').append('<link href="<%- selfLib("style.css") %>?20181212" rel="stylesheet">')
-      }
-    
-      if(localStorage.getItem("theme")===null){
-        localStorage.setItem("theme","light-official")
-      }
-    
-      settheme(localStorage.getItem("theme"))
-    </script>  
+                  
+                  <div class="item" >
+                        <input type="checkbox" id="dark-mode" name="dark-mode" tabindex="0" class="hidden">
+                        <label for="dark-mode">&nbsp;DarkMode</label>
+                    </div>
+                  
+
+
                   <% if (user.is_admin) { %>
                     <a class="item" href="<%= syzoj.utils.makeUrl(['admin', 'info']) %>"><i class="settings icon"></i>后台管理</a>
                     <div class="ui basic modal" id="modal-restart">
@@ -225,5 +234,49 @@
             </div>
         </div>
     </div>
+    <script data-cfasync="false">
+        //DarkMode 实时选中状态
+        $("#dark-mode").change(function () {
+            var b = $(this).is(":checked");
+            // console.log("b " +b);
+            if(b){
+                setDark("true");
+                localStorage.setItem("darkmode", "true");
+            }else{
+                setDark("false");
+                localStorage.setItem("darkmode", "false");
+            }
+            
+        });
+        
+        // 判断上次使用是否选择暗黑模式
+        $(function () {
+            if(localStorage.getItem("darkmode")===null){
+                localStorage.setItem("darkmode","false");
+              }
+            if (localStorage.getItem("darkmode") === "true") {
+                // console.log("lo dac true " + localStorage.getItem('darkmode'));
+                $("#dark-mode").prop("checked", "checked");
+                setDark("true");
+                localStorage.setItem('darkmode', "true");
+            }else{
+                // console.log("lo dac false " + localStorage.getItem('darkmode'));
+                setDark("false");
+                $("#dark-mode").prop("checked", "");
+                localStorage.setItem('darkmode', "false");
+            }
+        });
+        
+        // 调用此函数执行CSS更替
+        function setDark(isdark){
+            $('.wfyzoj-theme').remove()
+            if(isdark === "true"){
+                // console.log("isdark = 1");
+              $('head').append('<link rel="stylesheet" class="wfyzoj-theme" href="https://cdn.jsdelivr.net/gh/wfyzoj/themes@master/Dark.min.css" type="text/css">');
+            }
+            $('head').append('<link href="<%- selfLib("style.css") %>?20181212" rel="stylesheet">');
+        }
+    </script> 
+    
     <div style="margin-top: 28px; ">
     <div class="ui main container">
