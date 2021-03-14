@@ -269,10 +269,10 @@
         
         // 调用此函数执行CSS更替
         function setDark(isdark){
-            $('.wfyzoj-theme').remove()
+            $('.hgnuoj-darkmode').remove()
             if(isdark === "true"){
                 // console.log("isdark = 1");
-              $('head').append('<link rel="stylesheet" class="wfyzoj-theme" href="https://cdn.jsdelivr.net/gh/wfyzoj/themes@master/Dark.min.css" type="text/css">');
+              $('head').append('<link rel="stylesheet" class="hgnuoj-darkmode" href="https://cdn.jsdelivr.net/gh/hgnu/hgnuoj@master/static/themes/Dark.min.css?v=20210314" type="text/css">');
             }
             $('head').append('<link href="<%- selfLib("style.css") %>?20181212" rel="stylesheet">');
         }
