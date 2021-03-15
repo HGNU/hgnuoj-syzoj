@@ -47,6 +47,15 @@
                   <label for="type-acm">ICPC</label>
                 </div>
               </div>
+              
+              <!-- // mode by kaygb 20210315 below -->
+              <div class="field">
+                <div class="ui radio checkbox">
+                  <input <% if (contest.id) { %>disabled <% } %>type="radio" name="type" id="type-cur" value="cur"<% if (contest.type === 'cur') { %> checked="checked"<% } %>>
+                  <label for="type-cur">COURSE</label>
+                </div>
+              </div>
+              <!-- // mode by kaygb 20210315 end -->
             </div>
             <div class="field">
                 <label>排行参数（格式：<code>{ "题目 ID": 分值倍数 }</code>）</label>
@@ -62,7 +71,7 @@
             </div>
             <div class="field">
                 <label>结束时间</label>
-                <input type="text" name="end_time" value="<%= syzoj.utils.formatDate(contest.end_time || syzoj.utils.getCurrentDate()) %>">
+                <input type="text" name="end_time" value="<%= syzoj.utils.formatDate(contest.end_time || syzoj.utils.getCurrentDate() + 7200) %>">
             </div>
             <div class="inline field">
               <label class="ui header">公开</label>
