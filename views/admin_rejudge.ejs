@@ -52,8 +52,9 @@
       <input type="text" name="min_score" placeholder="分数（最小值）" value="<%= form.min_score %>">
     </div>
     <div class="field">
+    <% var agotime = Date.parse( new Date() ).toString(); agotime = agotime.substr(0,10) - 2592000; //获取当前时间戳 %>
       <label>提交时间（最小值）</label>
-      <input type="text" name="min_time" placeholder="提交时间（最小值）" value="<%= form.min_time || syzoj.utils.formatDate(1610236800) %>">
+      <input type="text" name="min_time" placeholder="提交时间（最小值）" value="<%= form.min_time || syzoj.utils.formatDate(agotime) %>">
     </div>
   </div>
   <div class="three fields">
@@ -67,7 +68,8 @@
     </div>
     <div class="field">
       <label>提交时间（最大值）</label>
-      <input type="text" name="max_time" placeholder="提交时间（最大值）" value="<%= form.max_time || syzoj.utils.formatDate(2147483647) %>">
+      <% var currenttime = Date.parse( new Date() ).toString(); currenttime = currenttime.substr(0,10); //获取当前时间戳 %>
+      <input type="text" name="max_time" placeholder="提交时间（最大值）" value="<%= form.max_time || syzoj.utils.formatDate(currenttime) %>">
     </div>
   </div>
 

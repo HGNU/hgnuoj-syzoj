@@ -287,7 +287,7 @@ if (contest) {
                 });
                 </script>
                 <div class="ui form" style="width: 100%; ">
-                  <div class="inline fields" style="width: 100%; ">
+                  <div class="inline fields" style="width: 100%; display:none">
                     <div class="field" style="margin: 0 auto; ">
                       <label for="answer">或者，上传答案（请使用 ZIP 格式压缩）</label>
                       <input type="file" id="answer" name="answer">
@@ -321,16 +321,14 @@ if (contest) {
                     <%- this.showLoadingEditor(); %>
                   </div>
                 </div>
-                <!--
                 <div class="ui form" style="width: 100%; ">
-                  <div class="inline fields" style="width: 100%; ">
+                  <div class="inline fields" style="width: 100%; display:none ">
                     <div class="field" style="margin: 0 auto; ">
                       <label for="answer">或者，上传代码文件</label>
                       <input type="file" id="answer" name="answer">
                     </div>
                   </div>
                 </div>
-                -->
               </div>
               <div class="ui center aligned vertical segment" style="padding-bottom: 0; ">
                 <button type="submit" class="ui labeled icon button"><i class="ui edit icon"></i>提交</button>
