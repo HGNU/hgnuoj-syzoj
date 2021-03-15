@@ -78,6 +78,13 @@ export default class Contest extends Model {
     else return false;
   }
 
+    // 允许cur赛制显示排行榜单 mode by kaygb 20210315
+  allowedShowingBoard(){
+    if(this.type === 'cur') return true;
+    return false;
+  }
+
+
   allowedSeeingScore() { // If not, then the user can only see status
     if (this.type === 'ioi' || this.type === 'acm' || this.type === 'cur'  ) return true;// mode by kaygb 20210315
     else return false;

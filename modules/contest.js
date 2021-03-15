@@ -245,7 +245,7 @@ app.get('/contest/:id/ranklist', async (req, res) => {
     if (!contest.is_public && (!res.locals.user || (!res.locals.user.is_admin && !contest.admins.includes(res.locals.user.id.toString())))) throw new ErrorMessage('比赛未公开，请耐心等待 (´∀ `)');
 
     if ([contest.allowedSeeingResult() && contest.allowedSeeingOthers(),
-    contest.isEnded(), //contest.allowedShowingBoard(),   // mode there kaygb 20210315
+    contest.isEnded(), contest.allowedShowingBoard(),   // mode there kaygb 20210315
     await contest.isSupervisior(curUser)].every(x => !x))
       throw new ErrorMessage('您没有权限进行此操作。');
 
@@ -304,7 +304,7 @@ function getDisplayConfig(contest) {
     showResult: contest.allowedSeeingResult(),
     showOthers: contest.allowedSeeingOthers(),
     showDetailResult: contest.allowedSeeingTestcase(),
-    //showBoard: contest.allowedShowingBoard(), // mode there kaygb 20210315
+    showBoard: contest.allowedShowingBoard(), // mode there kaygb 20210315
     showTestdata: false,
     inContest: true,
     showRejudge: false

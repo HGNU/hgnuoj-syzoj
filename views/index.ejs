@@ -4,40 +4,64 @@
   <div class="ui two column stackable grid">  <!-- 原来类为：ui three column grid -->
     <div class="eleven wide column"> <!-- 原来类为：eleven wide column -->
       
-            <h4 class="ui top attached block header"><i class="ui calendar icon"></i>近期比赛</h4>
-      <div class="ui bottom attached <% if (!contests || !contests.length) { %>center aligned <% } %>segment">
-        <% if (!contests || !contests.length) { %>
-        还没有举行过任何比赛
-        <% } else { %>
-        <table class="ui very basic  aligned table">
-          <thead>
-            <tr>
-              <th>比赛名称</th>
-              <th>开始时间</th>
-            </tr>
-          </thead>
-          <tbody>
-            <%
-            for (let contest of contests) {
-              let now = syzoj.utils.getCurrentDate();
-              let tag = '';
-            %>
-            <tr>
-              <% if (now < contest.start_time) { %>
-                <% tag = '<span class="ui header"><div class="ui mini red label">未开始</div></span>' %>
-              <% } else if (now >= contest.start_time && now < contest.end_time) { %>
-                <% tag = '<span class="ui header"><div class="ui mini green label">进行中</div></span>' %>
-              <% } else { %>
-                <% tag = '<span class="ui header"><div class="ui mini grey label">已结束</div></span>' %>
-              <% } %>
-              <td><a href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><%= contest.title %> <%- tag %></a></td>
-              <td><%= syzoj.utils.formatDate(contest.start_time) %></td>
-            </tr>
+      
+        <h4 class="ui top attached block header"><i class="ui info icon"></i>公告</h4>
+        <div class="ui bottom attached segment">
+            <table class="ui very basic table">
+            <!--
+              <thead>
+                <tr>
+                  <th>标题</th>
+                  <th>时间</th>
+                </tr>
+              </thead>
+             -->
+              <tbody>
+                <% for (let item of notices) { %>
+                    <tr>
+                        <td><a href="<%= item.url %>"><%= item.title %></a></td>
+                        <td><%= item.date %></td>
+                    </tr>
+                <% } %>
+              </tbody>
+            </table>
+        </div>
+      
+      
+        <h4 class="ui top attached block header"><i class="ui calendar icon"></i>近期比赛</h4>
+        <div class="ui bottom attached <% if (!contests || !contests.length) { %>center aligned <% } %>segment">
+            <% if (!contests || !contests.length) { %>
+            还没有举行过任何比赛
+            <% } else { %>
+            <table class="ui very basic  aligned table">
+              <thead>
+                <tr>
+                  <th>比赛名称</th>
+                  <th>开始时间</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%
+                for (let contest of contests) {
+                  let now = syzoj.utils.getCurrentDate();
+                  let tag = '';
+                %>
+                <tr>
+                  <% if (now < contest.start_time) { %>
+                    <% tag = '<span class="ui header"><div class="ui mini red label">未开始</div></span>' %>
+                  <% } else if (now >= contest.start_time && now < contest.end_time) { %>
+                    <% tag = '<span class="ui header"><div class="ui mini green label">进行中</div></span>' %>
+                  <% } else { %>
+                    <% tag = '<span class="ui header"><div class="ui mini grey label">已结束</div></span>' %>
+                  <% } %>
+                  <td><a href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><%= contest.title %> <%- tag %></a></td>
+                  <td><%= syzoj.utils.formatDate(contest.start_time) %></td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
             <% } %>
-          </tbody>
-        </table>
-        <% } %>
-      </div>
+          </div>
       
       
       <h4 class="ui top attached block header"><i class="ui rss icon"></i>最近更新</h4>
@@ -125,25 +149,7 @@
     <div class="five wide column">  <!-- 原来类为：right floated five wide column -->
         
       
-        <h4 class="ui top attached block header"><i class="ui info icon"></i>公告</h4>
-      <div class="ui bottom attached segment">
-        <table class="ui very basic table">
-          <thead>
-            <tr>
-              <th>标题</th>
-              <th>时间</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% for (let item of notices) { %>
-                <tr>
-                    <td><a href="<%= item.url %>"><%= item.title %></a></td>
-                    <td><%= item.date %></td>
-                </tr>
-            <% } %>
-          </tbody>
-        </table>
-      </div>
+        
       
        <h4 class="ui top attached block header"><i class="ui quote left icon"></i>寻求帮助？</h4>
         <div class="ui bottom attached center aligned segment">
