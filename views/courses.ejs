@@ -2,11 +2,19 @@
 
 <% include header %>
 
-
-
-<h2 class="ui red header">正在建设中。。。</h2>
+<% if (user && user.is_admin) { %>
+    <form class="ui mini form">
+      <div class="inline fields" style="margin-bottom: 25px; white-space: nowrap; ">
+        <a href="<%= syzoj.utils.makeUrl(['contest', 0, 'edit']) %>" class="ui mini labeled icon right floated button" style="margin-left: auto; ">
+          <i class="ui icon write"></i>
+          创建专题
+        </a>
+     </div>
+    </form>
+    <% } %>
 
 <div class="ui four column stackable grid cards">
+
 
     
   <div class="card">
@@ -18,6 +26,8 @@
       </div>
 
   </div>
+  
+  
   
 </div>
  
