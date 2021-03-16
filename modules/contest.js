@@ -8,37 +8,37 @@ let User = syzoj.model('user');
 const jwt = require('jsonwebtoken');
 const { getSubmissionInfo, getRoughResult, processOverallResult } = require('../libs/submissions_process');
 
+// app.get('/contests', async (req, res) => {
+//   try {
+//     let where;
+//     if (res.locals.user && res.locals.user.is_admin) where = {}
+//     else where = { is_public: true };
+
+//     let paginate = syzoj.utils.paginate(await Contest.countForPagination(where), req.query.page, syzoj.config.page.contest);
+//     let contests = await Contest.queryPage(paginate, where, {
+//       start_time: 'DESC'
+//     });
+
+//     await contests.forEachAsync(async x => x.subtitle = await syzoj.utils.markdown(x.subtitle));
+
+//     res.render('contests', {
+//       contests: contests,
+//       paginate: paginate
+//     })
+//   } catch (e) {
+//     syzoj.log(e);
+//     res.render('error', {
+//       err: e
+//     });
+//   }
+// });
+
 app.get('/contests', async (req, res) => {
   try {
+    // let where =  { type: ['acm', 'ioi', 'noi'] , is_public: true    };
     let where;
     if (res.locals.user && res.locals.user.is_admin) where = {}
-    else where = { is_public: true };
-
-    let paginate = syzoj.utils.paginate(await Contest.countForPagination(where), req.query.page, syzoj.config.page.contest);
-    let contests = await Contest.queryPage(paginate, where, {
-      start_time: 'DESC'
-    });
-
-    await contests.forEachAsync(async x => x.subtitle = await syzoj.utils.markdown(x.subtitle));
-
-    res.render('contests', {
-      contests: contests,
-      paginate: paginate
-    })
-  } catch (e) {
-    syzoj.log(e);
-    res.render('error', {
-      err: e
-    });
-  }
-});
-
-app.get('/contests', async (req, res) => {
-  try {
-    let where =  { type: ['acm', 'ioi', 'noi'] , is_public: true    };
-    // let where;
-    // if (res.locals.user && res.locals.user.is_admin) where = {}
-    // else where = { type: ['acm', 'ioi', 'noi'] , is_public: true   };
+    else where = { type: 'acm' || 'ioi'|| 'noi' ,is_public: true   };   // mode by kaygb 20210316 比赛列表过滤
 
     let paginate = syzoj.utils.paginate(await Contest.countForPagination(where), req.query.page, syzoj.config.page.contest);
     let contests = await Contest.queryPage(paginate, where, {
@@ -64,7 +64,7 @@ app.get('/courses', async (req, res) => {
     let where =  { type: 'cur' , is_public: true };  // mode by kaygb 20210316 专题页面使用cur赛制过滤
     // let where;
     // if (res.locals.user && res.locals.user.is_admin) where = {}
-    // else where = { type: 'cur' };
+    // else where = { type: 'cur' , is_public: true };
 
     let paginate = syzoj.utils.paginate(await Contest.countForPagination(where), req.query.page, syzoj.config.page.contest);
     let contests = await Contest.queryPage(paginate, where, {
