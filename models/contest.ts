@@ -74,7 +74,7 @@ export default class Contest extends Model {
   }
 
   allowedSeeingOthers() {
-    if (this.type === 'acm') return true;
+    if (this.type === 'acm' || this.type === 'cur') return true; //mode by guke 0316
     else return false;
   }
 
@@ -86,7 +86,7 @@ export default class Contest extends Model {
 
 
   allowedSeeingScore() { // If not, then the user can only see status
-    if (this.type === 'ioi' || this.type === 'acm' || this.type === 'cur'  ) return true;// mode by kaygb 20210315
+    if (this.type === 'ioi' || this.type === 'cur'  ) return true;// mode by kaygb 20210315
     else return false;
   }
 
@@ -96,7 +96,7 @@ export default class Contest extends Model {
   }
 
   allowedSeeingTestcase() {
-    if (this.type === 'ioi' || this.type === 'acm'  || this.type === 'cur') return true;// mode by kaygb 20210315
+    if (this.type === 'ioi' || this.type === 'cur') return true;// mode by kaygb 20210315
     return false;
   }
 

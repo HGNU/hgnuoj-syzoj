@@ -296,6 +296,24 @@ app.get('/contest/:id/ranklist', async (req, res) => {
   }
 });
 
+
+function getDisplayConfigForCur(contest) {
+    
+    // 为CUR模式定义的配置 mode there kaygb 20210316
+  return {
+    showScore: contest.allowedSeeingScore(),
+    showUsage: true,
+    showCode: false,
+    showResult: contest.allowedSeeingResult(),
+    showOthers: contest.allowedSeeingOthers(),
+    showDetailResult: contest.allowedSeeingTestcase(),  // 允许查看测试用例
+    showBoard: contest.allowedShowingBoard(), // 允许显示排行榜
+    showTestdata: true, // 允许查看提交记录详细信息
+    inContest: true,
+    showRejudge: true
+  };
+}
+
 function getDisplayConfig(contest) {
   return {
     showScore: contest.allowedSeeingScore(),
@@ -304,8 +322,8 @@ function getDisplayConfig(contest) {
     showResult: contest.allowedSeeingResult(),
     showOthers: contest.allowedSeeingOthers(),
     showDetailResult: contest.allowedSeeingTestcase(),
-    showBoard: contest.allowedShowingBoard(), // mode there kaygb 20210315
-    showTestdata: false,
+    // showBoard: false,//contest.allowedShowingBoard(), // mode there kaygb 20210315
+    showTestdata: false, // 使所有比赛可以查看提交记录详细信息
     inContest: true,
     showRejudge: false
   };
@@ -453,8 +471,16 @@ app.get('/contest/submission/:id', async (req, res) => {
 
     const contest = await Contest.findById(judge.type_info);
     contest.ended = contest.isEnded();
-
-    const displayConfig = getDisplayConfig(contest);
+    
+    // mode by kaygb 20210316  acm 模式调用单独的displayConfig  // if语句中不能使用const定义
+    if(contest.type === 'cur'){
+        displayConfig = getDisplayConfigForCur(contest);
+    }else{
+        displayConfig = getDisplayConfig(contest);
+    }
+     //end
+     console.log("ct type" + contest.type);
+    //const displayConfig = getDisplayConfig(contest);
     displayConfig.showCode = true;
 
     await judge.loadRelationships();
