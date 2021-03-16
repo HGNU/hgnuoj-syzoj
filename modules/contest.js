@@ -33,6 +33,58 @@ app.get('/contests', async (req, res) => {
   }
 });
 
+app.get('/contests', async (req, res) => {
+  try {
+    let where =  { type: ['acm', 'ioi', 'noi'] , is_public: true    };
+    // let where;
+    // if (res.locals.user && res.locals.user.is_admin) where = {}
+    // else where = { type: ['acm', 'ioi', 'noi'] , is_public: true   };
+
+    let paginate = syzoj.utils.paginate(await Contest.countForPagination(where), req.query.page, syzoj.config.page.contest);
+    let contests = await Contest.queryPage(paginate, where, {
+      start_time: 'DESC'
+    });
+
+    await contests.forEachAsync(async x => x.subtitle = await syzoj.utils.markdown(x.subtitle));
+
+    res.render('contests', {
+      contests: contests,
+      paginate: paginate
+    })
+  } catch (e) {
+    syzoj.log(e);
+    res.render('error', {
+      err: e
+    });
+  }
+});
+
+app.get('/courses', async (req, res) => {
+  try {
+    let where =  { type: 'cur' , is_public: true };  // mode by kaygb 20210316 专题页面使用cur赛制过滤
+    // let where;
+    // if (res.locals.user && res.locals.user.is_admin) where = {}
+    // else where = { type: 'cur' };
+
+    let paginate = syzoj.utils.paginate(await Contest.countForPagination(where), req.query.page, syzoj.config.page.contest);
+    let contests = await Contest.queryPage(paginate, where, {
+      start_time: 'DESC'
+    });
+
+    await contests.forEachAsync(async x => x.subtitle = await syzoj.utils.markdown(x.subtitle));
+
+    res.render('courses', {
+      contests: contests,
+      paginate: paginate
+    })
+  } catch (e) {
+    syzoj.log(e);
+    res.render('error', {
+      err: e
+    });
+  }
+});
+
 app.get('/contest/:id/edit', async (req, res) => {
   try {
 

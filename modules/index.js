@@ -68,13 +68,13 @@ app.get('/about', async (req, res) => {
   }
 });
 
-app.get('/courses', async (req, res) => {   //  课程模块 dev
-  try {
-    res.render('courses');
-  } catch (e) {
-    syzoj.log(e);
-    res.render('error', {
-      err: e
-    });
-  }
-});
+// app.get('/courses', async (req, res) => {   //  课程模块 dev
+//   try {
+//     res.render('courses');
+//   } catch (e) {
+//     syzoj.log(e);
+//     res.render('error', {
+//       err: e
+//     });
+//   }
+// });
