@@ -71,8 +71,32 @@
                     <div class="meta">
                         <a class="group">
                         
-                        <%= show_user.is_admin ? '管理员' : '普通用户' %>
-                    
+                        
+                        <%  
+                        // 如果有管理用户权限则为管理员，否则为普通用户，系统管理员显示为超级管理员。kaygb 20210317
+                        let ad1 = show_user.is_admin;
+                        let ad2 = user.is_useradmin;
+                        
+                        function show_uadmin(ad1,ad2){
+                            let str = '普通用户';
+                            if(show_user.is_admin){
+                                str = '超级管理员';
+                            }else if(user.is_useradmin){
+                            
+                                str = '管理员';
+                            }else{
+                                str = '普通用户';
+                            }
+                            return str;
+                        }
+                        
+                        
+                        %>
+                        <%= show_uadmin(ad1,ad2) %>
+                        
+                        <%= // show_user.is_admin ? '超级管理员' : '普通用户' %>
+                        
+                        
                            
                         
                         </a>

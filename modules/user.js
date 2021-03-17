@@ -85,6 +85,9 @@ app.get('/user/:id', async (req, res) => {
     let statistics = await user.getStatistics();
     await user.renderInformation();
     user.emailVisible = user.public_email || user.allowedEdit;
+    
+    user.privileges = await user.getPrivileges();   // kaygb 20210317 
+    res.locals.user.is_useradmin = await res.locals.user.hasPrivilege('manage_user');  // kaygb 20210317
 
     const ratingHistoryValues = await RatingHistory.find({
       where: { user_id: user.id },
