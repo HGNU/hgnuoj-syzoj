@@ -94,7 +94,7 @@
     <% include page %>
   </div>
   <% } %>
-    <% if (article.allowedComment) { %>
+    <% if (user.is_admin && article.allowedComment) { %>
     <form class="ui reply form" method="post" action="<%= syzoj.utils.makeUrl(['article', article.id, 'comment']) %>">
       <div class="field">
         <textarea name="comment" class="markdown-edit"></textarea>

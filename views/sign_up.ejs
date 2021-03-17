@@ -6,7 +6,7 @@
   教师账户用户名请使用<span style="color:red;">【教职工号+姓名拼音/首字母】</span>或<span style="color:red;">【教职工号】</span>注册，工号请填写完整<br>
     学生账户用户名请使用<span style="color:red;">【学号 + 姓名拼音/首字母】</span> 或 <span style="color:red;">【学号】 </span> 注册，学号请填写完整，便于任课老师打分。
     <br> 注册后将<span style="color:red;">无法修改用户名</span>，如需修改请联系管理员，联系方式请查看<a href="/about" target="_blank">关于页面</a><br>
-    <b>非本校学生请使用【qq+QQ账号】或者【wx+微信号】注册,如【qq-123456】或【wx-123456】</b>
+    <b><del>非本校学生请使用【qq+QQ账号】或者【wx+微信号】注册,如【qq-123456】或【wx-123456】</del> 暂未开放非本校学生注册</b>
   </p>
   <p ><b>未按完整格式注册的用户可联系管理一修改用户名，未修改用户的账户可能会被<span style="color:red;">删除</span></b>
   </p>
@@ -15,7 +15,7 @@
   </div>
           <form class="ui form">
                 <div class="field">
-                    <label for="username">用户名（格式：学号 + 姓名拼音）</label>
+                    <label for="username">用户名（格式：学号/教职工号 + 姓名拼音）</label>
                     <input type="text" placeholder="请使用学号 + 姓名拼音" id="username">
                 </div>
                 <div class="field">
@@ -52,7 +52,7 @@ function mail_required() {
     var s = $("#email").val();
     var mailWebsite = 'https://mail.' + s.substring(s.indexOf('@') + 1, s.length);
     if (mailWebsite === 'https://mail.gmail.com') mailWebsite = 'https://mail.google.com';
-    window.location.href = mailWebsite;
+    // window.location.href = mailWebsite;
 }
 
 function submit() {
@@ -61,6 +61,13 @@ function submit() {
         return;
     }
     password = md5($("#password1").val() + "syzoj2_xxx")
+    // var is_email = $("email").val();
+    // var email_req = /[1-9]\d{7,10}@qq\.com/;
+    // isok = email_req.test(is_email);
+    // if (!isok){
+    // show_error("请输入正确的qq邮箱");
+    // return;
+    // }
     $("#sign_up").addClass("loading");
     $.ajax({
         url: '/api/sign_up',
@@ -80,7 +87,7 @@ function submit() {
                     break;
                 case 2005:
                 case 2002:
-                    show_error("用户名需要大于 3 个字符小于 16 个字符，仅允许字母数字和下划线");
+                    show_error("请使用正确的学号/教职工号和姓名拼音/首字母");
                     break;
                 case 2007:
                 case 2003:
