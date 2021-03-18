@@ -94,8 +94,9 @@
     <% include page %>
   </div>
   <% } %>
-    <% if (user.is_admin && article.allowedComment) { %>
-    <form class="ui reply form" method="post" action="<%= syzoj.utils.makeUrl(['article', article.id, 'comment']) %>">
+    <% //if (user && article.allowedComment) { %>
+    
+    <!--<form class="ui reply form" method="post" action="<%= //syzoj.utils.makeUrl(['article', article.id, 'comment']) %>">
       <div class="field">
         <textarea name="comment" class="markdown-edit"></textarea>
       </div>
@@ -104,7 +105,7 @@
         <i class="icon edit"></i> 回复
       </button>
       </div>
-    </form>
-  <% } %>
+    </form> -->
+  <% //} %>
 </div>
 <% include footer %>
