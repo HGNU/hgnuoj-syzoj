@@ -107,6 +107,7 @@ app.get('/contest/:id/edit', async (req, res) => {
     if (contest.problems) problems = await contest.problems.split('|').mapAsync(async id => await Problem.findById(id));
     if (contest.admins) admins = await contest.admins.split('|').mapAsync(async id => await User.findById(id));
 
+    // let imgsrc = await Contest.findById(contest_id);
     res.render('contest_edit', {
       contest: contest,
       problems: problems,
@@ -158,6 +159,10 @@ app.post('/contest/:id/edit', async (req, res) => {
     if (!req.body.title.trim()) throw new ErrorMessage('比赛名不能为空。');
     contest.title = req.body.title;
     contest.subtitle = req.body.subtitle;
+    
+    //kaygb 20210318 below imgsrc
+    contest.imgsrc = req.body.imgsrc;
+    
     if (!Array.isArray(req.body.problems)) req.body.problems = [req.body.problems];
     if (!Array.isArray(req.body.admins)) req.body.admins = [req.body.admins];
     contest.problems = req.body.problems.join('|');
