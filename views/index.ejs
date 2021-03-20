@@ -118,7 +118,7 @@
             %>
                 <tr>
                     <td><b><%= i %></b></td>
-                    <td><a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><%= user.username %></a><% if (user.nameplate) { %><%- user.nameplate %><% } %></td>
+                    <td><% if (user.nameplate) { %><div class="ui mini blue label"><%- user.nameplate %></div><% } %> <a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><%= user.username %></a></td>
                     <td style="font-content;white-space: nowrap; word-break: break-all;">
                       <script id="user-infomation-script-<%= i %>" data-cfasync="false">
                       (function () {
