@@ -14,10 +14,16 @@
     <p id="error_info"></p>
   </div>
           <form class="ui form">
+            <div class="two fields">
                 <div class="field">
                     <label for="username">用户名（格式：学号/教职工号 + 姓名拼音）</label>
                     <input type="text" placeholder="请使用学号 + 姓名拼音" id="username">
                 </div>
+                <div class="field">
+                    <label for="nameplate">班级（例：计科2001，软工1801）</label>
+                    <input type="text" placeholder="" id="nameplate">
+                </div>
+            </div>
                 <div class="field">
                     <label for="email">邮箱</label>
                     <input type="email" placeholder="会收到一封验证邮件" id="email">
@@ -61,11 +67,13 @@ function submit() {
         return;
     }
     password = md5($("#password1").val() + "syzoj2_xxx")
+    
+    // 邮箱正则表达式 guke 0320
     // var is_email = $("email").val();
-    // var email_req = /[1-9]\d{7,10}@qq\.com/;
+    // var email_req = /[1-9]\d{7,12}@qq\.com/;
     // isok = email_req.test(is_email);
     // if (!isok){
-    // show_error("请输入正确的qq邮箱");
+    // show_error("请输入正确的qq邮箱（不支持英文邮箱）");
     // return;
     // }
     $("#sign_up").addClass("loading");
@@ -76,6 +84,7 @@ function submit() {
         data: {
           username: $("#username").val(),
           password: password,
+          nameplate: $("#nameplate").val(),
           email: $("#email").val(),
           prevUrl: <%- serializejs(req.query.url || '/') %>
         },

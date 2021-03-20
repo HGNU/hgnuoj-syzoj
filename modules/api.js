@@ -84,6 +84,7 @@ app.post('/api/sign_up', async (req, res) => {
       let sendObj = {
         username: req.body.username,
         password: req.body.password,
+        nameplate: req.body.nameplate,
         email: req.body.email,
       };
 
@@ -110,6 +111,7 @@ app.post('/api/sign_up', async (req, res) => {
       user = await User.create({
         username: req.body.username,
         password: req.body.password,
+        nameplate: req.body.nameplate,
         email: req.body.email,
         is_show: syzoj.config.default.user.show,
         rating: syzoj.config.default.user.rating,
@@ -198,6 +200,7 @@ app.get('/api/sign_up_confirm', async (req, res) => {
       username: obj.username,
       password: obj.password,
       email: obj.email,
+      nameplate: obj.nameplate,
       is_show: syzoj.config.default.user.show,
       rating: syzoj.config.default.user.rating,
       register_time: parseInt((new Date()).getTime() / 1000)

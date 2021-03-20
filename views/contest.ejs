@@ -13,16 +13,25 @@
   <% let unveiled = (isSupervisior || syzoj.utils.getCurrentDate() >= contest.start_time); %>
   <% const seeResult = (isSupervisior || contest.ended); %>
   <% const seeRanklist = seeResult || (contest.allowedSeeingResult() && contest.allowedSeeingOthers()); %>
-  <% let start = syzoj.utils.formatDate(contest.start_time), end = syzoj.utils.formatDate(contest.end_time); %>
+  
+  <!-- 控制比赛时间显示，需要yarn by guke 0319 -->
+  
+  <% if (contest.type === 'acm' || contest.type === 'ioi' || contest.type === 'noi'){
+  
+   let start = syzoj.utils.formatDate(contest.start_time), end = syzoj.utils.formatDate(contest.end_time); %>
   <% if (contest.running && start.split(' ')[0] === end.split(' ')[0]) {
     start = start.split(' ')[1]; end = end.split(' ')[1];
   } %>
+  
   <div class="ui pointing below left label"><%= start %></div>
   <div class="ui pointing below right label"><%= end %></div>
   <% let timePercentage = Math.floor(Math.min(1, (syzoj.utils.getCurrentDate() - contest.start_time) / (contest.end_time - contest.start_time)) * 100); %>
   <div id="timer-progress" class="ui tiny indicating progress<% if (timePercentage == 100) { %> success<% } %>" data-percent="<%= timePercentage %>">
     <div class="bar" style="width: <%= timePercentage %>%;"></div>
   </div>
+  
+  <% } %>
+  
   <div class="ui grid">
     <div class="row">
       <div class="column">

@@ -28,7 +28,7 @@ export default class Contest extends Model {
   @TypeORM.Column({ nullable: true, type: "text" })
   subtitle: string;
   
-  // kaygb 20210318 below
+  // kaygb 20210318 below datebase
   @TypeORM.Column({ nullable: true, type: "text" })
   imgsrc: string;
 
