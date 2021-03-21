@@ -141,18 +141,28 @@
                 container: "tp-weather-widget"
               })
             </script>
+            <%
+            
+                function switch_username(){
+                    if (user.nickname){
+                        return user.nickname;
+                    }else{
+                        return "我的账户";
+                    }
+                }
+            
+            %>
             <div class="right menu">
               <% if (user) { %>
               <a href="#" style="color: inherit; ">
               <div class="ui simple dropdown item">
-                <i class="user icon"></i><span> 我的账户</span>
+                <i class="user icon"></i><span><%= switch_username() %></span>
                 
                 <div class="menu">
                 
                 <% if (typeof contest !== 'undefined' && contest && contest.id) { %>
                   <a id="back_to_contest" class="item" href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><i class="arrow left icon"></i> 返回比赛</a>
                 <% } %>
-                  <a class="item" href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><span class="nc_name" style="width: 100px;line-height:24px;display:block;overflow: hidden;text-overflow: ellipsis!important;white-space: nowrap;"> <%= user.username %><% if (user.nameplate) { %><%- user.nameplate %><% } %> </span></a>
                   <a class="item" href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><i class="user icon"></i>个人资料</a>
                   <a class="item" href="<%= syzoj.utils.makeUrl(['user', user.id, 'edit']) %>"><i class="edit icon"></i>修改资料</a>
                   
