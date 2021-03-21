@@ -3,25 +3,26 @@
 <div class="padding">
   <h1>注册</h1>
   <p ><span style="color:red;">请注意：</span></br>
-  教师账户用户名请使用<span style="color:red;">【教职工号+姓名拼音/首字母】</span>或<span style="color:red;">【教职工号】</span>注册，工号请填写完整<br>
-    学生账户用户名请使用<span style="color:red;">【学号 + 姓名拼音/首字母】</span> 或 <span style="color:red;">【学号】 </span> 注册，学号请填写完整，便于任课老师打分。
+  教师账户用户名请使用<span style="color:red;">【教职工号】</span>注册，工号请填写完整<br>
+    学生账户用户名请使用<span style="color:red;">【学号】</span>注册，学号请填写完整，便于任课老师打分。
     <br> 注册后将<span style="color:red;">无法修改用户名</span>，如需修改请联系管理员，联系方式请查看<a href="/about" target="_blank">关于页面</a><br>
-    <b><del>非本校学生请使用【qq+QQ账号】或者【wx+微信号】注册,如【qq-123456】或【wx-123456】</del> 暂未开放非本校学生注册</b>
-  </p>
-  <p ><b>未按完整格式注册的用户可联系管理一修改用户名，未修改用户的账户可能会被<span style="color:red;">删除</span></b>
   </p>
   <div class="ui error message" id="error" data-am-alert hidden>
     <p id="error_info"></p>
   </div>
           <form class="ui form">
-            <div class="two fields">
                 <div class="field">
-                    <label for="username">用户名（格式：学号/教职工号 + 姓名拼音）</label>
-                    <input type="text" placeholder="请使用学号 + 姓名拼音" id="username">
+                    <label for="username">用户名（格式：学号/教职工号）</label>
+                    <input type="text" placeholder="请使用学号" id="username">
+                </div>
+                <div class="two fields"><!-- nameplate 0320 nickname 0321 guke -->
+                <div class="field">
+                    <label for="nameplate">班级（例：计科2001，软工1801，计算机2006）</label>
+                    <input type="text" placeholder="" id="nameplate">
                 </div>
                 <div class="field">
-                    <label for="nameplate">班级（例：计科2001，软工1801）</label>
-                    <input type="text" placeholder="" id="nameplate">
+                    <label for="nameplate">真实姓名</label>
+                    <input type="text" placeholder="" id="nickname">
                 </div>
             </div>
                 <div class="field">
@@ -85,6 +86,7 @@ function submit() {
           username: $("#username").val(),
           password: password,
           nameplate: $("#nameplate").val(),
+          nickname: $("#nickname").val(),
           email: $("#email").val(),
           prevUrl: <%- serializejs(req.query.url || '/') %>
         },
@@ -96,7 +98,7 @@ function submit() {
                     break;
                 case 2005:
                 case 2002:
-                    show_error("请使用正确的学号/教职工号和姓名拼音/首字母");
+                    show_error("请使用正确的学号/教职工号");
                     break;
                 case 2007:
                 case 2003:
@@ -114,6 +116,12 @@ function submit() {
                     break;
                 case 2010:
                     show_error("验证邮件发送失败：\n" + data.message);
+                    break;
+                case 2020:
+                    show_error("请输入正确的班级");
+                    break;
+                case 2021:
+                    show_error("请输入正确的姓名");
                     break;
                 case 1:
                     success();

@@ -17,7 +17,12 @@
 	    	    <!-- nameplate 班级 guke 0320 -->
 	    <div class="field">
 	    	<label for="nameplate">班级</label>
-	    	<input type="text" id="nameplate" name="nameplate" value="<%= edited_user.nameplate %>">
+	    	<input type="text" placeholder="例：计科2001，软工1801，计算机2006" id="nameplate" name="nameplate" value="<%= edited_user.nameplate %>">
+	    </div>
+	    	    <!-- nickname 班级 guke 0321 -->
+	    <div class="field">
+	    	<label for="nickname">姓名</label>
+	    	<input type="text" id="nickname" name="nickname" value="<%= edited_user.nickname %>">
 	    </div>
       <div class="field">
 	    	<label for="sex">性别</label>
@@ -105,7 +110,31 @@ function make_md5(tag) {
 		tag.val(md5(tag.val() + "syzoj2_xxx"));
 	}
 }
+
+
 function check() {
+
+    var nameplate_re = /^[\u4E00-\u9FA5]{2,3}[1-2][0-9]{3}$/;
+    var nickname_re = /^[\u4E00-\u9FA5]{2,4}$/;
+    nameplate = $('#nameplate');
+    nickname = $('#nickname');
+    if (!nameplate_re.test(nameplate.val())) {
+        $("#error").removeClass("success");
+		$("#error").removeClass("error");
+		$("#error").addClass("error");
+		$("#error_info").html("输入的班级格式有误。");
+		$("#error").show();
+		return false;
+    }
+    if (!nickname_re.test(nickname.val())) {
+        $("#error").removeClass("success");
+		$("#error").removeClass("error");
+		$("#error").addClass("error");
+		$("#error_info").html("输入的姓名格式有误。");
+		$("#error").show();
+		return false;
+    }
+
 	old_password = $("#old_password");
 	password1 = $("#password1");
 	password2 = $("#password2");

@@ -86,8 +86,8 @@ app.get('/user/:id', async (req, res) => {
     await user.renderInformation();
     user.emailVisible = user.public_email || user.allowedEdit;
     
-    user.privileges = await user.getPrivileges();   // kaygb 20210317 
-    res.locals.user.is_useradmin = await res.locals.user.hasPrivilege('manage_user');  // kaygb 20210317
+    // user.privileges = await user.getPrivileges();   // kaygb 20210317 
+    // res.locals.user.is_useradmin = await res.locals.user.hasPrivilege('manage_user');  // kaygb 20210317
 
     const ratingHistoryValues = await RatingHistory.find({
       where: { user_id: user.id },
@@ -192,6 +192,7 @@ app.post('/user/:id/edit', async (req, res) => {
 
     user.information = req.body.information;
     user.nameplate = req.body.nameplate; // guke 0320
+    user.nickname = req.body.nickname; // guke 0321
     user.sex = req.body.sex;
     user.public_email = (req.body.public_email === 'on');
     user.prefer_formatted_code = (req.body.prefer_formatted_code === 'on');

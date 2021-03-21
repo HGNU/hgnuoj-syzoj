@@ -75,7 +75,14 @@ app.post('/api/sign_up', async (req, res) => {
 
     // Because the salt is "syzoj2_xxx" and the "syzoj2_xxx" 's md5 is"59cb..."
     // the empty password 's md5 will equal "59cb.."
+    // nameplate_re,  nickname_re 分别为班级和姓名的正则表达式
+    
     let syzoj2_xxx_md5 = '59cb65ba6f9ad18de0dcd12d5ae11bd2';
+    let nameplate_re = /^[\u4E00-\u9FA5]{2,3}[1-2][0-9]{3}$/;
+    let nickname_re = /^[\u4E00-\u9FA5]{2,4}$/;
+    
+    if (!nickname_re.test(req.body.nickname)) throw 2021;
+    if (!nameplate_re.test(req.body.nameplate)) throw 2020;
     if (req.body.password === syzoj2_xxx_md5) throw 2007;
     if (!(req.body.email = req.body.email.trim())) throw 2006;
     if (!syzoj.utils.isValidUsername(req.body.username)) throw 2002;
@@ -84,7 +91,8 @@ app.post('/api/sign_up', async (req, res) => {
       let sendObj = {
         username: req.body.username,
         password: req.body.password,
-        nameplate: req.body.nameplate,
+        nameplate: req.body.nameplate, //guke 0320
+        nickname: req.body.nickname, //guke 0321
         email: req.body.email,
       };
 
@@ -112,6 +120,7 @@ app.post('/api/sign_up', async (req, res) => {
         username: req.body.username,
         password: req.body.password,
         nameplate: req.body.nameplate,
+        nickname: req.body.nickname,
         email: req.body.email,
         is_show: syzoj.config.default.user.show,
         rating: syzoj.config.default.user.rating,
@@ -201,6 +210,7 @@ app.get('/api/sign_up_confirm', async (req, res) => {
       password: obj.password,
       email: obj.email,
       nameplate: obj.nameplate,
+      nickname: obj.nickname,
       is_show: syzoj.config.default.user.show,
       rating: syzoj.config.default.user.rating,
       register_time: parseInt((new Date()).getTime() / 1000)
