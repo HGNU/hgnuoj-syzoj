@@ -118,7 +118,7 @@
             <a class="zsy-pc item<% if (active.startsWith('ranklist')) { %> active<% } %>" href="/ranklist"><i class="signal icon"></i> 排名</a>
             <a class="zsy-pc item<% if (active.startsWith('discussion') || active.startsWith('article')) { %> active<% } %>" href="/discussion/global"><i class="comments icon"></i> 公告</a>
             <a class="zsy-pc item<% if (active.startsWith('about')) { %> active<% } %>" href="/about"><i class="help circle icon"></i> 关于</a>
-            
+            <!-- <a class="item<% if (active.startsWith('homework')) { %> active<% } %>" href="/homeworks"><i class="book icon"></i> 作业</a> -->
             
             <% if (typeof contest !== 'undefined' && contest && contest.id) { %>
               <a id="back_to_contest" class="zsy-pc item" href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><i class="arrow left icon"></i> 返回比赛</a>

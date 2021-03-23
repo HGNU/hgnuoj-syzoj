@@ -17,7 +17,7 @@
                 </div>
                 <div class="two fields"><!-- nameplate 0320 nickname 0321 guke -->
                 <div class="field">
-                    <label for="nameplate">班级（例：计科2001，软工1801，计算机2006）</label>
+                    <label for="nameplate">班级（例：计科2001，计算机2006）老师请输入“老师”两个字</label>
                     <input type="text" placeholder="" id="nameplate">
                 </div>
                 <div class="field">
@@ -122,6 +122,9 @@ function submit() {
                     break;
                 case 2021:
                     show_error("请输入正确的姓名");
+                    break;
+                case 2022:
+                    show_error("请老师在班级输入框内输入“老师”两个字");
                     break;
                 case 1:
                     success();
