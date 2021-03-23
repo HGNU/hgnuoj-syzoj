@@ -8,12 +8,20 @@
 }
 </style>
 <div class="padding">
-<h1 class="ui center aligned header" style="margin-bottom: 30px; "><%= contest.title %></h1>
-        <table class="ui very basic center aligned table" style="overflow-x: auto;display: block;">
+<h1 class="ui center aligned header" ><%= contest.title %></h1>
+<!-- 总人数 -->
+  <% let person = 0;
+    for (let item of ranklist) {
+    person++;
+    }
+    %>
+<h3 class="ui center aligned header" style="margin-bottom: 30px; ">总参与人数：<%= person %></h3>
+        <table class="ui very basic center aligned table" style="overflow-x: auto;overflow-y: hidden;display: block;">
             <thead>
             <tr>
-                <th>#</th>
-                <th>用户名</th>
+                <th>排名</th>
+                
+                <th style="min-width:150px">姓名</th>
                 <!-- mode by kaygb 20210315 --><!-- 总分 guke 0317 -->
                 <% if (contest.type === 'noi' || contest.type === 'ioi'  || contest.type === 'cur') { %>
                   <th>总分</th>
@@ -98,7 +106,7 @@
                 <td>
                 <% if (item.user.nameplate) { %><div class="ui mini pink label"><%- item.user.nameplate %></div><% } %> 
                 
-                <% if(item.user.nickname) { %><a href="<%= syzoj.utils.makeUrl(['user', item.user.id]) %>"><%- item.user.nickname %><% }else { %>
+                <% if(item.user.nickname) { %><a href="<%= syzoj.utils.makeUrl(['user', item.user.id]) %>" style="display:block"><%- item.user.nickname %><% }else { %>
                 <a href="<%= syzoj.utils.makeUrl(['user', item.user.id]) %>"><%= item.user.username %></a><% } %></td>
                 <% if (contest.type === 'acm') { %>
                   <td>

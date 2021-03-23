@@ -1,6 +1,7 @@
 <% this.title = '修改资料'; %>
 <% include header %>
 <div class="padding">
+<!-- guke 0323 -->
   <div class="ui error message" id="error" data-am-alert hidden>
     <p id="error_info"></p>
   </div>
@@ -106,15 +107,17 @@ function make_md5(tag) {
 		tag.val(md5(tag.val() + "syzoj2_xxx"));
 	}
 }
+<!-- guke 0323 -->
 function show_error(error) {
     $("#error_info").text(error);
     $("#error").show();
 }
-
+<!-- guke 0323 -->
 function check() {
 
     var nameplate_re = /^[\u4E00-\u9FA5]{2,3}[1-2][0-9]{3}$/;
     var nickname_re = /^[\u4E00-\u9FA5]{2,4}$/;
+    var username_re = /^2\d{7}$|2\d{12}$/;
     nameplate = $("#nameplate");
     nickname = $("#nickname");
     username = $("#username");
@@ -125,6 +128,10 @@ function check() {
     
     if (!nameplate_re.test(nameplate.val()) && username.val().length != 8) {
         show_error("输入的班级格式有误");
+		return false;
+    }
+    else if (!username_re.test(username.val())) {
+        show_error("输入的用户名格式有误");
 		return false;
     }
     else if (!nickname_re.test(nickname.val())) {
