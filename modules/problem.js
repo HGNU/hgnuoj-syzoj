@@ -12,6 +12,23 @@ const jwt = require('jsonwebtoken');
 let Judger = syzoj.lib('judger');
 let CodeFormatter = syzoj.lib('code_formatter');
 
+// guke 0326 tagsearch
+function sortTagList(tags) {
+  const order = syzoj.config.problem_tag_colors;
+  tags.sort((a, b) => {
+    let x = order.indexOf(a.color);
+    let y = order.indexOf(b.color);
+    if (x === -1) x = order.length;
+    if (y === -1) y = order.length;
+    if (x < y) return -1;
+    if (x > y) return 1;
+    if (a.name < b.name) return -1;
+    if (a.name > b.name) return 1;
+    return 0;
+  });
+}
+
+
 app.get('/problems', async (req, res) => {
   try {
     const sort = req.query.sort || syzoj.config.sorting.problem.field;
@@ -43,11 +60,15 @@ app.get('/problems', async (req, res) => {
       problem.allowedEdit = await problem.isAllowedEditBy(res.locals.user);
       problem.judge_state = await problem.getJudgeState(res.locals.user, true);
       problem.tags = await problem.getTags();
+      sortTagList(problem.tags); // guke 0326 tagsearch
     });
+    
 
+    // guke 0326 tagsearch
     res.render('problems', {
       allowedManageTag: res.locals.user && await res.locals.user.hasPrivilege('manage_problem_tag'),
       problems: problems,
+      showTagFilter: true,
       paginate: paginate,
       curSort: sort,
       curOrder: order === 'asc'
@@ -59,6 +80,27 @@ app.get('/problems', async (req, res) => {
     });
   }
 });
+
+
+app.get('/problems/tags', async (req, res) => {
+  try {
+    let tags = await ProblemTag.find();
+    let data = {};
+    data.order = syzoj.config.problem_tag_colors;
+    data.tags = tags.map(tag => ({
+      id: tag.id,
+      name: tag.name,
+      color: tag.color
+    }));
+    res.send(data);
+  } catch (e) {
+    syzoj.log(e);
+    res.send({
+      error: e.message
+    });
+  }
+});
+
 
 app.get('/problems/search', async (req, res) => {
   try {
@@ -106,6 +148,7 @@ app.get('/problems/search', async (req, res) => {
       problem.allowedEdit = await problem.isAllowedEditBy(res.locals.user);
       problem.judge_state = await problem.getJudgeState(res.locals.user, true);
       problem.tags = await problem.getTags();
+      sortTagList(problem.tags);
     });
 
     res.render('problems', {
@@ -123,8 +166,10 @@ app.get('/problems/search', async (req, res) => {
   }
 });
 
-app.get('/problems/tag/:tagIDs', async (req, res) => {
+// guke 0326 tagsearch
+app.get('/problems/tag/:tagIDs', async (req, res, next) => {
   try {
+    if (!/^[\d,]+$/.test(req.params.tagIDs)) return next();
     let tagIDs = Array.from(new Set(req.params.tagIDs.split(',').map(x => parseInt(x))));
     let tags = await tagIDs.mapAsync(async tagID => ProblemTag.findById(tagID));
     const sort = req.query.sort || syzoj.config.sorting.problem.field;
@@ -173,13 +218,18 @@ app.get('/problems/tag/:tagIDs', async (req, res) => {
       problem.allowedEdit = await problem.isAllowedEditBy(res.locals.user);
       problem.judge_state = await problem.getJudgeState(res.locals.user, true);
       problem.tags = await problem.getTags();
+      sortTagList(problem.tags);
 
       return problem;
     });
+    
+    // guke 0326 tagsearch
+    sortTagList(tags);
 
     res.render('problems', {
       allowedManageTag: res.locals.user && await res.locals.user.hasPrivilege('manage_problem_tag'),
       problems: problems,
+      showTagFilter: true, // guke 0326 tagsearch
       tags: tags,
       paginate: paginate,
       curSort: sort,
@@ -215,6 +265,7 @@ app.get('/problem/:id', async (req, res) => {
     let state = await problem.getJudgeState(res.locals.user, false);
 
     problem.tags = await problem.getTags();
+    sortTagList(problem.tags);
     await problem.loadRelationships();
 
     let testcases = await syzoj.utils.parseTestdata(problem.getTestdataPath(), problem.type === 'submit-answer');

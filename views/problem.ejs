@@ -188,28 +188,41 @@ if (contest) {
   <% } %>
   <% if (problem.tags && problem.tags.length && (typeof contest === 'undefined' || !contest)) { %>
     <div class="row">
-      <div class="column">
-        <h4 class="ui block header" id="show_tag_title_div" style="margin-bottom: 0; margin-left: -1px; margin-right: -1px; "><a href="#" id="show_tag_button" style="color: #000; ">显示分类标签</a></h4>
-        <div class="ui bottom attached segment" style="display: none; " id="show_tag_div">
+    <div class="column">
+      <h4 class="ui top attached block header">分类标签</h4>
+        <div class="ui bottom attached segment">
+          <% let has_hidden_tags = false; %>
           <% for (let tag of problem.tags) { %>
-            <a href="<%= syzoj.utils.makeUrl(['problems', 'tag', tag.id]) %>" class="ui medium <%= tag.color %> label">
+            <%
+              let is_hidden = syzoj.config.hidden_problem_tag_colors.includes(tag.color);
+              if (is_hidden) has_hidden_tags = true;
+            %>
+            <a href="<%= syzoj.utils.makeUrl(['problems', 'tag', tag.id]) %>" class="ui medium <%= tag.color %> label<% if (is_hidden) { %> tag_hidden<% } %>">
               <%= tag.name %>
             </a>
+          <% } %>
+          <% if (has_hidden_tags) { %>
+            <a id="show_tag_button" class="ui mini basic button" href="javascript:;" style="margin-left: .5em;">显示隐藏标签</a>
           <% } %>
         </div>
       </div>
     </div>
-    <script>
-    $(function () {
-      $('#show_tag_button').click(function (e) {
-        e.preventDefault();
-        $('#show_tag_title_div').addClass('top');
-        $('#show_tag_title_div').addClass('top attached');
-        $('#show_tag_title_div').text('分类标签');
-        $('#show_tag_div').css('display', '');
-      })
-    });
-    </script>
+    <% if (has_hidden_tags) { %>
+      <style id="show_tag_style">
+        .tag_hidden {
+          display: none !important;
+        }
+      </style>
+      <script>
+      $(function () {
+        $('#show_tag_button').click(function (e) {
+          e.preventDefault();
+          $('#show_tag_style').html('');
+          $(this).remove();
+        })
+      });
+      </script>
+    <% } %>
   <% } %>
     <% let noSubmit = false; %>
     <%

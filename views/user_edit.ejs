@@ -130,7 +130,7 @@ function check() {
         show_error("输入的班级格式有误");
 		return false;
     }
-    else if (!username_re.test(username.val())) {
+    else if (!username_re.test(username.val()) && allowedManagePrivilege) {
         show_error("输入的用户名格式有误");
 		return false;
     }

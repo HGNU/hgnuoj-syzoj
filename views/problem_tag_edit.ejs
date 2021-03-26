@@ -13,55 +13,21 @@
             <i class="dropdown icon"></i>
             <div class="default text">选择颜色</div>
             <div class="menu">
-              <div class="item" data-value="red">
-                <div class="ui red empty circular label"></div>
-                Red
-              </div>
-              <div class="item" data-value="blue">
-                <div class="ui blue empty circular label"></div>
-                Blue
-              </div>
-              <div class="item" data-value="black">
-                <div class="ui black empty circular label"></div>
-                Black
-              </div>
-              <div class="item" data-value="purple">
-                <div class="ui purple empty circular label"></div>
-                Purple
-              </div>
-              <div class="item" data-value="orange">
-                <div class="ui orange empty circular label"></div>
-                Orange
-              </div>
-              <div class="item" data-value="yellow">
-                <div class="ui yellow empty circular label"></div>
-                Yellow
-              </div>
-              <div class="item" data-value="pink">
-                <div class="ui pink empty circular label"></div>
-                Pink
-              </div>
-              <div class="item" data-value="green">
-                <div class="ui green empty circular label"></div>
-                Green
-              </div>
-              <div class="item" data-value="olive">
-                <div class="ui olive empty circular label"></div>
-                Olive
-              </div>
-              <div class="item" data-value="teal">
-                <div class="ui teal empty circular label"></div>
-                Teal
-              </div>
-              <div class="item" data-value="violet">
-                <div class="ui violet empty circular label"></div>
-                Violet
-              </div>
+              <% for (let color of syzoj.config.problem_tag_colors) { %>
+                <div class="item" data-value="<%= color %>">
+                  <div class="ui <%= color %> empty circular label"></div>
+                  <%= color.split('').map((a, i) => i ? a : a.toUpperCase()).join('') %>
+                </div>
+              <% } %>
             </div>
           </div>
       </div>
       <div style="text-align: center; ">
-      <button type="submit" class="ui labeled submit icon button">
+      <% if (isNewTag) { %>
+      <a href="<%= syzoj.utils.makeUrl(['problems', 'tag', 'bulk_create']) %>" class="ui labeled icon button" style="margin-right: 2em;">
+        <i class="icon arrow right"></i> 批量添加标签
+      </a>
+      <% } %>
         <i class="icon edit"></i> 提交
       </button>
       </div>
