@@ -28,65 +28,7 @@
         </div>
       
       
-        <h4 class="ui top attached block header"><i class="ui calendar icon"></i>近期比赛</h4>
-        <div class="ui bottom attached <% if (!contests || !contests.length) { %>center aligned <% } %>segment">
-            <% if (!contests || !contests.length) { %>
-            还没有举行过任何比赛
-            <% } else { %>
-            <table class="ui very basic  aligned table">
-              <thead>
-                <tr>
-                  <th>比赛名称</th>
-                  <th>开始时间</th>
-                </tr>
-              </thead>
-              <tbody>
-                <%
-                for (let contest of contests) {
-                  let now = syzoj.utils.getCurrentDate();
-                  let tag = '';
-                %>
-                <tr>
-                  <% if (now < contest.start_time) { %>
-                    <% tag = '<span class="ui header"><div class="ui mini red label">未开始</div></span>' %>
-                  <% } else if (now >= contest.start_time && now < contest.end_time) { %>
-                    <% tag = '<span class="ui header"><div class="ui mini green label">进行中</div></span>' %>
-                  <% } else { %>
-                    <% tag = '<span class="ui header"><div class="ui mini grey label">已结束</div></span>' %>
-                  <% } %>
-                  <td><a href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><%= contest.title %> <%- tag %></a></td>
-                  <td><%= syzoj.utils.formatDate(contest.start_time) %></td>
-                </tr>
-                <% } %>
-              </tbody>
-            </table>
-            <% } %>
-          </div>
-      
-      
-      <h4 class="ui top attached block header"><i class="ui rss icon"></i>最近更新</h4>
-      <div class="ui bottom attached segment">
-	<table class="ui very basic aligned table">
-          <thead>
-            <tr>
-              <th width="70%">题目</th>
-              <th width="30%">更新时间</th>
-            </tr>
-	  </thead>
-	  <tbody>
-	    <%
-	    for (let problem of problems) {
-	    %>
-	    <tr>
-	      <td><a href="<%= syzoj.utils.makeUrl(['problem', problem.id]) %>"><%= problem.title %></a></td>
-	      <td><%= problem.time %></td>
-	    </tr>
-	    <% } %>
-	  </tbody>
-	</table>
-      </div>
-      
-      
+        
       
       <h4 class="ui top attached block header"><i class="ui signal icon"></i>排名</h4>
       <div class="ui bottom attached segment">
@@ -142,6 +84,61 @@
           </tbody>
         </table>
       </div>
+      
+      
+     
+      <h4 class="ui top attached block header"><i class="ui rss icon"></i>最近更新</h4>
+      <div class="ui bottom attached segment">
+	<table class="ui very basic aligned table">
+          <thead>
+            <tr>
+              <th width="70%">题目</th>
+              <th width="30%">更新时间</th>
+            </tr>
+	  </thead>
+	  <tbody>
+	    <%
+	    for (let problem of problems) {
+	    %>
+	    <tr>
+	      <td><a href="<%= syzoj.utils.makeUrl(['problem', problem.id]) %>"><%= problem.title %></a></td>
+	      <td><%= problem.time %></td>
+	    </tr>
+	    <% } %>
+	  </tbody>
+	</table>
+      </div>
+      
+      <h4 class="ui top attached block header"><i class="ui quote left icon"></i>感谢</h4>
+        <div class="ui bottom attached center aligned segment">
+        <table class="ui very basic center aligned table" style="table-layout: fixed; ">
+            <tbody>
+            <tr>
+            <td style="width: 15%">NAME</td>
+            <td style="width: 10%">￥</td>
+            <td>留言</td>
+            <td style="width: 15%">渠道</td>
+            </tr>
+            <tr>
+            <td><a href="/user/102" target="_blank" rel="noopener noreferrer">one</a></td>
+            <td>0.01</td>
+            <td></td>
+            <td>微信</td>
+            </tr>
+            <tr>
+            <td><a href="/user/367" target="_blank" rel="noopener noreferrer">**举</a></td>
+            <td>10.00</td>
+            <td>向优秀者学习</td>
+            <td>支付宝</td>
+            </tr>
+            
+            </tbody>
+            </table>
+        </div>    
+      
+      
+      
+       
       
       
       
@@ -200,29 +197,42 @@
 
         -->
         
-        <h4 class="ui top attached block header"><i class="ui quote left icon"></i>感谢</h4>
-        <div class="ui bottom attached center aligned segment">
-        <table class="ui very basic center aligned table" style="table-layout: fixed; ">
-<tbody>
-<tr>
-<td>NAME</td>
-<td>￥</td>
-<td>渠道</td>
-</tr>
-<tr>
-<td><a href="/user/102" target="_blank" rel="noopener noreferrer">one</a></td>
-<td>0.01</td>
-<td>微信</td>
-</tr>
-<tr>
-<td><a href="/user/367" target="_blank" rel="noopener noreferrer">**举</a></td>
-<td>10.00</td>
-<td>支付宝</td>
-</tr>
-
-</tbody>
-</table>
-        </div>    
+        <h4 class="ui top attached block header"><i class="ui calendar icon"></i>近期比赛</h4>
+        <div class="ui bottom attached <% if (!contests || !contests.length) { %>center aligned <% } %>segment">
+            <% if (!contests || !contests.length) { %>
+            还没有举行过任何比赛
+            <% } else { %>
+            <table class="ui very basic  aligned table">
+              <thead>
+                <tr>
+                  <th>比赛名称</th>
+                  <th>开始时间</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%
+                for (let contest of contests) {
+                  let now = syzoj.utils.getCurrentDate();
+                  let tag = '';
+                %>
+                <tr>
+                  <% if (now < contest.start_time) { %>
+                    <% tag = '<span class="ui header"><div class="ui mini red label">未开始</div></span>' %>
+                  <% } else if (now >= contest.start_time && now < contest.end_time) { %>
+                    <% tag = '<span class="ui header"><div class="ui mini green label">进行中</div></span>' %>
+                  <% } else { %>
+                    <% tag = '<span class="ui header"><div class="ui mini grey label">已结束</div></span>' %>
+                  <% } %>
+                  <td><a href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><%= contest.title %> <%- tag %></a></td>
+                  <td><%= syzoj.utils.formatDate(contest.start_time) %></td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+            <% } %>
+          </div>
+      
+      
         
 
       <% if (typeof links !== 'undefined' && links && links.length) { %>
