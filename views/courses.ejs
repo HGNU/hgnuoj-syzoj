@@ -12,7 +12,18 @@
          </div> 
         </form>
     <% } %>
-
+    
+    <!-- 专题强制填写姓名和班级 guke 0324 -->
+    <script>
+    
+    <% if (user && !user.is_admin && (!user.nickname || !user.nameplate)){ %>
+        alert("请补全姓名和班级！");
+        location.href = "<%= syzoj.utils.makeUrl(['user', user.id]) %>/edit";
+    <% } %>
+    
+    </script>
+    
+    
     <div class="ui four column stackable grid cards">
     
         <% for (let contest of contests) { %>

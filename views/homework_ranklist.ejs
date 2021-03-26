@@ -1,0 +1,52 @@
+<% this.title = homework.title + ' - 完成情况' %>
+<% include header %>
+<% include homework_header %>
+<style>
+.submit_time {
+  font-size: 0.8em;
+  margin-top: 5px;
+  color: #000;
+}
+</style>
+<table class="ui very basic center aligned table">
+    <thead>
+    <tr>
+        <th>用户名</th>
+        <% for (let problem of problems) { %>
+        <th>
+          <a href="<%= syzoj.utils.makeUrl(['problem', problem.id]) %>">
+            <%= syzoj.utils.removeTitleTag(problem.title) %>
+          </a>
+        </th>
+        <% } %>
+    </tr>
+    </thead>
+    <tbody>
+      <% for (let item of ranklist) { %>
+        <tr>
+          <td><a href="<%= syzoj.utils.makeUrl(['user', item[0].id]) %>"><span><%= item[0].username %></span></a><% if (item[0].nickname) { %><span class="user-tag bg-<%= syzoj.utils.makeUserColor(item[0].rating, item[0].is_admin) %>"><%- item[0].nickname %></span><% } %><span class="user-gray"><span class="user-nameplate"><%= item[0].nameplate %></span></span></td>
+          <%
+          let i = 1;
+          for (let problem of problems) {
+          %>
+            <td>
+              <% if (item[i] != null) { %>
+                <b>
+                  <% if (item[i] == 100) { %>
+                    <i class="check icon score_10"></i>
+                  <% } else { %>
+                    <span class="score score_<%= parseInt (item[i] / 10) %>"><%= item[i] %></span>
+                  <% } %>
+                </b>
+              <% } %>
+            </td>
+          <%
+            ++i;
+          }
+          %>
+        </tr>
+      <% } %> 
+    </tbody>
+</table>
+<% include homework_footer %>
+<% include footer %>

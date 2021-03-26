@@ -1,0 +1,68 @@
+<% this.title = homework.id ? '编辑作业' : '新建作业' %>
+<% include header %>
+<div class="padding">
+        <form action="<%= syzoj.utils.makeUrl(['homework', homework.id, 'edit']) %>" method="post">
+          <div class="ui form">
+              <div class="field">
+                <label>作业名称</label>
+                <input type="text" name="title" value="<%= homework.title %>">
+              </div>
+              <div class="field">
+                <label>作业描述</label>
+                <input type="text" name="subtitle" class="markdown-edit" value="<%= homework.subtitle %>">
+              </div>
+            <div class="field">
+                <label>题目列表</label>
+                <select class="ui fluid search dropdown" multiple="" id="search_problems" name="problems">
+                <% for (let problem of problems) { %>
+                <option value="<%= problem.id %>" selected>#<%= problem.id %>. <%= problem.title %></option>
+                <% } %>
+                </select>
+            </div>
+            <div class="inline fields">
+                <label>参与成员</label>
+                <% for (let item of items) { %>
+                    <div class="field">
+                          <div>
+                            <input style="vertical-align: middle;" type="checkbox" name="items" value="<%= item[0].id %>" <% if (item[1]) { %> checked="checked"<% } %>>
+                            <label for="condition_participate">
+                                <span><%= item[0].username %></span><span class="user-gray"><span class="user-nameplate"><%= item[0].nameplate %></span></span>
+                            </label>
+                          </div>
+                    </div>
+                <% } %>
+            </div>
+            <div class="field">
+                <label>作业公告</label>
+                <textarea rows="5" name="information" class="markdown-edit"><%= homework.information %></textarea>
+            </div>
+            <div class="inline field">
+              <label class="ui header">布置</label>
+              <div class="ui toggle checkbox">
+                <input type="checkbox"<% if (homework.is_public) { %> checked<% } %> name="is_public">
+                <label><span style="visibility: hidden; ">　</span></label>
+              </div>
+            </div>
+            <div style="text-align: center; "><button id="submit_button" type="submit" class="ui labeled icon blue button"><i class="ui edit icon"></i>提交</button></div>
+          </div>
+        </form>
+<script>
+$(function () {
+$('#search_problems')
+    .dropdown({
+      debug: true,
+      apiSettings: {
+        url: '/api/v2/search/problems/{query}',
+        onResponse: function (response) {
+          var a = $('#search_problems').val().map(function (x) { return parseInt(x) });
+          if (response.results) {
+            response.results = response.results.filter(function(x) {return !a.includes(parseInt(x.value));});
+          }
+          return response;
+        },
+        cache: false
+      }
+    });
+});
+</script>
+<% include footer %>

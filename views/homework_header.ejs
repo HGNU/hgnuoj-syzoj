@@ -1,0 +1,23 @@
+<style>
+.ui.label.pointing.below.left::before { left: 12%; }
+.ui.label.pointing.below.right::before { left: 88%; }
+.ui.label.pointing.below.left { margin-bottom: 0; }
+.ui.label.pointing.below.right { margin-bottom: 0; float: right; }
+#back_to_homework { display: none;  }
+</style>
+<div class="padding">
+  <h1><%= homework.title %></h1>
+  <div style="margin-bottom: 30px;"><%- homework.subtitle %></div>
+  <div class="ui grid" style="display: block;">
+    <div class="row">
+      <div class="column">
+        <div class="ui buttons">
+          <a class="ui small orange button" href="<%= syzoj.utils.makeUrl(['homework', homework.id]) %>">信息</a>
+          <a class="ui small yellow button" href="<%= syzoj.utils.makeUrl(['homework', homework.id, 'problem']) %>">题目</a>
+          <a class="ui small blue button" href="<%= syzoj.utils.makeUrl(['homework', homework.id, 'ranklist']) %>">完成情况</a>
+          <% if (isSupervisior) { %>
+            <a class="ui small button" href="<%= syzoj.utils.makeUrl(['homework', homework.id, 'edit']) %>">编辑作业</a>
+          <% } %>
+        </div>
+      </div>
+    </div>

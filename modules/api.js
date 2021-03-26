@@ -81,8 +81,16 @@ app.post('/api/sign_up', async (req, res) => {
     let nameplate_re = /^[\u4E00-\u9FA5]{2,3}[1-2][0-9]{3}$/;
     let nickname_re = /^[\u4E00-\u9FA5]{2,4}$/;
     
-    if (!nickname_re.test(req.body.nickname)) throw 2021;
-    if (!nameplate_re.test(req.body.nameplate)) throw 2020;
+    if (req.body.username.length === 8) { //老师注册逻辑 0322 guke
+        if (!nickname_re.test(req.body.nickname)) throw 2021;
+        if (req.body.nameplate !== "老师") throw 2022;
+    }
+    else {
+        if (!nickname_re.test(req.body.nickname)) throw 2021;
+        if (!nameplate_re.test(req.body.nameplate)) throw 2020;
+    }
+    
+    
     if (req.body.password === syzoj2_xxx_md5) throw 2007;
     if (!(req.body.email = req.body.email.trim())) throw 2006;
     if (!syzoj.utils.isValidUsername(req.body.username)) throw 2002;
@@ -255,6 +263,8 @@ app.get('/api/sign_up/:token', async (req, res) => {
     user = await User.create({
       username: obj.username,
       password: obj.password,
+      nameplate: obj.nameplate,
+      nickname: obj.nickname,
       email: obj.email,
       public_email: true
     });

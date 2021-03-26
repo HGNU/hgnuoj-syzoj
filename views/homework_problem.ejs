@@ -1,0 +1,45 @@
+<% this.title = homework.title + ' - 题目' %>
+<% include header %>
+<% include homework_header %>
+<div class="row">
+  <div class="column">
+      <table class="ui selectable celled table">
+        <thead>
+          <tr>
+            <% if (state.length) { %>
+              <th class="one wide" style="text-align: center">状态</th>
+            <% } %>
+            <th>题目</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%
+          let i = 0;
+          for (let problem of problems) {
+          %>
+          <tr>
+            <% if (state.length) { %>
+              <td class="center aligned" style="white-space: nowrap; ">
+              <% if (state[i] != null) { %>
+                <b>
+                  <% if (state[i] == 100) { %>
+                    <i class="check icon score_10"></i>
+                  <% } else { %>
+                    <span class="score score_<%= parseInt (state[i] / 10) %>"><%= state[i] %></span>
+                  <% } %>
+                </b>
+              <% } %>
+              </td>
+            <% } %>
+            <td><a href="<%= syzoj.utils.makeUrl(['problem', problem.id]) %>"><%= syzoj.utils.removeTitleTag(problem.title) %></a></td>
+          </tr>
+        <%
+          i++;
+        }
+        %>
+        </tbody>
+    </table>
+  </div>
+</div>
+<% include homework_footer %>
+<% include footer %>

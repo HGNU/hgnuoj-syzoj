@@ -1,13 +1,10 @@
 <% this.title = '修改资料'; %>
 <% include header %>
 <div class="padding">
-    <div class="ui <% if (error_info === '') { %>success<% } else { %>error<% } %> message" id="error" <% if (error_info === null) { %>hidden<% } %>>
-      <% if (error_info !== null) {
-          if (error_info === '') error_info = '修改成功。';
-      %>
-      	<p id="error_info"><%= error_info %></p>
-      <% } %>
-    </div>
+<!-- guke 0323 -->
+  <div class="ui error message" id="error" data-am-alert hidden>
+    <p id="error_info"></p>
+  </div>
 		<form id="form" action="<%= syzoj.utils.makeUrl(['user', edited_user.id, 'edit']) %>" method="post" onsubmit="return check()">
       <div class="ui form">
       <div class="field">
@@ -17,7 +14,7 @@
 	    	    <!-- nameplate 班级 guke 0320 -->
 	    <div class="field">
 	    	<label for="nameplate">班级</label>
-	    	<input type="text" placeholder="例：计科2001，软工1801，计算机2006" id="nameplate" name="nameplate" value="<%= edited_user.nameplate %>">
+	    	<input type="text" placeholder="例：计科2001，计算机2006" id="nameplate" name="nameplate" value="<%= edited_user.nameplate %>">
 	    </div>
 	    	    <!-- nickname 班级 guke 0321 -->
 	    <div class="field">
@@ -110,42 +107,45 @@ function make_md5(tag) {
 		tag.val(md5(tag.val() + "syzoj2_xxx"));
 	}
 }
-
-
+<!-- guke 0323 -->
+function show_error(error) {
+    $("#error_info").text(error);
+    $("#error").show();
+}
+<!-- guke 0323 -->
 function check() {
 
     var nameplate_re = /^[\u4E00-\u9FA5]{2,3}[1-2][0-9]{3}$/;
     var nickname_re = /^[\u4E00-\u9FA5]{2,4}$/;
-    nameplate = $('#nameplate');
-    nickname = $('#nickname');
-    if (!nameplate_re.test(nameplate.val())) {
-        $("#error").removeClass("success");
-		$("#error").removeClass("error");
-		$("#error").addClass("error");
-		$("#error_info").html("输入的班级格式有误。");
-		$("#error").show();
-		return false;
-    }
-    if (!nickname_re.test(nickname.val())) {
-        $("#error").removeClass("success");
-		$("#error").removeClass("error");
-		$("#error").addClass("error");
-		$("#error_info").html("输入的姓名格式有误。");
-		$("#error").show();
-		return false;
-    }
-
-	old_password = $("#old_password");
+    var username_re = /^2\d{7}$|2\d{12}$/;
+    nameplate = $("#nameplate");
+    nickname = $("#nickname");
+    username = $("#username");
+    
+    old_password = $("#old_password");
 	password1 = $("#password1");
 	password2 = $("#password2");
-	if ($("#old_password").val() && password1.val() != password2.val()) {
-		$("#error").removeClass("success");
-		$("#error").removeClass("error");
-		$("#error").addClass("error");
-		$("#error_info").html("两次输入的密码不一致。");
-		$("#error").show();
+    
+    if (!nameplate_re.test(nameplate.val()) && username.val().length != 8) {
+        show_error("输入的班级格式有误");
+		return false;
+    }
+    else if (!username_re.test(username.val()) && allowedManagePrivilege) {
+        show_error("输入的用户名格式有误");
+		return false;
+    }
+    else if (!nickname_re.test(nickname.val())) {
+        show_error("输入的姓名格式有误");
+		return false;
+    }
+	else if ($("#old_password").val() && password1.val() != password2.val()) {
+		show_error("两次输入的密码不一致");
 		return false;
 	}
+	else {
+        alert("修改成功！");
+	}
+	
 	make_md5(old_password);
 	make_md5(password1);
 	make_md5(password2);
