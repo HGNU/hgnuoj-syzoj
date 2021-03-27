@@ -22,7 +22,6 @@
               <% } %>
             </label>
             <input type="text" id="id" name="id" placeholder="<% if (problem.new) { %>留空则自动延伸<% } else { %>留空则不修改<% } %>" value="<%= problem.id ? problem.id : '' %>">
-
             <div style="margin-top: 15px; "></div>
           <% } %>
           <label for="title">题目名称</label>
@@ -34,7 +33,7 @@
           <textarea class="markdown-edit" rows="10" id="input" name="input_format"><%= problem.input_format %></textarea>
           <label style="margin-top: 15px; " for="output_format">输出格式</label>
           <textarea class="markdown-edit" rows="10" id="output" name="output_format"><%= problem.output_format %></textarea>
-          <label style="margin-top: 15px; ">样例</label>
+          <label style="margin-top: 15px; ">样例 <a id="btn-sample-quickedit" href="javascript:;" style="margin-left: .5em;">快速编辑 (beta)</a></label>
           <textarea class="markdown-edit" rows="15" id="example" name="example"><%= problem.example %></textarea>
           <label style="margin-top: 15px; ">数据范围与提示</label>
           <textarea class="markdown-edit" rows="10" id="hint" name="limit_and_hint"><%= problem.limit_and_hint %></textarea>
@@ -73,7 +72,462 @@
       </div>
       <% } %>
     </form>
+
+    <div id="vue-sample-quickedit">
+      <div ref="modal" class="ui large modal">
+        <div class="header">编辑样例 - {{ modalSubtitle }}</span>
+        </div>
+        <div class="ui form content">
+          <div v-show="!showPreview">
+            <template v-if="currentSample.type == 'brief'">
+              <div class="ui field">
+                <label>样例内容</label>
+                <textarea class="markdown-edit" v-model="currentSample.content" rows="16"></textarea>
+              </div>
+            </template>
+            <template v-if="currentSample.type == 'default'">
+              <div class="ui two fields">
+                <div class="ui field">
+                  <label>样例输入</label>
+                  <textarea class="markdown-edit" v-model="currentSample.input" :rows="dataBoxSize"></textarea>
+                </div>
+                <div class="ui field">
+                  <label>样例输出</label>
+                  <textarea class="markdown-edit" v-model="currentSample.output" :rows="dataBoxSize"></textarea>
+                </div>
+              </div>
+              <div class="ui field">
+                <label>
+                  样例解释
+                  <a href="javascript:;" tabindex="-1" style="margin-left: .25em; outline: none;" @click="toggleCommentBox">
+                    {{ showCommentBox ? '隐藏' : '显示' }}
+                  </a>
+                  <a href="javascript:;" tabindex="-1" style="margin-left: .25em; outline: none;" @click="toggleCommentPreview" v-show="showCommentBox">
+                    {{ showCommentPreview ? '返回' : '预览' }}
+                  </a>
+                </label>
+                <textarea class="markdown-edit" rows="7" v-model="currentSample.comment" v-show="showCommentBox && !showCommentPreview"></textarea>
+                <div
+                  class="ui segment font-content"
+                  v-if="showCommentBox && showCommentPreview"
+                  v-html="commentPreview"
+                  style="min-height: 10em; max-height: 20em; overflow-y: auto;"></div>
+              </div>
+            </template>
+          </div>
+          <div v-if="previewMode == 'html'" v-html="previewHTML" style="height: 32em; overflow-y: auto;"></div>
+          <div v-if="previewMode == 'markdown'" class="ui field">
+            <textarea class="markdown-edit" rows="24" v-model="previewMarkdown" readonly></textarea>
+          </div>
+        </div>
+        <div class="actions">
+          <div style="margin-left: .5em; float: left;">
+            <div v-show="!showPreview">
+              <div class="ui blue buttons">
+                <a class="ui icon button" :title="isFirst ? '在最前添加' : '上一个'" @click="navigate(-1)">
+                  <i class="chevron left icon"></i>
+                </a>
+                <a class="ui icon button">
+                  {{ userSampleIndex }} / {{ samples.length }}
+                </a>
+                <a class="ui icon button" :title="isLast ? '在最后添加' : '下一个'" @click="navigate(+1)">
+                  <i class="chevron right icon"></i>
+                </a>
+              </div>
+              <div style="display: inline-block; margin-left: 1em;">
+                <div class="ui teal buttons" style="margin-left: 1em;">
+                  <a class="ui icon button" :class="{ disabled: isFirst }" title="前移" @click="moveSample(-1)">
+                    <i class="angle double left icon"></i>
+                  </a>
+                  <a class="ui icon button" :class="{ disabled: isLast }" title="后移" @click="moveSample(+1)">
+                    <i class="angle double right icon"></i>
+                  </a>
+                </div>
+              </div>
+              <div style="display: inline-block; margin-left: 1em;">
+                <a class="ui icon green button" title="添加" @click="addSample(currentSampleIndex + 1)">
+                  <i class="plus icon"></i>
+                </a>
+                <a class="ui icon red button" title="删除" :class="{ disabled: !canRemove }" @click="removeSample(currentSampleIndex)">
+                  <i class="remove icon"></i>
+                </a>
+              </div>
+              <div style="display: inline-block; margin-left: 1em;">
+                <a class="ui icon circular button" :class="{ disabled: !canUndo }" :title="undoComment" @click="undo">
+                  <i class="undo icon"></i>
+                </a>
+                <a class="ui icon circular button" title="切换样例类型" @click="toggleSampleType">
+                  <i class="exchange icon"></i>
+                </a>
+              </div>
+              <div style="display: inline-block; margin-left: 1em;">
+                <span v-if="numberEmptySamples">空样例：{{ numberEmptySamples }} 个</span>
+              </div>
+            </div>
+            <div v-show="showPreview">
+              <a class="ui button" @click="togglePreviewMode">
+                <template v-if="previewMode == 'html'">
+                  <i class="code icon"></i> Markdown
+                </template>
+                <template v-if="previewMode == 'markdown'">
+                  <i class="eye icon"></i> HTML
+                </template>
+              </a>
+            </div>
+          </div>
+          <a class="ui button" @click="togglePreview">{{ showPreview ? "返回" : "预览" }}</a>
+          <a class="ui negative button">取消</a>
+          <a class="ui positive button" @click="confirm">确定</a>
+        </div>
+      </div>
+    </div>
 </div>
+
+<script src="<%- lib('vue/2.5.21/vue.min.js') %>"></script>
+
+<script type="text/javascript">
+  function copyObject(o) {
+    return JSON.parse(JSON.stringify(o));
+  }
+  function ensureEndNewline(str) {
+    if (str.endsWith('\n')) return str;
+    return str + '\n';
+  }
+  let sampleParser = {
+    reHeaderMarkdown: [/^__(.+)__$/, /^#{1,6}(.+)$/, /^\*\*(.+)\*\*$/],
+    sampleTypeKeys: {
+      'brief': ['content'],
+      'default': ['input', 'output', 'comment']
+    },
+    parseHeader(str) {
+      for (let re of this.reHeaderMarkdown) {
+        let tmp = str.match(re);
+        if (tmp) {
+          let headerName = tmp[1].trim();
+          if (!headerName.includes('样例') || headerName.length > 10 || /，。/.test(headerName)) return null;
+          let types = [];
+          for (let [type, text] of [['input', '输入'], ['output', '输出'], ['comment', '解释']]) {
+            if (headerName.includes(text)) types.push(type);
+          }
+          if (types.length > 1) throw new Error("multiple types");
+          if (types.length == 0) types.push('content');
+          let indexes = headerName.match(/\d+/g) || [0];
+          if (indexes.length > 1) throw new Error("multiple indexes");
+          return {
+            type: types[0],
+            index: indexes[0]
+          };
+        }
+      }
+      return null;
+    },
+    checkSample(sample) {
+      let sampleType = null;
+      for (let type in this.sampleTypeKeys) {
+        for (let key of this.sampleTypeKeys[type]) {
+          if (key in sample) {
+            if (sampleType) throw new Error('multiple types of sample');
+            sampleType = type;
+            break;
+          }
+        }
+      }
+      if (!sampleType) throw new Error('unknown sample type');
+      sample.type = sampleType;
+      for (let key of this.sampleTypeKeys[sampleType]) {
+        if (!(key in sample)) sample[key] = '';
+      }
+    },
+    createSample(type) {
+      let sample = { type: type };
+      for (let key of this.sampleTypeKeys[type]) {
+        sample[key] = '';
+      }
+      return sample;
+    },
+    parseSamples(source) {
+      let samples = [], header = null, content = null, unused = [];
+      function saveSection() {
+        if (!header) return;
+        if (!samples[header.index]) {
+          samples[header.index] = {};
+        }
+        let sample = samples[header.index];
+        if (header.type in sample) throw new Error('duplicate section');
+        while (content.length && !content[0].trim()) content.shift();
+        while (content.length && !content[content.length - 1].trim()) content.pop();
+        if (['input', 'output'].includes(header.type)) {
+          if (content.length > 1 && content[0].trim().startsWith('```') && content[content.length - 1].trim() == '```') {
+            content = content.slice(1, -1);
+          } else {
+            throw new Error('sample malformed');
+          }
+        }
+        let str = content.join('\n');
+        if (str.trim()) str += '\n';
+        sample[header.type] = str;
+        header = null;
+        content = null;
+      }
+      for (let raw of source.split('\n')) {
+        let str = raw.trim();
+        let headerInfo = this.parseHeader(str);
+        if (headerInfo) {
+          saveSection();
+          header = headerInfo;
+          content = [];
+          continue;
+        }
+        if (header) {
+          content.push(raw);
+          continue;
+        }
+        if (str || unused.length) unused.push(raw);
+      }
+      saveSection();
+      samples = samples.filter(a => a);
+      samples.forEach(sample => this.checkSample(sample));
+      while (unused.length && !unused[unused.length - 1]) unused.pop();
+      return {
+        samples: samples,
+        extra: unused.join('\n')
+      };
+    }
+  };
+  let appSampleQuickEdit = new Vue({
+    el: '#vue-sample-quickedit',
+    data: {
+      rawEditor: $('#example'),
+      originalContent: '',
+      samples: [],
+      currentSampleIndex: -1,
+      showCommentBox: true,
+      showCommentPreview: false,
+      commentPreview: '',
+      showPreview: false,
+      previewMode: 'none',
+      previewHTML: '',
+      previewMarkdown: '',
+      history: []
+    },
+    watch: {
+      currentSample() {
+        this.updateCommentPreview();
+      }
+    },
+    computed: {
+      modalSubtitle() {
+        if (this.showPreview) {
+          return '预览';
+        } else {
+          return '样例 ' + this.userSampleIndex;
+        }
+      },
+      undoComment() {
+        if (!this.history.length) return '无法撤销';
+        return '撤销 ' + this.history[this.history.length - 1].comment;
+      },
+      currentSample() {
+        if (this.currentSampleIndex == -1) return { type: 'none' };
+        return this.samples[this.currentSampleIndex];
+      },
+      userSampleIndex() {
+        return this.currentSampleIndex + 1;
+      },
+      numberEmptySamples() {
+        return this.samples.filter(this.isSampleEmpty).length;
+      },
+      dataBoxSize() {
+        if (this.showCommentBox) return this.showCommentPreview ? 6 : 12;
+        return 18;
+      },
+      canUndo() {
+        return this.history.length > 0;
+      },
+      canRemove() {
+        return this.samples.length > 1 || this.numberEmptySamples == 0;
+      },
+      isFirst() {
+        return this.currentSampleIndex == 0;
+      },
+      isLast() {
+        return this.currentSampleIndex == this.samples.length - 1;
+      },
+      isAny() {
+        return this.samples.length > 0;
+      }
+    },
+    methods: {
+      isSampleEmpty(sample) {
+        switch (sample.type) {
+          case 'brief':
+            return !sample.content.trim();
+          case 'default':
+            return !sample.input && !sample.output && !sample.comment.trim();
+          default:
+            return true;
+        }
+      },
+      fromHistory(o) {
+        this.currentSampleIndex = -1;
+        this.samples = o.samples;
+        this.currentSampleIndex = o.currentSampleIndex;
+      },
+      toHistory() {
+        return {
+          samples: copyObject(this.samples),
+          currentSampleIndex: this.currentSampleIndex
+        };
+      },
+      addHistory(comment) {
+        this.history.push({
+          state: this.toHistory(),
+          comment: comment
+        });
+      },
+      undo() {
+        if (this.canUndo) {
+          this.fromHistory(this.history.pop().state);
+        }
+      },
+      addSample(index, type = 'default') {
+        if (this.samples.length) this.addHistory('添加样例');
+        let sample = sampleParser.createSample(type);
+        this.samples.splice(index, 0, sample);
+        this.currentSampleIndex = index;
+      },
+      removeSample(index) {
+        if (!this.canRemove) return;
+        this.addHistory('删除样例');
+        this.currentSampleIndex = -1;
+        this.samples.splice(index, 1);
+        if (!this.isAny) this.addSample(0);
+        this.currentSampleIndex = Math.min(this.samples.length - 1, index);
+      },
+      moveSample(delta) {
+        if ((delta < 0 && this.isFirst) || (delta > 0 && this.isLast)) return;
+        this.addHistory(delta < 0 ? '前移' : '后移');
+        let sourceIndex = this.currentSampleIndex;
+        let targetIndex = sourceIndex + delta;
+        this.samples.splice(sourceIndex, 1, this.samples.splice(targetIndex, 1, this.currentSample)[0]);
+        this.currentSampleIndex = targetIndex;
+      },
+      toggleSampleType() {
+        this.addHistory('切换样例类型');
+        let oldType = this.currentSample.type;
+        let newType = oldType == 'default' ? 'brief' : 'default';
+        this.samples.splice(this.currentSampleIndex, 1, sampleParser.createSample(newType));
+      },
+      navigate(delta) {
+        if (delta < 0 && this.isFirst) {
+          this.addSample(0);
+        } else if (delta > 0 && this.isLast) {
+          this.addSample(this.samples.length);
+        } else {
+          this.currentSampleIndex += delta;
+        }
+      },
+      export() {
+        const reEndNewline = /\n$/;
+        let result = [];
+        if (this.originalContent) result.push(this.originalContent);
+        let index = 0;
+        for (let sample of this.samples) {
+          ++index;
+          let indexStr = this.samples.length == 1 ? '' : ' ' + index;
+          switch (sample.type) {
+            case 'brief':
+              result.push(`__样例${indexStr}__`);
+              result.push(sample.content.trim());
+              break;
+            case 'default':
+              result.push(`__样例输入${indexStr}__`);
+              result.push('```plain\n' + ensureEndNewline(sample.input) + '```');
+              result.push(`__样例输出${indexStr}__`);
+              result.push('```plain\n' + ensureEndNewline(sample.output) + '```');
+              if (sample.comment.trim()) {
+                result.push(`__样例解释${indexStr}__`);
+                result.push(sample.comment.trim());
+              }
+              break;
+          }
+        }
+        return result.join('\n\n') + '\n';
+      },
+      confirm() {
+        this.rawEditor.val(this.export());
+      },
+      showModal() {
+        let text = this.rawEditor.val();
+        try {
+          let result = sampleParser.parseSamples(text);
+          if (!result.samples || !result.samples.length) throw new Error("no content");
+          this.originalContent = result.extra;
+          this.samples = result.samples;
+          this.currentSampleIndex = 0;
+        } catch (err) {
+          console.log(err);
+          this.originalContent = text;
+          this.currentSampleIndex = -1;
+          this.samples = [];
+          this.addSample(0);
+        }
+        this.history = [];
+        this.showPreview = false;
+        this.previewMode = 'none';
+        this.showCommentBox = true;
+        this.showCommentPreview = false;
+        $(this.$refs.modal).modal('setting', 'closable', false).modal('show');
+        this.refreshModal();
+      },
+      refreshModal() {
+        setTimeout(() => {
+          $(this.$refs.modal).modal('refresh');
+        }, 0);
+      },
+      toggleCommentBox() {
+        this.showCommentBox = !this.showCommentBox;
+        this.updateCommentPreview();
+        this.refreshModal();
+      },
+      updateCommentPreview() {
+        if (!this.showCommentBox || !this.showCommentPreview || this.currentSample.type != 'default') return;
+        this.commentPreview = '加载中...';
+        $.post('/api/markdown', { s: this.currentSample.comment }, (s) => {
+          this.commentPreview = s;
+          this.refreshModal();
+        });
+      },
+      toggleCommentPreview() {
+        this.showCommentPreview = !this.showCommentPreview;
+        this.updateCommentPreview();
+        this.refreshModal();
+      },
+      togglePreview() {
+        this.showPreview = !this.showPreview;
+        if (this.showPreview) {
+          this.previewMode = 'html';
+          this.previewMarkdown = this.export();
+          this.previewHTML = '加载中...';
+          $.post('/api/markdown', { s: this.previewMarkdown }, (s) => {
+            this.previewHTML = s;
+            this.refreshModal();
+          });
+        } else {
+          this.previewMode = 'none';
+        }
+      },
+      togglePreviewMode() {
+        if (this.showPreview) {
+          this.previewMode = this.previewMode == 'html' ? 'markdown' : 'html';
+          this.refreshModal();
+        }
+      }
+    }
+  });
+  $('#btn-sample-quickedit').click(appSampleQuickEdit.showModal);
+</script>
+
 <script type="text/javascript">
 $(function () {
     function render(output, input) {
@@ -108,7 +562,8 @@ $(function () {
           return response;
         },
         cache: false
-      }
+      },
+      saveRemoteData: false
     });
 });
 </script>
