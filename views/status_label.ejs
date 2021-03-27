@@ -1,25 +1,25 @@
 <script>
 const iconList = {
-  'Accepted': 'checkmark',
-  'Wrong Answer': 'remove',
-  'Runtime Error': 'bomb',
-  'Invalid Interaction': 'ban',
-  'Time Limit Exceeded': 'clock',
-  'Memory Limit Exceeded': 'microchip',
-  'Output Limit Exceeded': 'print',
-  'File Error': 'file outline',
-  'Waiting': 'hourglass half',
-  'Running': 'spinner',
-  'Compiling': 'spinner',
-  'Judging': 'spinner',
-  'Compile Error': 'code',
-  'Submitted': 'checkmark', // NOI contests
-  'System Error': 'server',
-  'No Testdata': 'folder open outline',
-  'Partially Correct': 'minus',
-  'Judgement Failed': 'server',
-  'Skipped': 'fast forward',
-  'Unknown': 'question circle'
+  'Accepted': 'fa-check',
+  'Wrong Answer': 'fa-times',
+  'Runtime Error': 'fa-bomb',
+  'Invalid Interaction': 'fa-ban',
+  'Time Limit Exceeded': 'fa-clock',
+  'Memory Limit Exceeded': 'fa-microchip',
+  'Output Limit Exceeded': 'fa-print',
+  'File Error': 'fa-file',
+  'Waiting': 'fa-hourglass-half',
+  'Running': 'fa-spinner',
+  'Compiling': 'fa-spinner',
+  'Judging': 'fa-spinner',
+  'Compile Error': 'fa-code',
+  'Submitted': 'fa-check', // NOI contests
+  'System Error': 'fa-server',
+  'No Testdata': 'fa-folder-open',
+  'Partially Correct': 'fa-minus',
+  'Judgement Failed': 'fa-server',
+  'Skipped': 'fa-fast-forward',
+  'Unknown': 'fa-question-circle'
 };
 Vue.component('status-label', {
   template: '#statusIconTemplate',
@@ -30,7 +30,7 @@ Vue.component('status-label', {
       if (x in iconList) {
         return iconList[x];
       } else {
-        return 'question circle';
+        return 'question-circle';
       }
     },
     colorClass() {
@@ -52,7 +52,7 @@ Vue.component('status-label', {
 </script>
 <script type="text/x-template" id="statusIconTemplate">
   <span class="status" :class="colorClass">
-    <i class="icon" :class="icon"></i>
+    <i class="fad fa-fw" :class="icon"></i>
     <template v-if="['Running', 'Waiting'].includes(displayStatus) && getProgress && getProgress.total">
       <span style="text-align: left; display: inline-block; width: 58px; ">{{ displayStatus }}</span>{{getProgress.finished }}/{{ getProgress.total }}
     </template>

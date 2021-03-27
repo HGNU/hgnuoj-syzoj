@@ -1,11 +1,12 @@
 <% this.title = '首页'; %>
 <% include header %>
+<% include util %>
 <div class="">  <!-- 此处删除了padding类 -->
   <div class="ui two column stackable grid">  <!-- 原来类为：ui three column grid -->
     <div class="eleven wide column"> <!-- 原来类为：eleven wide column -->
       
       
-        <h4 class="ui top attached block header"><i class="ui info icon"></i>公告</h4>
+        <h4 class="ui top attached block header"><i class="fad fa-info"></i>公告</h4>
         <div class="ui bottom attached segment">
             <table class="ui very basic table">
             <!--
@@ -30,7 +31,7 @@
       
         
       
-      <h4 class="ui top attached block header"><i class="ui signal icon"></i>排名</h4>
+      <h4 class="ui top attached block header"><i class="fad fa-signal-3"></i>排名</h4>
       <div class="ui bottom attached segment">
         <table class="ui very basic center aligned table" style="table-layout: fixed; ">
           <thead>
@@ -87,7 +88,7 @@
       
       
      
-      <h4 class="ui top attached block header"><i class="ui rss icon"></i>最近更新</h4>
+      <h4 class="ui top attached block header"><i class="fad fa-rss"></i>最近更新</h4>
       <div class="ui bottom attached segment">
 	<table class="ui very basic aligned table">
           <thead>
@@ -109,7 +110,7 @@
 	</table>
       </div>
       
-      <h4 class="ui top attached block header"><i class="ui quote left icon"></i>感谢</h4>
+      <h4 class="ui top attached block header"><i class="fad fa-quote-left"></i>感谢</h4>
         <div class="ui bottom attached center aligned segment">
         <table class="ui very basic center aligned table" style="table-layout: fixed; ">
             <tbody>
@@ -148,7 +149,7 @@
     <div class="five wide column">  <!-- 原来类为：right floated five wide column -->
         
       
-        <h4 class="ui top attached block header"><i class="ui quote left icon"></i>捐赠</h4>
+        <h4 class="ui top attached block header"><i class="fad fa-quote-left"></i>捐赠</h4>
         <div class="ui bottom attached center aligned segment">
           本OJ运营不易，搭建、维护与开发纯属用爱发电，如果本OJ在某些方面有帮助到您，希望您能对开发组给予一定的支持
           
@@ -156,13 +157,13 @@
           <b>支持微信、支付宝、QQ</b>
         </div>       
       
-       <h4 class="ui top attached block header"><i class="ui quote left icon"></i>寻求帮助？</h4>
+       <h4 class="ui top attached block header"><i class="fad fa-quote-left"></i>寻求帮助？</h4>
         <div class="ui bottom attached center aligned segment">
           <img src="https://acm-m.eas1.cn/images/2021/03/11/Snipaste_2021-03-11_14-54-22.png" alt="扫码加入QQ群" border="0" />
           <span>或者 <a href="https://support.qq.com/products/313501" target="_blank">在线反馈</a></span>
         </div>       
 
-       <h4 class="ui top attached block header"><i class="ui quote left icon"></i>一言（ヒトコト）</h4>
+       <h4 class="ui top attached block header"><i class="fad fa-quote-left"></i>一言（ヒトコト）</h4>
         <div class="ui bottom attached center aligned segment">
           <div class="ui active centered inline loader" id="hitokoto-loader"></div>
           <script>
@@ -197,7 +198,7 @@
 
         -->
         
-        <h4 class="ui top attached block header"><i class="ui calendar icon"></i>近期比赛</h4>
+        <h4 class="ui top attached block header"><i class="fad fa-calendar"></i>近期比赛</h4>
         <div class="ui bottom attached <% if (!contests || !contests.length) { %>center aligned <% } %>segment">
             <% if (!contests || !contests.length) { %>
             还没有举行过任何比赛
@@ -236,7 +237,7 @@
         
 
       <% if (typeof links !== 'undefined' && links && links.length) { %>
-      <h4 class="ui top attached block header font-content"><i class="ui linkify icon"></i>友情链接</h4>
+      <h4 class="ui top attached block header font-content"><i class="fad fa-link"></i>友情链接</h4>
       <div class="ui bottom attached segment">
         <ul style="margin: 0; padding-left: 20px; ">
           <% for (let link of links) { %>

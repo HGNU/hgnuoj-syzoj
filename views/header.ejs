@@ -2,6 +2,17 @@
 <!DOCTYPE html>
 <html lang="zh-CN" style="position: fixed; width: 100%; overflow: hidden; ">
 <head>
+    <style>
+        .ui.menu .item>i.fal {
+        opacity: .9;
+        float: none;
+        margin: 0 .35714286em 0 0;
+    }
+        .ui.header .icon:only-child, .fad{
+        margin-right: .75rem;
+        padding: 0;
+    }
+    </style>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=1200">
@@ -13,6 +24,7 @@
     <!-- <link href="<%- selfLib('style.css') %>?20181212" rel="stylesheet">-->
     <link href="<%- lib('morris.js/0.5.1/morris.css') %>" rel="stylesheet">
     <link href="//acm-m.eas1.cn/images/2021/03/10/image.png" rel="shortcut icon">
+    <link href="https://cdn.jsdelivr.net/gh/HGNU/fontawesome-cdn@master/css/all.min.css", rel="stylesheet">
     <% if (useLocalLibs || !syzoj.config.google_fonts || !['like-google-fonts', 'like-local', 'built-in'].includes(syzoj.config.google_fonts.type)) { %>
       <link href="<%- syzoj.utils.makeUrl(['google-fonts', 'fira-mono.css']) %>" rel="stylesheet">
       <link href="<%- syzoj.utils.makeUrl(['google-fonts', 'lato.css']) %>" rel="stylesheet">
@@ -83,7 +95,7 @@
     
 
 </head>
-<body style="position: relative; margin-top: 49px; height: calc(100% - 49px); overflow-y: overlay; background:#f7f7f7;">
+<body style="position: relative; margin-top: 49px; height: calc(100% - 49px); overflow-y: overlay;">
     <div class="ui fixed borderless menu" style="position: fixed; height: 49px; ">
         <div class="ui container">
         <style>
@@ -115,18 +127,18 @@
             <% } else { %>
             <a class="header item" href="/"><span style="font-family: 'Exo 2'; font-size: 1.5em; font-weight: 600; "><%= syzoj.config.title %></span></a>
             <% } %>
-            <a class="zsy-pc item<% if (active === '') { %> active<% } %>" href="/"><i class="home icon"></i> 首页</a>
-            <a class="zsy-pc item<% if (active.startsWith('problem')) { %> active<% } %>" href="/problems"><i class="list icon"></i> 题库</a>
-            <a class="zsy-pc item<% if (active.startsWith('course')) { %> active<% } %>" href="/courses"><i class="list alternate outline icon"></i> 专题</a>
-            <a class="zsy-pc item<% if (active.startsWith('contest')) { %> active<% } %>" href="/contests"><i class="calendar icon"></i> 比赛</a>
-            <a class="zsy-pc item<% if (active.startsWith('submission')) { %> active<% } %>" href="/submissions"><i class="tasks icon"></i> 评测</a>
-            <a class="zsy-pc item<% if (active.startsWith('ranklist')) { %> active<% } %>" href="/ranklist"><i class="signal icon"></i> 排名</a>
-            <a class="zsy-pc item<% if (active.startsWith('discussion') || active.startsWith('article')) { %> active<% } %>" href="/discussion/global"><i class="comments icon"></i> 公告</a>
-            <a class="zsy-pc item<% if (active.startsWith('about')) { %> active<% } %>" href="/about"><i class="help circle icon"></i> 关于</a>
+            <a class="zsy-pc item<% if (active === '') { %> active<% } %>" href="/"><i class="fal fa-home"></i> 首页</a>
+            <a class="zsy-pc item<% if (active.startsWith('problem')) { %> active<% } %>" href="/problems"><i class="fal fa-list"></i> 题库</a>
+            <a class="zsy-pc item<% if (active.startsWith('course')) { %> active<% } %>" href="/courses"><i class="fal fa-chart-bar"></i> 专题</a>
+            <a class="zsy-pc item<% if (active.startsWith('contest')) { %> active<% } %>" href="/contests"><i class="fad fa-calendar"></i> 比赛</a>
+            <a class="zsy-pc item<% if (active.startsWith('submission')) { %> active<% } %>" href="/submissions"><i class="fal fa-tasks"></i> 评测</a>
+            <a class="zsy-pc item<% if (active.startsWith('ranklist')) { %> active<% } %>" href="/ranklist"><i class="fad fa-signal-3"></i> 排名</a>
+            <a class="zsy-pc item<% if (active.startsWith('discussion') || active.startsWith('article')) { %> active<% } %>" href="/discussion/global"><i class="fal fa-comments"></i> 公告</a>
+            <a class="zsy-pc item<% if (active.startsWith('about')) { %> active<% } %>" href="/about"><i class="fal fa-question-circle"></i> 关于</a>
             <!-- <a class="item<% if (active.startsWith('homework')) { %> active<% } %>" href="/homeworks"><i class="book icon"></i> 作业</a> -->
             
             <% if (typeof contest !== 'undefined' && contest && contest.id) { %>
-              <a id="back_to_contest" class="zsy-pc item" href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><i class="arrow left icon"></i> 返回比赛</a>
+              <a id="back_to_contest" class="zsy-pc item" href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><i class="fal fa-arrow-left"></i> 返回比赛</a>
             <% } %>
             <div class="zsy-pc item" id="tp-weather-widget"></div>
             

@@ -140,7 +140,7 @@ if (typeof tags !== 'undefined') tagIDs = tags.map(x => x.id);
                 <% if (problem.judge_state) { %>
                   <a href="<%= syzoj.utils.makeUrl(['submission', problem.judge_state.id]) %>">
                     <span class="status <%= problem.judge_state.status.toLowerCase().split(' ').join('_') %>">
-                      <i class="<%= icon[problem.judge_state.status] || 'remove' %> icon"></i>
+                      <i class="fad <%= icon[problem.judge_state.status] || 'times' %> fa-fw"></i>
                     </span>
                   </a>
                 <% } %>

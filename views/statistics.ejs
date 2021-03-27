@@ -76,7 +76,7 @@ function getColorOfScore(score) {
               <td><a href="<%= syzoj.utils.makeUrl(['submission', judge.id]) %>">
                   <b>
                   <span class="status <%= getStatusMeta(judge.status).toLowerCase().split(' ').join('_') %>">
-                  <i class="<%= icon[getStatusMeta(judge.status)] || 'remove' %> icon"></i>
+                  <i class="fad <%= icon[getStatusMeta(judge.status)] || 'fa-times' %>"></i>
                   <%= judge.status %>
                   </span>
                   </b>
