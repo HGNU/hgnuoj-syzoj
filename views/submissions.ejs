@@ -91,14 +91,35 @@
     </span> -->
     <script src="<%- lib('layer/dist/layer.js') %>"></script>
     <script>
-        $(function(){  
-         	layer.alert('Wating 或 Compiling状态请等待或刷新页面, 长时间未改变状态请刷新页面，请不要重复提交。<br> Compile Error 表示您的代码未通过编译器检查，请检查是否有语法错误。<br>请仔细查看题目输入输出描述，无需在输入输出前添加如“请输入xxx”或“按下任意键退出”语句', {
+        <% if (user && !user.is_admin){ %>
+        $(document).ready(function () {
+            //判断cookie中是否展示过的状态  1为展示过          animate为JQ中的动画
+            if (!getCookie("oncenotice")) {
+                OnceNotice();
+                var exp = new Date(); 
+                exp.setTime(exp.getTime() + 12*60*60*1000); // 设置cookie过期时间12小时
+                document.cookie = "oncenotice=1;expires=" + exp.toGMTString();
+            }
+        })
+    　　　//读取cookie，解析得到值
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i].trim();
+                if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+        
+        function OnceNotice(){  
+         	layer.alert('重要提示：<br> Wating 或 Compiling状态请等待或刷新页面, 长时间未改变状态请刷新页面，请不要重复提交。<br> Compile Error 表示您的代码未通过编译器检查，请检查是否有语法错误。<br>请仔细查看题目输入输出描述，无需在输入输出前添加如“请输入xxx”或“按下任意键退出”语句', {
             skin: 'layui-layer-lan'
             ,closeBtn: 0
             ,anim: 4 //动画类型
           });
-         })
-        
+         }
+        <% } %>
     </script>
     <table id="vueAppFuckSafari" class="ui unstackable very basic center aligned table " style="white-space: nowrap; " id="table"> <!-- ui very basic center aligned table segment -->
     <thead>
