@@ -113,12 +113,25 @@
                 }
             }
             @media screen and (min-width:991px){
-            .zsy-pc{
-                display:flex;
+                .zsy-pc{
+                    display:flex;
                 
                 }
-            .zsy-mb{
-                display: none!important;
+                .zsy-mb{
+                    display: none!important;
+                }
+
+            }
+            @media screen and (min-width:765px){
+
+                .hgnuoj_title{
+                    padding-left:0px!important;
+                }
+            }
+            @media screen and (max-width:764px){
+
+                .hgnuoj_title{
+                    padding-left:auto;
                 }
             }
             .nav-cl .zsy-pc.item{
@@ -136,7 +149,7 @@
             %>
             <a class="header item" href="/"><img src="<%= syzoj.config.logo.url %>" style="width: <%= width %>; height: <%= height %>; "></a>
             <% } else { %>
-            <a class="header item" href="/"><span style="font-family: 'Exo 2'; font-size: 1.5em; font-weight: 600; "><%= syzoj.config.title %></span></a>
+            <a class="header hgnuoj_title item" href="/"><span style="font-family: 'Exo 2'; font-size: 1.5em; font-weight: 600; "><%= syzoj.config.title %></span></a>
             <% } %>
             <a class="zsy-pc item<% if (active === '') { %> active<% } %>" href="/"><i class="fal fa-home"></i> 首页</a>
             <a class="zsy-pc item<% if (active.startsWith('problem')) { %> active<% } %>" href="/problems"><i class="fal fa-list"></i> 题库</a>
