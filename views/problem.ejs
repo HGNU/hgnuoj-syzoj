@@ -18,7 +18,8 @@ if (contest) {
     display: none;
 }
 </style>
-
+    <script src="<%- lib('clipboard.js/dist/clipboard.min.js') %>"></script>
+<script src="<%- lib('layer/dist/layer.js') %>"></script>
 <% include monaco-editor %>
 
 <div class="ui aligned grid" style="
@@ -40,8 +41,8 @@ if (contest) {
           <% if (problem.type === 'interaction') { %>
             <span class="ui label">题目类型：交互</span>
           <% } else if (problem.file_io) { %>
-            <span class="ui label">输入文件：<%= problem.file_io_input_name %></span>
-            <span class="ui label">输出文件：<%= problem.file_io_output_name %></span>
+            <span class="ui label">输入文件：<a href="javascript:;" title="点击复制" data-click-copy="<%= problem.file_io_input_name %>"><%= problem.file_io_input_name %></a></span>
+            <span class="ui label">输出文件：<a href="javascript:;" title="点击复制" data-click-copy="<%= problem.file_io_output_name %>"><%= problem.file_io_output_name %></a></span>
           <% } else { %>
             <span class="ui label">标准输入输出</span>
           <% } %>
@@ -174,9 +175,52 @@ if (contest) {
     <div class="row">
         <div class="column">
           <h4 class="ui top attached block header">样例</h4>
-          <div class="ui bottom attached segment font-content"><%- problem.example %></div>
+          <div id="example_content" class="ui bottom attached segment font-content"><%- problem.example %></div>
         </div>
     </div>
+
+    <script type="text/javascript">
+      $('#example_content div.ui.existing.segment pre').each(function(i, pre) {
+        var $pre = $(pre);
+        var $segment = $pre.parent();
+        var $p = $segment.prev('p');
+        var $btn = $('<span class="ui mini compact button">');
+        $btn.text('复制').attr('id', 'copybtn-'+i);
+        //$btncopyi = 
+        $btn.attr('data-clipboard-text', $pre.text());
+        $pre.attr('id','copypre-' + i);
+        
+        var clipboard = new ClipboardJS('#copybtn-'+i);
+
+        clipboard.on('success', function(e) {
+            layer.msg('复制成功');
+            console.info('Action:', e.action);
+            console.info('Text:', e.text);
+            console.info('Trigger:', e.trigger);
+        
+            e.clearSelection();
+        });
+        
+        clipboard.on('error', function(e) {
+            layer.msg('复制失败');
+            console.error('Action:', e.action);
+            console.error('Trigger:', e.trigger);
+        });
+        if ($p.length) {
+          $p.append($btn.css('marginLeft', '1em'));
+        } else {
+          $btn.css({
+            position: 'absolute',
+            right: '0',
+            top: '0',
+            marginRight: '0',
+            borderTopLeftRadius: '0',
+            borderBottomRightRadius: '0'
+          }).insertBefore($pre);
+        }
+      });
+      
+    </script>
   <% } %>
   <% if (problem.limit_and_hint) { %>
     <div class="row">
@@ -352,6 +396,8 @@ if (contest) {
     </div>
     <% } %>
 </div>
+
+
 
 <% if (problem.type !== 'submit-answer') { %>
 <script type="text/javascript">

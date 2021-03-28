@@ -24,7 +24,9 @@
     <!-- <link href="<%- selfLib('style.css') %>?20181212" rel="stylesheet">-->
     <link href="<%- lib('morris.js/0.5.1/morris.css') %>" rel="stylesheet">
     <link href="//acm-m.eas1.cn/images/2021/03/10/image.png" rel="shortcut icon">
-    <link href="https://cdn.jsdelivr.net/gh/HGNU/fontawesome-cdn@master/css/all.min.css", rel="stylesheet">
+    <link href="<%- lib('fontawesome-cdn/css/all.min.css') %>", rel="stylesheet">
+    
+        
     <% if (useLocalLibs || !syzoj.config.google_fonts || !['like-google-fonts', 'like-local', 'built-in'].includes(syzoj.config.google_fonts.type)) { %>
       <link href="<%- syzoj.utils.makeUrl(['google-fonts', 'fira-mono.css']) %>" rel="stylesheet">
       <link href="<%- syzoj.utils.makeUrl(['google-fonts', 'lato.css']) %>" rel="stylesheet">
@@ -59,6 +61,8 @@
       ga('send', 'pageview');
 
     </script>
+    
+
     <% } %>
 
     <style>
@@ -164,7 +168,7 @@
                     if (user.nickname){
                         return user.nickname;
                     }else{
-                        return "我的账户";
+                        return user.username;
                     }
                 }
             
@@ -173,7 +177,7 @@
               <% if (user) { %>
               <a href="#" style="color: inherit; ">
               <div class="ui simple dropdown item">
-                <i class="user icon"></i><span><%= switch_username() %></span>
+                <i class="fal fa-user"></i><span>&nbsp;<%= switch_username() %></span>
                 
                 <div class="menu">
                 

@@ -7,7 +7,7 @@
 #back_to_contest { display: none;  }
 </style>
 <% include header %>
-<div class="padding">
+<div class="">
   <h1><%= contest.title %></h1>
   <div style="margin-bottom: 30px;"><%- contest.subtitle %></div>
   <% let unveiled = (isSupervisior || syzoj.utils.getCurrentDate() >= contest.start_time); %>
