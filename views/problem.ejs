@@ -22,38 +22,40 @@ if (contest) {
 <script src="<%- lib('layer/dist/layer.js') %>"></script>
 <% include monaco-editor %>
 
-<div class="ui aligned grid" style="
-    padding: 15px;
-">
+<div class="ui aligned grid">
     <div class="row">
-      <h1 class="ui header">
-        <% if (contest) { %>
-          <%= this.alpha(pid) %>. <%= syzoj.utils.removeTitleTag(problem.title) %>
-        <% } else { %>
-          #<%= problem.id %>. <%= problem.title %><% if (problem.allowedEdit && !problem.is_public) { %><span class="ui tiny red label">未公开</span><% } %>
-        <% } %>
-      </h1>
+        <div class="column">
+          <h1 class="ui header">
+            <% if (contest) { %>
+              <%= this.alpha(pid) %>. <%= syzoj.utils.removeTitleTag(problem.title) %>
+            <% } else { %>
+              #<%= problem.id %>. <%= problem.title %><% if (problem.allowedEdit && !problem.is_public) { %><span class="ui tiny red label">未公开</span><% } %>
+            <% } %>
+          </h1>
+        </div>
     </div>
     <% if (problem.type !== 'submit-answer') { %>
       <div class="row" style="margin-top: -15px">
-          <span class="ui label">内存限制：<%= problem.memory_limit %> MiB</span>
-          <span class="ui label">时间限制：<%= problem.time_limit %> ms</span>
+      <div class="column">
+          <span class="ui pink label"><i class="fal fa-microchip"></i>&nbsp;<%= problem.memory_limit %> MiB</span>
+          <span class="ui teal label"><i class="fal fa-clock"></i>&nbsp;<%= problem.time_limit %> ms</span>
           <% if (problem.type === 'interaction') { %>
-            <span class="ui label">题目类型：交互</span>
+            <span class="ui violet  label"><i class="fal fa-book"></i>&nbsp;交互</span>
           <% } else if (problem.file_io) { %>
-            <span class="ui label">输入文件：<a href="javascript:;" title="点击复制" data-click-copy="<%= problem.file_io_input_name %>"><%= problem.file_io_input_name %></a></span>
-            <span class="ui label">输出文件：<a href="javascript:;" title="点击复制" data-click-copy="<%= problem.file_io_output_name %>"><%= problem.file_io_output_name %></a></span>
+            <span class="ui green label">输入文件：<a href="javascript:;" title="点击复制" data-click-copy="<%= problem.file_io_input_name %>"><%= problem.file_io_input_name %></a></span>
+            <span class="ui green label">输出文件：<a href="javascript:;" title="点击复制" data-click-copy="<%= problem.file_io_output_name %>"><%= problem.file_io_output_name %></a></span>
           <% } else { %>
-            <span class="ui label">标准输入输出</span>
+            <span class="ui purple  label"><i class="fal fa-bolt"></i>&nbsp;标准输入输出</span>
           <% } %>
       
     <% } %>
     <% if (problem.type !== 'interaction') { %>
       
-          <span class="ui label">题目类型：<%= { 'submit-answer': '答案提交', 'interaction': '交互', 'traditional': '传统' }[problem.type] %></span>
-          <span class="ui label">评测方式：<%= (testcases && !testcases.error) ? (testcases.spj ? 'Special Judge' : '文本比较') : '无测试数据' %></span>
+          <span class="ui blue label"><i class="fal fa-book"></i>&nbsp;<%= { 'submit-answer': '答案提交', 'interaction': '交互', 'traditional': '传统' }[problem.type] %></span>
+          <span class="ui black  label"><i class="fal fa-balance-scale"></i>&nbsp;<%= (testcases && !testcases.error) ? (testcases.spj ? 'Special Judge' : '文本比较') : '无测试数据' %></span>
       
     <% } %>
+    <!-- 
     <% if (!contest) { %>
         
             <span class="ui label">上传者：
@@ -72,8 +74,11 @@ if (contest) {
                 <% } %>
                 </span>
             <% } %>
-        </div>
+        
     <% } %>
+    -->
+    </div>
+    </div>
 </div>
 <div class="ui grid">
   <div class="row">

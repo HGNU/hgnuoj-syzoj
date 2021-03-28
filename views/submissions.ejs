@@ -86,9 +86,20 @@
   <style>.hgnuoj-sumissions::-webkit-scrollbar {//display:none}</style>
   <div style="overflow-x:auto;overflow-y: hidden;" class="hgnuoj-sumissions">
     
-    <span class = "red" style = "color:red;font-size:20px;font-weight:bold;">Wating或Compiling状态请等待或刷新页面，请不要重复提交。<br> Compile Error 表示您的代码未通过编译器检查，请检查是否有语法错误。<br>
-        请仔细查看题目输入输出描述，无需提示如‘请输入xxx’语句。
-    </span>
+    <!-- <span class = "red" style = "color:red;font-size:20px;font-weight:bold;">Wating或Compiling状态请等待, 长时间未改变状态请刷新页面，请不要重复提交。<br> Compile Error 表示您的代码未通过编译器检查，请检查是否有语法错误。<br>
+        请仔细查看题目输入输出描述，无需在输入输出前添加如“请输入xxx”或“按下任意键退出”语句。
+    </span> -->
+    <script src="<%- lib('layer/dist/layer.js') %>"></script>
+    <script>
+        $(function(){  
+         	layer.alert('Wating 或 Compiling状态请等待或刷新页面, 长时间未改变状态请刷新页面，请不要重复提交。<br> Compile Error 表示您的代码未通过编译器检查，请检查是否有语法错误。<br>请仔细查看题目输入输出描述，无需在输入输出前添加如“请输入xxx”或“按下任意键退出”语句', {
+            skin: 'layui-layer-lan'
+            ,closeBtn: 0
+            ,anim: 4 //动画类型
+          });
+         })
+        
+    </script>
     <table id="vueAppFuckSafari" class="ui unstackable very basic center aligned table " style="white-space: nowrap; " id="table"> <!-- ui very basic center aligned table segment -->
     <thead>
       <tr>

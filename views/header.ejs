@@ -101,7 +101,7 @@
 </head>
 <body style="position: relative; margin-top: 49px; height: calc(100% - 49px); overflow-y: overlay;">
     <div class="ui fixed borderless menu" style="position: fixed; height: 49px; ">
-        <div class="ui container">
+        <div class="ui container nav-cl">
         <style>
             @media screen and (max-width:900px){
             .zsy-pc{
@@ -120,6 +120,13 @@
             .zsy-mb{
                 display: none!important;
                 }
+            }
+            .nav-cl .zsy-pc.item{
+                border-top: 3px solid transparent;
+                border-bottom: 3px solid transparent;
+            }
+            .nav-cl .zsy-pc.item.active{
+                border-top: 3px solid red;
             }
         </style>
             <%
