@@ -154,9 +154,9 @@
             <a class="zsy-pc item<% if (active === '') { %> active<% } %>" href="/"><i class="fal fa-home"></i> 首页</a>
             <a class="zsy-pc item<% if (active.startsWith('problem')) { %> active<% } %>" href="/problems"><i class="fal fa-list"></i> 题库</a>
             <a class="zsy-pc item<% if (active.startsWith('course')) { %> active<% } %>" href="/courses"><i class="fal fa-chart-bar"></i> 专题</a>
-            <a class="zsy-pc item<% if (active.startsWith('contest')) { %> active<% } %>" href="/contests"><i class="fad fa-calendar"></i> 比赛</a>
+            <a class="zsy-pc item<% if (active.startsWith('contest')) { %> active<% } %>" href="/contests"><i class="fal fa-calendar"></i> 比赛</a>
             <a class="zsy-pc item<% if (active.startsWith('submission')) { %> active<% } %>" href="/submissions"><i class="fal fa-tasks"></i> 评测</a>
-            <a class="zsy-pc item<% if (active.startsWith('ranklist')) { %> active<% } %>" href="/ranklist"><i class="fad fa-signal-3"></i> 排名</a>
+            <a class="zsy-pc item<% if (active.startsWith('ranklist')) { %> active<% } %>" href="/ranklist"><i class="fal fa-signal"></i> 排名</a>
             <a class="zsy-pc item<% if (active.startsWith('discussion') || active.startsWith('article')) { %> active<% } %>" href="/discussion/global"><i class="fal fa-comments"></i> 公告</a>
             <a class="zsy-pc item<% if (active.startsWith('about')) { %> active<% } %>" href="/about"><i class="fal fa-question-circle"></i> 关于</a>
             <!-- <a class="item<% if (active.startsWith('homework')) { %> active<% } %>" href="/homeworks"><i class="book icon"></i> 作业</a> -->
@@ -204,8 +204,8 @@
                 <% if (typeof contest !== 'undefined' && contest && contest.id) { %>
                   <a id="back_to_contest" class="item" href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><i class="arrow left icon"></i> 返回比赛</a>
                 <% } %>
-                  <a class="item" href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><i class="user icon"></i>个人资料</a>
-                  <a class="item" href="<%= syzoj.utils.makeUrl(['user', user.id, 'edit']) %>"><i class="edit icon"></i>修改资料</a>
+                  <a class="item" href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><i class="fal fa-user"></i>个人资料</a>
+                  <a class="item" href="<%= syzoj.utils.makeUrl(['user', user.id, 'edit']) %>"><i class="fal fa-edit"></i>修改资料</a>
                   
                   <!-- 
                   
@@ -215,8 +215,8 @@
                     </div>
                     -->
                     
-                    <a class="settheme item" name="dark-official"><i class="moon icon"></i> DarkMode</a>
-                    <a class="settheme item" name="light-official"><i class="sun icon"></i> LightMode</a>
+                    <a class="settheme item" name="dark-official"><i class="fal fa-moon"></i> DarkMode</a>
+                    <a class="settheme item" name="light-official"><i class="fal fa-sun"></i> LightMode</a>
         <script>
     $(".settheme").click(function(){
         localStorage.setItem("theme",$(this).attr('name'))
@@ -243,7 +243,7 @@
 
 
                   <% if (user.is_admin) { %>
-                    <a class="item" href="<%= syzoj.utils.makeUrl(['admin', 'info']) %>"><i class="settings icon"></i>后台管理</a>
+                    <a class="item" href="<%= syzoj.utils.makeUrl(['admin', 'info']) %>"><i class="fal fa-cog"></i>后台管理</a>
                     <div class="ui basic modal" id="modal-restart">
                       <div class="ui icon header">
                         <i class="redo icon"></i>
@@ -263,9 +263,9 @@
                         </a>
                       </div>
                     </div>
-                    <a class="item" href="#" onclick="$('#modal-restart').modal('show')"><i class="redo icon"></i>重启服务</a>
+                    <a class="item" href="#" onclick="$('#modal-restart').modal('show')"><i class="fal fa-redo"></i>重启服务</a>
                   <% } %>
-                  <a class="item" href-post="<%= syzoj.utils.makeUrl(['logout'], { url: req.originalUrl }) %>"><i class="power icon"></i>注销</a>
+                  <a class="item" href-post="<%= syzoj.utils.makeUrl(['logout'], { url: req.originalUrl }) %>"><i class="fal fa-power-off"></i>注销</a>
                 </div>
               </div>
               </a>
@@ -283,14 +283,14 @@
                   <i class="bars icon"></i>
                     <div class="menu">
                     
-                    <a class="item<% if (active === '') { %> active<% } %>" href="/"><i class="home icon"></i> 首页</a>
-                    <a class="item<% if (active.startsWith('problem')) { %> active<% } %>" href="/problems"><i class="list icon"></i> 题库</a>
-                    <a class="item<% if (active.startsWith('course')) { %> active<% } %>" href="/courses"><i class="list alternate outline icon"></i> 专题</a>
-                    <a class="item<% if (active.startsWith('contest')) { %> active<% } %>" href="/contests"><i class="calendar icon"></i> 比赛</a>
-                    <a class="item<% if (active.startsWith('submission')) { %> active<% } %>" href="/submissions"><i class="tasks icon"></i> 评测</a>
-                    <a class="item<% if (active.startsWith('ranklist')) { %> active<% } %>" href="/ranklist"><i class="signal icon"></i> 排名</a>
-                    <a class="item<% if (active.startsWith('discussion') || active.startsWith('article')) { %> active<% } %>" href="/discussion/global"><i class="comments icon"></i> 公告</a>
-                    <a class="item<% if (active.startsWith('about')) { %> active<% } %>" href="/about"><i class="help circle icon"></i> 关于</a>
+                    <a class="item<% if (active === '') { %> active<% } %>" href="/"><i class="fal fa-home"></i> 首页</a>
+                    <a class="item<% if (active.startsWith('problem')) { %> active<% } %>" href="/problems"><i class="fal fa-list "></i> 题库</a>
+                    <a class="item<% if (active.startsWith('course')) { %> active<% } %>" href="/courses"><i class="fal fa-chart-bar"></i> 专题</a>
+                    <a class="item<% if (active.startsWith('contest')) { %> active<% } %>" href="/contests"><i class="fal fa-calendar"></i> 比赛</a>
+                    <a class="item<% if (active.startsWith('submission')) { %> active<% } %>" href="/submissions"><i class="fal fa-tasks"></i> 评测</a>
+                    <a class="item<% if (active.startsWith('ranklist')) { %> active<% } %>" href="/ranklist"><i class="fal fa-signal"></i> 排名</a>
+                    <a class="item<% if (active.startsWith('discussion') || active.startsWith('article')) { %> active<% } %>" href="/discussion/global"><i class="fal fa-comments"></i> 公告</a>
+                    <a class="item<% if (active.startsWith('about')) { %> active<% } %>" href="/about"><i class="fal fa-question-circle"></i> 关于</a>
     
                     </div>
                   </div>
