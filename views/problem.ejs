@@ -89,13 +89,13 @@ if (contest) {
             
             <a class="small ui primary button" href="<%= syzoj.utils.makeUrl(['problem', problem.id]) %>">转到题库</a>
           <% } %>
-          <a class="small ui positive button" href="<%= syzoj.utils.makeUrl(['contest', contest.id, 'submissions'], { problem_id: pid }) %>">提交记录</a>
+          <a class="small ui primary button" href="<%= syzoj.utils.makeUrl(['contest', contest.id, 'submissions'], { problem_id: pid }) %>">提交记录</a>
           <% if (problem.additional_file) { %>
             <a class="small ui teal button" href="<%= syzoj.utils.makeUrl(['contest', contest.id, pid, 'download', 'additional_file']) %>">附加文件</a>
           <% } %>
           <a href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>" class="ui orange button">返回比赛</a>
         <% } else { %>
-          <a class="small ui positive button" href="<%= syzoj.utils.makeUrl(['submissions'], { problem_id: problem.id }) %>">提交记录</a>
+          <a class="small ui primary button" href="<%= syzoj.utils.makeUrl(['submissions'], { problem_id: problem.id }) %>">提交记录</a>
           <a class="small ui orange button" href="<%= syzoj.utils.makeUrl(['problem', problem.id, 'statistics', problem.type === 'submit-answer' ? 'shortest' : 'fastest']) %>">统计</a>
           <a class="small ui yellow button" href="<%= syzoj.utils.makeUrl(['problem', problem.id, 'testdata']) %>">测试数据</a>
           <% if (problem.additional_file) { %>
@@ -142,35 +142,39 @@ if (contest) {
       <% } %>
     </div>
   </div>
-  <% if (problem.description) { %>
-  <div class="row">
-    <div class="column">
-      <h4 class="ui top attached block header">题目描述</h4>
-      <div class="ui bottom attached segment font-content"><%- problem.description %></div>
-    </div>
   </div>
+  <div class="ui section divider"></div>
+<div class="ui items">
+  
+  <% if (problem.description) { %>
+  <div class="item" style="margin-bottom:24px">
+    <div class="content">
+      <div class="ui large header" style="margin-bottom:12px">题目描述</div>
+      <div class="description"><%- problem.description %></div>
+    </div></div>
+
   <% } %>
   <% if (problem.input_format) { %>
-  <div class="row">
-    <div class="column">
-        <h4 class="ui top attached block header">输入格式</h4>
-        <div class="ui bottom attached segment font-content"><%- problem.input_format %></div>
-    </div>
-  </div>
+  <div class="item" style="margin-bottom:24px">
+  <div class="content">
+        <div class="ui large header" style="margin-bottom:12px">输入格式</div>
+        <div class="description"><%- problem.input_format %></div>
+    </div></div>
+
   <% } %>
   <% if (problem.output_format) { %>
-    <div class="row">
-        <div class="column">
-          <h4 class="ui top attached block header">输出格式</h4>
-          <div class="ui bottom attached segment font-content"><%- problem.output_format %></div>
+  <div class="item" style="margin-bottom:24px">
+    <div class="content">
+      <div class="ui large header" style="margin-bottom:12px">输出格式</div>
+          <div class="description"><%- problem.output_format %></div>
         </div>
     </div>
   <% } %>
   <% if (problem.example) { %>
-    <div class="row">
-        <div class="column">
-          <h4 class="ui top attached block header">样例</h4>
-          <div id="example_content" class="ui bottom attached segment font-content"><%- problem.example %></div>
+  <div class="item" style="margin-bottom:24px">
+    <div class="content">
+      <div class="ui large header" style="margin-bottom:12px">样例</div>
+          <div id="example_content" class="description"><%- problem.example %></div>
         </div>
     </div>
 
@@ -218,10 +222,10 @@ if (contest) {
     </script>
   <% } %>
   <% if (problem.limit_and_hint) { %>
-    <div class="row">
-        <div class="column">
-          <h4 class="ui top attached block header">数据范围与提示</h4>
-          <div class="ui bottom attached segment font-content"><%- problem.limit_and_hint %></div>
+    <div class="item" style="margin-bottom:24px">
+    <div class="content">
+      <div class="ui large header" style="margin-bottom:12px">数据范围与提示</div>
+          <div class="description"><%- problem.limit_and_hint %></div>
         </div>
     </div>
   <% } %>
@@ -263,6 +267,9 @@ if (contest) {
       </script>
     <% } %>
   <% } %>
+  </div>
+  <div class="ui grid">
+  
     <% let noSubmit = false; %>
     <%
     if (typeof contest !== 'undefined' && contest && contest.ended || (!testcases || testcases.error)) {
