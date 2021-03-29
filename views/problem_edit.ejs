@@ -96,6 +96,8 @@
                   <textarea class="markdown-edit" v-model="currentSample.output" :rows="dataBoxSize"></textarea>
                 </div>
               </div>
+              
+              <!-- guke 0329
               <div class="ui field">
                 <label>
                   样例解释
@@ -113,6 +115,8 @@
                   v-html="commentPreview"
                   style="min-height: 10em; max-height: 20em; overflow-y: auto;"></div>
               </div>
+              -->
+              
             </template>
           </div>
           <div v-if="previewMode == 'html'" v-html="previewHTML" style="height: 32em; overflow-y: auto;"></div>
@@ -441,10 +445,17 @@
               result.push(sample.content.trim());
               break;
             case 'default':
+            // guke 0329
+              result.push('<div class="ui equal width grid">');
+              result.push('<div class="column">\n');
               result.push(`__样例输入${indexStr}__`);
-              result.push('```plain\n' + ensureEndNewline(sample.input) + '```');
+              result.push('```plain\n' + ensureEndNewline(sample.input) + '```\n');
+              result.push('</div>');
+              result.push('<div class="column">\n');
               result.push(`__样例输出${indexStr}__`);
-              result.push('```plain\n' + ensureEndNewline(sample.output) + '```');
+              result.push('```plain\n' + ensureEndNewline(sample.output) + '```\n');
+              result.push('</div>');
+              result.push('</div>');
               if (sample.comment.trim()) {
                 result.push(`__样例解释${indexStr}__`);
                 result.push(sample.comment.trim());
