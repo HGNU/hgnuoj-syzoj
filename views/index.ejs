@@ -18,12 +18,16 @@
               </thead>
              -->
               <tbody>
-                <% for (let item of notices) { %>
+                <% for (let i=0; i<5; i++) { %>
                     <tr>
-                        <td><a href="<%= item.url %>"><%= item.title %></a></td>
-                        <td><%= item.date %></td>
+                        <td><a href="<%= notices[i].url %>"><%= notices[i].title %></a></td>
+                        <td><%= notices[i].date %></td>
                     </tr>
                 <% } %>
+                    <tr>
+                        <td><a href="/discussion/global">查看更多...</td>
+                        <td></td>
+                    </tr>
               </tbody>
             </table>
         </div>
