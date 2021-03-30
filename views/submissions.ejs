@@ -5,7 +5,14 @@
 <div class="">
   <% if (displayConfig.inContest) { %>
     <div class="ui large info message">
-      <div class="ui header">比赛 - <%= contest.title %></div>
+    
+        <% if (contest.type === 'cur'){ %>
+            <div class="ui header">课程专题 - <%= contest.title %></div>
+        <% }else{ %>
+            <div class="ui header">比赛 - <%= contest.title %></div>
+        <% } %>
+    
+      
       <% if (displayConfig.showOthers) { %>
         <p>您可以看到其他人的提交。
       <% } else { %>

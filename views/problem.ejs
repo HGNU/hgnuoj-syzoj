@@ -17,6 +17,9 @@ if (contest) {
 #languages-menu .item::after, #testcase-menu .item::after {
     display: none;
 }
+.hgnuoj-lables .label{
+    margin-bottom:10px;
+}
 </style>
     <script src="<%- lib('clipboard.js/dist/clipboard.min.js') %>"></script>
 <script src="<%- lib('layer/dist/layer.js') %>"></script>
@@ -36,7 +39,7 @@ if (contest) {
     </div>
     <% if (problem.type !== 'submit-answer') { %>
       <div class="row" style="margin-top: -15px">
-      <div class="column">
+      <div class="column hgnuoj-lables">
           <span class="ui pink label"><i class="fal fa-microchip"></i>&nbsp;<%= problem.memory_limit %> MiB</span>
           <span class="ui teal label"><i class="fal fa-clock"></i>&nbsp;<%= problem.time_limit %> ms</span>
           <% if (problem.type === 'interaction') { %>
@@ -77,8 +80,25 @@ if (contest) {
         
     <% } %>
     -->
+    
+        <% if (problem.tags && problem.tags.length && (typeof contest === 'undefined' || !contest)) { %>
+            |
+        <% let has_hidden_tags = false; %>
+          <% for (let tag of problem.tags) { %>
+            <%
+              let is_hidden = syzoj.config.hidden_problem_tag_colors.includes(tag.color);
+              if (is_hidden) has_hidden_tags = true;
+            %>
+            <a href="<%= syzoj.utils.makeUrl(['problems', 'tag', tag.id]) %>" class="ui medium <%= tag.color %> label<% if (is_hidden) { %> tag_hidden<% } %>">
+              <%= tag.name %>
+            </a>
+          <% } %>
+    <% } %>
     </div>
     </div>
+    
+
+    
 </div>
 <div class="ui grid">
   <div class="row">
@@ -93,7 +113,14 @@ if (contest) {
           <% if (problem.additional_file) { %>
             <a class="small ui teal button" href="<%= syzoj.utils.makeUrl(['contest', contest.id, pid, 'download', 'additional_file']) %>">附加文件</a>
           <% } %>
-          <a href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>" class="ui orange button">返回比赛</a>
+          
+          
+          <% if (contest.type === 'cur'){ %>
+                <a href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>" class="ui pink button">返回专题</a>
+                <% }else{ %>
+                <a href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>" class="ui pink button">返回比赛</a>
+            <% } %>
+          
         <% } else { %>
           <a class="small ui primary button" href="<%= syzoj.utils.makeUrl(['submissions'], { problem_id: problem.id }) %>">提交记录</a>
           <a class="small ui orange button" href="<%= syzoj.utils.makeUrl(['problem', problem.id, 'statistics', problem.type === 'submit-answer' ? 'shortest' : 'fastest']) %>">统计</a>
@@ -229,45 +256,11 @@ if (contest) {
         </div>
     </div>
   <% } %>
-  <% if (problem.tags && problem.tags.length && (typeof contest === 'undefined' || !contest)) { %>
-    <div class="row">
-    <div class="column">
-      <h4 class="ui top attached block header">分类标签</h4>
-        <div class="ui bottom attached segment">
-          <% let has_hidden_tags = false; %>
-          <% for (let tag of problem.tags) { %>
-            <%
-              let is_hidden = syzoj.config.hidden_problem_tag_colors.includes(tag.color);
-              if (is_hidden) has_hidden_tags = true;
-            %>
-            <a href="<%= syzoj.utils.makeUrl(['problems', 'tag', tag.id]) %>" class="ui medium <%= tag.color %> label<% if (is_hidden) { %> tag_hidden<% } %>">
-              <%= tag.name %>
-            </a>
-          <% } %>
-          <% if (has_hidden_tags) { %>
-            <a id="show_tag_button" class="ui mini basic button" href="javascript:;" style="margin-left: .5em;">显示隐藏标签</a>
-          <% } %>
-        </div>
-      </div>
-    </div>
-    <% if (has_hidden_tags) { %>
-      <style id="show_tag_style">
-        .tag_hidden {
-          display: none !important;
-        }
-      </style>
-      <script>
-      $(function () {
-        $('#show_tag_button').click(function (e) {
-          e.preventDefault();
-          $('#show_tag_style').html('');
-          $(this).remove();
-        })
-      });
-      </script>
-    <% } %>
-  <% } %>
+  
+  
   </div>
+  
+  
   <div class="ui grid">
   
     <% let noSubmit = false; %>
