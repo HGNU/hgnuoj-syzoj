@@ -8,7 +8,7 @@
       <button class="ui mini button" type="submit">查找用户</button>
     </div>
   </form>
-	    <table class="ui very basic aligned table" style="table-layout: fixed; ">
+	    <table class="ui very basic center aligned table" style="table-layout: fixed; ">
 	        <thead>
 	        <tr>
 	            <th style="width: 60px; ">#</th>
@@ -40,8 +40,8 @@
 		        	<td><b><%= i %></b></td>
 		        	<!-- nameplate guke 0320 -->
 		        	<td><% if (user.nameplate) { %><div class="ui mini pink label"><%- user.nameplate %></div><% } %> 
-		        	<% if(user.nickname) { %><a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><%- user.nickname %><% }else { %>
-		        	<a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><%= user.username %></a><% } %></td>
+		        	<% if(user.nickname) { %><a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"  style="display:block" ><%- user.nickname %><% }else { %>
+		        	<a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>" style="display:block" ><%= user.username %></a><% } %></td>
 		        	<td class="font-content">
               <script id="user-infomation-script-<%= i %>" data-cfasync="false">
               (function () {

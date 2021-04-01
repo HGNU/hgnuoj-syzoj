@@ -7,6 +7,7 @@
   color: #000;
 }
 </style>
+
 <div class="">
 <h1 class="ui center aligned header" ><%= contest.title %></h1>
 <!-- 总人数 -->
@@ -16,7 +17,15 @@
     }
     %>
 <h3 class="ui center aligned header" style="margin-bottom: 30px; ">总参与人数：<%= person %></h3>
-        <table class="ui very basic center aligned table" style="overflow-x: auto;overflow-y: hidden;display: block;">
+<div>
+<button class="ui button" id="ctlist-lf">
+  <i class="left arrow icon"></i>
+</button>
+<button class="ui button" id="ctlist-rt">
+  <i class="right arrow icon"></i>
+</button>
+</div>
+        <table id="ctlist-tb" class="ui very basic center aligned table" style="overflow-x: auto;overflow-y: hidden;display: block;">
             <thead>
             <tr>
                 <th>排名</th>
@@ -94,11 +103,11 @@
                 
                 <td>
                   <% if (rank == 1) { %>
-                    <div class="ui yellow ribbon label">
+                    <div class="ui yellow label">
                   <% } else if (rank == 2) { %>
-                    <div class="ui ribbon label">
+                    <div class="ui label">
                   <% } else if (rank == 3) { %>
-                    <div class="ui brown ribbon label" style="background-color: #C47222 !important;">
+                    <div class="ui brown label" style="background-color: #C47222 !important;">
                   <% } else { %>
                     <div>
                   <% } %>
@@ -238,3 +247,19 @@
 <% } %>
 </div>
 <% include footer %>
+<script>
+        let ctlistzz = $("#ctlist-tb").scrollLeft();
+        $(document).ready(function(){
+          $("#ctlist-lf").click(function(){
+              if(ctlistzz >= 50){
+                  ctlistzz = ctlistzz - 50;
+              }
+            
+            $("#ctlist-tb").scrollLeft(ctlistzz);
+          });
+          $("#ctlist-rt").click(function(){
+            ctlistzz = ctlistzz + 50;
+            $("#ctlist-tb").scrollLeft(ctlistzz);
+          });
+        });
+</script>

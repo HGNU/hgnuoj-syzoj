@@ -58,7 +58,6 @@ if (contest) {
           <span class="ui black  label"><i class="fal fa-balance-scale"></i>&nbsp;<%= (testcases && !testcases.error) ? (testcases.spj ? 'Special Judge' : '文本比较') : '无测试数据' %></span>
       
     <% } %>
-    <!-- 
     <% if (!contest) { %>
         
             <span class="ui label">上传者：
@@ -79,7 +78,6 @@ if (contest) {
             <% } %>
         
     <% } %>
-    -->
     
         <% if (problem.tags && problem.tags.length && (typeof contest === 'undefined' || !contest)) { %>
             |
