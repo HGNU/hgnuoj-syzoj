@@ -93,13 +93,60 @@
         .ui.main.container {
             min-height: 100vh;
         }
+        .ui.top.attached.header,.ui.bottom.attached.segment{
+            box-shadow: 0px 0px 3px #eaeaea;
+            border-radius: 0px!important;
+            border: 0px!important;
+        }
+        .ui.vertical.footer.segment {
+                background: #000;
+                color: #999;
+                padding-top: 30px;
+                padding-bottom: 30px;
+            }
         
     </style>
+    
+    <% if (user && (user.id === 1 || user.id === 97)) { %>
+        <style>
+            .ui.main.container {
+                min-height: 100vh;
+                margin:0 auto!important;
+                background:#fff;
+                padding:10px;
+                padding-top:30px;
+                
+            }
+            .hgnuoj-content{
+                margin-top:0px!important;
+            }
+            .ui.vertical.footer.segment {
+                background: #000;
+                color: #999;
+                padding-top: 30px;
+                padding-bottom: 30px;
+            }
+            * {
+                border-radius: 0px!important;
+                border: 0px!important;
+            }
+            .ui.top.attached.header,.ui.bottom.attached.segment{
+                box-shadow: 0px 0px 3px #eaeaea;
+                border-radius: 0px!important;
+                border: 0px!important;
+            }
+            
+        </style>
+    <% } %>
 
     
 
 </head>
+<% if (user && (user.id === 1 || user.id === 97)) { %>
+<body style="position: relative; margin-top: 49px; height: calc(100% - 49px); overflow-y: overlay;background:#f7f7f7">
+<% } else { %>
 <body style="position: relative; margin-top: 49px; height: calc(100% - 49px); overflow-y: overlay;">
+<% } %>
     <div class="ui fixed borderless menu" style="position: fixed; height: 49px; ">
         <div class="ui container nav-cl">
         <style>
@@ -161,7 +208,6 @@
             <a class="zsy-pc item<% if (active.startsWith('discussion') || active.startsWith('article')) { %> active<% } %>" href="/discussion/global"><i class="fal fa-comments"></i> 公告</a>
             -->
             <a class="zsy-pc item<% if (active.startsWith('about')) { %> active<% } %>" href="/about"><i class="fal fa-question-circle"></i> 关于</a>
-            <!-- <a class="item<% if (active.startsWith('homework')) { %> active<% } %>" href="/homeworks"><i class="book icon"></i> 作业</a> -->
             
             <% if (typeof contest !== 'undefined' && contest && contest.id) { %>
               
@@ -367,5 +413,5 @@
         }
     </script> 
     
-    <div style="margin-top: 28px; ">
+    <div class="hgnuoj-content" style="margin-top: 28px; ">
     <div class="ui main container">
