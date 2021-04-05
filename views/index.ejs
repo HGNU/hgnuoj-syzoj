@@ -69,7 +69,7 @@
             %>
                 <tr><!-- nameplate 0320 nickname 0321 guke -->
                     <td><b><%= i %></b></td>
-                    <td><% if (user.nameplate) { %><div class="ui mini pink label"><%- user.nameplate %></div><% } %> 
+                    <td style="text-align:left"><% if (user.nameplate) { %><div class="ui mini pink label"><%- user.nameplate %></div><% } %> 
                     <% if(user.nickname) { %><a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><%- user.nickname %><% }else { %>
                     <a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><%= user.username %></a><% } %></td>
                     <td style="font-content;white-space: nowrap; word-break: break-all;">
