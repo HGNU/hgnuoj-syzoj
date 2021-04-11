@@ -110,7 +110,7 @@
         
     </style>
     
-    <% if (user && (user.id === 1 || user.id === 97)) { %>
+    <% if (user && (user.id === 1)) { %>
         <style>
             .ui.main.container {
                 min-height: 100vh;
@@ -145,7 +145,7 @@
     
 
 </head>
-<% if (user && (user.id === 1 || user.id === 97)) { %>
+<% if (user && (user.id === 1)) { %>
 <body style="position: relative; margin-top: 49px; height: calc(100% - 49px); overflow-y: overlay;background:#f7f7f7">
 <% } else { %>
 <body style="position: relative; margin-top: 49px; height: calc(100% - 49px); overflow-y: overlay;">

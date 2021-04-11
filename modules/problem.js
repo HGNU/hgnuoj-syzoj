@@ -789,7 +789,8 @@ app.post('/problem/:id/submit', app.multer.fields([{ name: 'answer', maxCount: 1
     }
 
     if (contest && (!await contest.isSupervisior(curUser))) {
-      res.redirect(syzoj.utils.makeUrl(['contest', contest_id, 'submissions']));
+    //   res.redirect(syzoj.utils.makeUrl(['contest', contest_id, 'submissions']));
+      res.redirect(syzoj.utils.makeUrl(['contest','submission', judge_state.id]));
     } else {
       res.redirect(syzoj.utils.makeUrl(['submission', judge_state.id]));
     }

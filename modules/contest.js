@@ -38,7 +38,8 @@ app.get('/contests', async (req, res) => {
     // let where =  { type: ['acm', 'ioi', 'noi'] , is_public: true    };
     let where;
     if (res.locals.user && res.locals.user.is_admin) where = {}
-    else where = { type: 'acm' || 'ioi'|| 'noi' ,is_public: true   };   // mode by kaygb 20210316 比赛列表过滤
+    // else where = { type: 'acm' || 'ioi'|| 'noi' ,is_public: true   };   // mode by kaygb 20210316 比赛列表过滤
+    else where = { is_public: true   };   // kaygb 20210411 比赛显示全公开
 
     let paginate = syzoj.utils.paginate(await Contest.countForPagination(where), req.query.page, syzoj.config.page.contest);
     let contests = await Contest.queryPage(paginate, where, {
@@ -530,7 +531,7 @@ app.get('/contest/submission/:id', async (req, res) => {
     contest.ended = contest.isEnded();
     
     // mode by kaygb 20210316  acm 模式调用单独的displayConfig  // if语句中不能使用const定义
-    if(contest.type === 'cur'){
+    if(contest.type === 'cur' || contest.type === 'ioi'){
         displayConfig = getDisplayConfigForCur(contest);
     }else{
         displayConfig = getDisplayConfig(contest);

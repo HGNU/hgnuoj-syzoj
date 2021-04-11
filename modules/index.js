@@ -31,7 +31,7 @@ app.get('/', async (req, res) => {
     
     
     // mode by kaygb 20210316 首页不显示cur赛制比赛
-    let contests = await Contest.queryRange([1, 5], {type: 'acm' || 'ioi'|| 'noi' , is_public: true }, {
+    let contests = await Contest.queryRange([1, 5], {is_public: true }, {
       start_time: 'DESC'
     });
 
