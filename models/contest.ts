@@ -78,7 +78,7 @@ export default class Contest extends Model {
   }
 
   allowedSeeingOthers() {
-    if (this.type === 'acm' || this.type === 'cur') return true; //mode by guke 0316
+    if (this.type === 'acm' || this.type === 'cur' || this.type === 'ioi') return true; //mode by guke 0316
     else return false;
   }
 
