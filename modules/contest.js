@@ -38,8 +38,8 @@ app.get('/contests', async (req, res) => {
     // let where =  { type: ['acm', 'ioi', 'noi'] , is_public: true    };
     let where;
     if (res.locals.user && res.locals.user.is_admin) where = {}
-    // else where = { type: 'acm' || 'ioi'|| 'noi' ,is_public: true   };   // mode by kaygb 20210316 比赛列表过滤
-    else where = { is_public: true   };   // kaygb 20210411 比赛显示全公开
+    // else where = { type: 'cur' ,is_public: false  }   // mode by kaygb 20210316 比赛列表过滤
+    else where = {is_course: false, is_public: true   };   // kaygb 20210411 比赛显示全公开
 
     let paginate = syzoj.utils.paginate(await Contest.countForPagination(where), req.query.page, syzoj.config.page.contest);
     let contests = await Contest.queryPage(paginate, where, {
@@ -62,7 +62,7 @@ app.get('/contests', async (req, res) => {
 
 app.get('/courses', async (req, res) => {
   try {
-    let where =  { type: 'cur' , is_public: true };  // mode by kaygb 20210316 专题页面使用cur赛制过滤
+    let where =  { is_course: true , is_public: true };  // mode by kaygb 20210316 专题页面使用cur赛制过滤
     // let where;
     // if (res.locals.user && res.locals.user.is_admin) where = {}
     // else where = { type: 'cur' , is_public: true };
@@ -163,6 +163,7 @@ app.post('/contest/:id/edit', async (req, res) => {
     
     //kaygb 20210318 below imgsrc
     contest.imgsrc = req.body.imgsrc;
+    contest.is_course = req.body.is_course === 'on';
     
     if (!Array.isArray(req.body.problems)) req.body.problems = [req.body.problems];
     if (!Array.isArray(req.body.admins)) req.body.admins = [req.body.admins];

@@ -93,6 +93,13 @@
                 <label><span style="visibility: hidden; ">　</span></label>
               </div>
             </div>
+            <div class="inline field">
+              <label class="ui header">课程专题</label>
+              <div class="ui toggle checkbox">
+                <input type="checkbox"<% if (contest.is_course) { %> checked<% } %> name="is_course">
+                <label><span style="visibility: hidden; ">　</span></label>
+              </div> 
+            </div>
             <div style="text-align: center; "><button id="submit_button" type="submit" class="ui labeled icon blue button"><i class="ui edit icon"></i>提交</button></div>
           </div>
         </form>
@@ -130,4 +137,5 @@ $(function () {
     });
 });
 </script>
+</div>
 <% include footer %>

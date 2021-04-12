@@ -19,10 +19,11 @@
              -->
               <tbody>
                 <tr>
-                    <td><a href="/about#ojupdate">HGNU OJ开发日志</td>
-                        <td></td>
+                    <tr>
+                        <td><a href="<%= notices[0].url %>" style="color:red"><%= notices[0].title %></a></td>
+                        <td><%= notices[0].date %></td>
                     </tr>
-                <% for (let i=0; i<5; i++) { %>
+                <% for (let i=1; i<5; i++) { %>
                     <tr>
                         <td><a href="<%= notices[i].url %>"><%= notices[i].title %></a></td>
                         <td><%= notices[i].date %></td>
@@ -41,11 +42,12 @@
       
       <h4 class="ui top attached block header"><i class="fad fa-signal-3"></i>排名</h4>
       <div class="ui bottom attached segment">
-        <table class="ui very basic center aligned table" style="table-layout: fixed; ">
+        <table class="ui very basic  aligned table" style="table-layout: fixed; ">
           <thead>
             <tr>
 	            <th style="width: 50px; ">#</th>
-	            <th style="width: 170px; ">用户名</th>
+	            <th style="width: 130px; ">姓名</th>
+	            <th style="width: 130px; ">班级</th>
 	            <th>个性签名</th>
             </tr>
           </thead>
@@ -69,9 +71,11 @@
             %>
                 <tr><!-- nameplate 0320 nickname 0321 guke -->
                     <td><b><%= i %></b></td>
-                    <td style="text-align:left"><% if (user.nameplate) { %><div class="ui mini pink label"><%- user.nameplate %></div><% } %> 
+                    <td>
                     <% if(user.nickname) { %><a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><%- user.nickname %><% }else { %>
                     <a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><%= user.username %></a><% } %></td>
+                    <td style="text-align:left"><% if (user.nameplate) { %><div class="ui mini pink label"><%- user.nameplate %></div><% } %> 
+                    </td>
                     <td style="font-content;white-space: nowrap; word-break: break-all;">
                       <script id="user-infomation-script-<%= i %>" data-cfasync="false">
                       (function () {
@@ -176,8 +180,8 @@
             <table class="ui very basic  aligned table">
               <thead>
                 <tr>
-                  <th>比赛名称</th>
-                  <th>开始时间</th>
+                  <th>比赛</th>
+                  <th>状态</th>
                 </tr>
               </thead>
               <tbody>
@@ -194,8 +198,8 @@
                   <% } else { %>
                     <% tag = '<span class="ui header"><div class="ui mini grey label">已结束</div></span>' %>
                   <% } %>
-                  <td><a href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><%= contest.title %> <%- tag %></a></td>
-                  <td><%= syzoj.utils.formatDate(contest.start_time) %></td>
+                  <td><a href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><%= contest.title %></a></td>
+                  <td><%- tag %></td>
                 </tr>
                 <% } %>
               </tbody>
