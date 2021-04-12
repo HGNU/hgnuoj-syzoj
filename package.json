@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "prepublish": "tsc -p .",
-    "start": "node app.js",
+    "start": "node -max_old_space_size=4096 app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
