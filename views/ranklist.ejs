@@ -8,11 +8,12 @@
       <button class="ui mini button" type="submit">查找用户</button>
     </div>
   </form>
-	    <table class="ui very basic center aligned table" style="table-layout: fixed; ">
+	    <table class="ui very basic aligned table" style="table-layout: fixed; ">
 	        <thead>
 	        <tr>
-	            <th style="width: 60px; ">#</th>
-	            <th style="width: 200px; "><%- createSortableTitle('username', '用户名', true) %></th>
+	            <th style="width: 50px; ">#</th>
+	            <th style="width: 130px; "><%- createSortableTitle('username', '姓名', true) %></th>
+	            <th style="width: 130px; ">班级</th>
 	            <th>个性签名</th>
 	            <th style="width: 100px; "><%- createSortableTitle('ac_num', '通过数量', false) %></th>
 	            <th style="width: 100px; "><%- createSortableTitle('rating', '积分', false) %></th>
@@ -39,9 +40,11 @@
             <tr>
 		        	<td><b><%= i %></b></td>
 		        	<!-- nameplate guke 0320 -->
-		        	<td style="text-align:left"><% if (user.nameplate) { %><div class="ui mini pink label"><%- user.nameplate %></div><% } %> 
+		        	<td>
 		        	<% if(user.nickname) { %><a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"  ><%- user.nickname %><% }else { %>
 		        	<a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"  ><%= user.username %></a><% } %></td>
+		        	<td style="text-align:left"><% if (user.nameplate) { %><div class="ui mini pink label"><%- user.nameplate %></div><% } %> 
+		        	</td>
 		        	<td class="font-content">
               <script id="user-infomation-script-<%= i %>" data-cfasync="false">
               (function () {

@@ -1,0 +1,81 @@
+<% this.title = '新版提交记录' %>
+<% include header_new %>
+<% include util %>
+<div class="mdui-container">
+    <div class="mdui-table-fluid">
+        <table id="vueAppFuckSafari" class="mdui-table" style="white-space: nowrap; " id="table">
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>状态</th>
+                <th>题目</th>
+                <th v-if="displayConfig.showScore">分数</th>
+                <th v-if="displayConfig.showUsage">时间</th>
+                <th v-if="displayConfig.showUsage">内存</th>
+                <th v-if="displayConfig.showCode">代码 / 答案文件</th>
+                <th>提交者</th>
+                <th>提交时间</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in items" :config="displayConfig" :show-rejudge="false" :data="item" is='submission-item' :rough="true">
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    
+</div>
+<script src="<%- lib('vue/2.5.21/vue.min.js') %>"></script>
+<script src="<%- lib('socket.io/2.2.0/socket.io.js') %>"></script>
+<% include submissions_item %>
+<script>
+$(function () {
+  $('#select_language').dropdown();
+  $('#select_status').dropdown();
+});
+const itemList = <%- serializejs(items) %>;
+const socketUrl = "/rough";
+const displayConfig = <%- serializejs(displayConfig) %>;
+
+const vueApp = new Vue({
+  el: '#vueAppFuckSafari',
+  data: {
+    items: itemList,
+    displayConfig: displayConfig
+  },
+});
+
+if (itemList.some(function(t) {return t.token != null;})) {
+  const socket = io(socketUrl);
+  socket.on('connect', function () {
+    for (let x of itemList.filter(function(x) {return x.token != null;})){
+      const getItem = function (id){ return itemList.find(function(x){ return x.info.taskId === id; })};
+      socket.on('start', function (data) {
+        getItem(data.taskId).running = true;
+      });
+
+      socket.on('finish', function (data) {
+        getItem(data.taskId).running = false;
+        getItem(data.taskId).result = data.result;
+        if (itemList.every(function(x){ return x.result; })) {
+          socket.close();
+        }
+      });
+
+      socket.emit('join', x.token, function (data) {
+        if (data && data.ok) {
+          if (data.running) {
+            x.running = true;
+          } else if (data.finished) {
+            x.running = false;
+            x.result = data.result;
+          }
+        } else {
+          alert("ERROR: " + JSON.stringify(data));
+        }
+      });
+    }
+  })
+}
+</script>
+<% include footer %>

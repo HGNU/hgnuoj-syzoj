@@ -14,7 +14,7 @@
               
               <!-- kaygb 20210318 imgsrc -->
               <div class="field">
-                <label>图片地址 <a href="https://acm-m.eas1.cn/" target="_blank">上传地址</a></label>
+                <label>图片地址(专题专用) <a href="https://acm-m.eas1.cn/" target="_blank">上传地址</a></label>
                 <input type="text" name="imgsrc" class="markdown-edit" value="<%= contest.imgsrc %>">
               </div>
             <div class="field">
@@ -93,6 +93,13 @@
                 <label><span style="visibility: hidden; ">　</span></label>
               </div>
             </div>
+            <div class="inline field">
+              <label class="ui header">课程专题</label>
+              <div class="ui toggle checkbox">
+                <input type="checkbox"<% if (contest.is_course) { %> checked<% } %> name="is_course">
+                <label><span style="visibility: hidden; ">　</span></label>
+              </div> 
+            </div>
             <div style="text-align: center; "><button id="submit_button" type="submit" class="ui labeled icon blue button"><i class="ui edit icon"></i>提交</button></div>
           </div>
         </form>
@@ -130,4 +137,5 @@ $(function () {
     });
 });
 </script>
+</div>
 <% include footer %>

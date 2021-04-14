@@ -105,7 +105,7 @@ if (contest) {
         <% if (typeof contest !== 'undefined' && contest) { %>
           <% if (contest.ended) { %>
             
-            <a class="small ui primary button" href="<%= syzoj.utils.makeUrl(['problem', problem.id]) %>">转到题库</a>
+            <a class="small ui black button" href="<%= syzoj.utils.makeUrl(['problem', problem.id]) %>">转到题库</a>
           <% } %>
           <a class="small ui primary button" href="<%= syzoj.utils.makeUrl(['contest', contest.id, 'submissions'], { problem_id: pid }) %>">提交记录</a>
           <% if (problem.additional_file) { %>

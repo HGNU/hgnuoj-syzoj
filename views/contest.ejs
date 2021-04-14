@@ -23,6 +23,14 @@
     start = start.split(' ')[1]; end = end.split(' ')[1];
   } %>
   
+  <script>
+    console.log("当前时间戳 <%= now %>");
+    console.log("比赛开始时间戳 <%= contest.start_time %>");
+    console.log("比赛开始时间 <%= start %>");
+    var timestamp = Math.round(new Date().getTime()/1000);
+    console.log(timestamp);
+  </script>
+  
   <div class="ui pointing below left label"><%= start %></div>
   <div class="ui pointing below right label"><%= end %></div>
   <% let timePercentage = Math.floor(Math.min(1, (syzoj.utils.getCurrentDate() - contest.start_time) / (contest.end_time - contest.start_time)) * 100); %>
@@ -43,10 +51,48 @@
           <i class="notched circle loading icon"></i>
           <div class="content">
             <div class="header">
-              等一等
+              等一等&nbsp;<span class="timeShow"></span>
             </div>
             <p>比赛还未开始，先去题库刷刷题吧</p>
           </div>
+          
+             <script>
+                // 比赛开始前十分钟倒计时，开始时自动刷新
+                    var timestamp = Math.round(new Date().getTime()/1000);
+                    var start_time = <%= contest.start_time %>;
+                    var intDiff = parseInt(start_time - timestamp - 1);//倒计时总秒数量
+                function timer(intDiff){
+                  window.setInterval(function(){
+                  var day=0,
+                    hour=0,
+                    minute=0,
+                    second=0;//时间默认值
+                  if(intDiff > 0 && intDiff < 1800){
+                    
+                    day = Math.floor(intDiff / (60 * 60 * 24));
+                    hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+                    minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+                    second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+                  }else if(intDiff<=0){//当时间耗尽，刷新页面
+                    window.location.reload();
+                  }
+                  if (minute <= 9) minute = '0' + minute;
+                  if (second <= 9) second = '0' + second;
+                  if(intDiff > 0 && intDiff < 1800){
+                    $(".timeShow").html('距离开始还有<font>'+minute+'分'+second+'</font>秒');
+                  }
+                  
+                  intDiff--;
+                  }, 1000);
+                } 
+                $(function(){
+                    if(intDiff >= 0){
+                        timer(intDiff);
+                    }
+                  
+                });
+            </script>
+          
         </div>
         <% if (isSupervisior) { %>
             <a class="ui small button" href="<%= syzoj.utils.makeUrl(['contest', contest.id, 'edit']) %>">编辑比赛</a>

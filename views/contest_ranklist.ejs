@@ -145,6 +145,17 @@
                   </td>
                 <% } %>
                 
+                <% if (contest.type === 'noi' || contest.type === 'ioi') { %>
+                  <td>
+                    <span class="score score_<%= parseInt((item.player.score / ranklist[0].player.score * 10) || 0) %>">
+                      <%= item.player.score %>
+                    </span>
+                    <div class="submit_time">
+                      <%= syzoj.utils.formatTime(latest - contest.start_time) %>
+                    </div>
+                  </td>
+                <% } %>
+                
                 
                 <% for (let problem of problems) { %>
                   <% if (problem.min === i) { %>
@@ -220,16 +231,7 @@
                   <% } %>
                 <% } %>
                 
-                <% if (contest.type === 'noi' || contest.type === 'ioi') { %>
-                  <td>
-                    <span class="score score_<%= parseInt((item.player.score / ranklist[0].player.score * 10) || 0) %>">
-                      <%= item.player.score %>
-                    </span>
-                    <div class="submit_time">
-                      <%= syzoj.utils.formatTime(latest - contest.start_time) %>
-                    </div>
-                  </td>
-                <% } %>
+                
                 
             </tr>
             <% lastItem = item; %>
