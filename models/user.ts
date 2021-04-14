@@ -74,7 +74,7 @@ export default class User extends Model {
   static async fromName(name): Promise<User> {
     return User.findOne({
       where: {
-        username: name
+        nickname: name
       }
     });
   }

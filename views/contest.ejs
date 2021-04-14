@@ -143,12 +143,12 @@
                 <th class="one wide" style="text-align: center">状态</th>
                 <th>题目</th>
                 <% if (hasStatistics) { %>
-                  
-                  <% if(contest.type === 'noi' || contest.type === 'ioi'){ %>
+                  <% if(contest.type === 'noi'){ %>
                     <% if (isSupervisior) { %>
                         <th class="one wide center aligned">通过人数/参与人数</th>
                     <% } %>
-                
+                    <% } else if (contest.type === 'ioi'){ %>
+                    <th class="one wide center aligned">通过人数/参与人数</th>
                   <% } else{ %>
                     <th class="one wide center aligned">统计</th>
                   <% } %>

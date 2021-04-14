@@ -5,8 +5,7 @@
   <div class="ui two column stackable grid">  <!-- 原来类为：ui three column grid -->
     <div class="eleven wide column"> <!-- 原来类为：eleven wide column -->
       
-      
-        <h4 class="ui top attached block header"><i class="fad fa-info"></i>公告</h4>
+          <h4 class="ui top attached block header"><i class="fad fa-info"></i>公告</h4>
         <div class="ui bottom attached segment">
             <table class="ui very basic table">
             <!--
@@ -23,24 +22,53 @@
                         <td><a href="<%= notices[0].url %>" style="color:red"><%= notices[0].title %></a></td>
                         <td><%= notices[0].date %></td>
                     </tr>
-                <% for (let i=1; i<5; i++) { %>
                     <tr>
-                        <td><a href="<%= notices[i].url %>"><%= notices[i].title %></a></td>
-                        <td><%= notices[i].date %></td>
+                        <td><a href="<%= notices[1].url %>"><%= notices[1].title %></a></td>
+                        <td><%= notices[1].date %></td>
                     </tr>
-                <% } %>
                     <tr>
-                        <td><a href="/discussion/global">查看更多...</td>
+                        <td><a href="/discussion/global">查看全部公告...</td>
                         <td></td>
                     </tr>
-                    <tr>
-                        <td><a href="/about#ojupdate" target="_blank">HGNU OJ 更新日志</td>
-                        <td></td>
-                    </tr>
+                    
               </tbody>
             </table>
         </div>
-      
+        
+      <h4 class="ui top attached block header"><i class="fad fa-calendar"></i>近期比赛</h4>
+          <div class="ui bottom attached <% if (!contests || !contests.length) { %>center aligned <% } %>segment">
+            <% if (!contests || !contests.length) { %>
+                暂无比赛
+            <% } else { %>
+            <table class="ui very basic  aligned table">
+              <thead>
+                <tr>
+                  <th>比赛</th>
+                  <th>状态</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%
+                for (let contest of contests) {
+                  let now = syzoj.utils.getCurrentDate();
+                  let tag = '';
+                %>
+                <tr>
+                  <% if (now < contest.start_time) { %>
+                    <% tag = '<span class="ui header"><div class="ui mini red label">未开始</div></span>' %>
+                  <% } else if (now >= contest.start_time && now < contest.end_time) { %>
+                    <% tag = '<span class="ui header"><div class="ui mini green label">进行中</div></span>' %>
+                  <% } else { %>
+                    <% tag = '<span class="ui header"><div class="ui mini grey label">已结束</div></span>' %>
+                  <% } %>
+                  <td><a href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><%= contest.title %></a></td>
+                  <td><%- tag %></td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
+            <% } %>
+          </div>
       
         
       
@@ -126,44 +154,7 @@
 	</table>
       </div>
       
-      <h4 class="ui top attached block header"><i class="fad fa-quote-left"></i>感谢</h4>
-        <div class="ui bottom attached center aligned segment">
-        <table class="ui very basic center aligned table" style="table-layout: fixed; ">
-            <tbody>
-            <tr>
-            <td style="width: 15%">NAME</td>
-            <td style="width: 10%">￥</td>
-            <td>留言</td>
-            <td style="width: 15%">渠道</td>
-            </tr>
-            <tr>
-            <td><a href="/user/102" target="_blank" rel="noopener noreferrer">one</a></td>
-            <td>0.01</td>
-            <td></td>
-            <td>微信</td>
-            </tr>
-            <tr>
-            <td><a href="/user/367" target="_blank" rel="noopener noreferrer">**举</a></td>
-            <td>10.00</td>
-            <td>向优秀者学习</td>
-            <td>支付宝</td>
-            </tr>
-            <tr>
-            <td>*迷</td>
-            <td>100.00</td>
-            <td></td>
-            <td>微信</td>
-            </tr>
-            <tr>
-            <td>*糕</td>
-            <td>1.88</td>
-            <td></td>
-            <td>微信</td>
-            </tr>
-            
-            </tbody>
-            </table>
-        </div>    
+     
       
       
       
@@ -175,43 +166,14 @@
     
     
     <div class="five wide column">  <!-- 原来类为：right floated five wide column -->
-        
-      <h4 class="ui top attached block header"><i class="fad fa-calendar"></i>近期比赛</h4>
-          <div class="ui bottom attached <% if (!contests || !contests.length) { %>center aligned <% } %>segment">
-            <% if (!contests || !contests.length) { %>
-                暂无比赛
-            <% } else { %>
-            <table class="ui very basic  aligned table">
-              <thead>
-                <tr>
-                  <th>比赛</th>
-                  <th>状态</th>
-                </tr>
-              </thead>
-              <tbody>
-                <%
-                for (let contest of contests) {
-                  let now = syzoj.utils.getCurrentDate();
-                  let tag = '';
-                %>
-                <tr>
-                  <% if (now < contest.start_time) { %>
-                    <% tag = '<span class="ui header"><div class="ui mini red label">未开始</div></span>' %>
-                  <% } else if (now >= contest.start_time && now < contest.end_time) { %>
-                    <% tag = '<span class="ui header"><div class="ui mini green label">进行中</div></span>' %>
-                  <% } else { %>
-                    <% tag = '<span class="ui header"><div class="ui mini grey label">已结束</div></span>' %>
-                  <% } %>
-                  <td><a href="<%= syzoj.utils.makeUrl(['contest', contest.id]) %>"><%= contest.title %></a></td>
-                  <td><%- tag %></td>
-                </tr>
-                <% } %>
-              </tbody>
-            </table>
-            <% } %>
-          </div>
-      
-      
+    
+    <h4 class="ui top attached block header"><i class="fad fa-quote-left"></i>更新</h4>
+    <div class="ui bottom attached segment">
+      <tr>
+        <td><a href="/about#ojupdate" target="_blank">HGNU OJ 更新日志</a></td>
+        <td></td>
+    </tr>
+    </div>
       
         <h4 class="ui top attached block header"><i class="fad fa-quote-left"></i>捐赠</h4>
         <div class="ui bottom attached center aligned segment">
@@ -227,6 +189,8 @@
           <span>或者 <a href="https://support.qq.com/products/313501" target="_blank">在线反馈</a></span>
         </div>       
 
+
+<!--
        <h4 class="ui top attached block header"><i class="fad fa-quote-left"></i>一言（ヒトコト）</h4>
         <div class="ui bottom attached center aligned segment">
           <div class="ui active centered inline loader" id="hitokoto-loader"></div>
@@ -243,7 +207,7 @@
           <div style="font-size: 1em; line-height: 1.5em; display: none; " id="hitokoto-content"></div>
           <div style="text-align: right; margin-top: 15px; font-size: 0.9em; color: #666; display: none; " id="hitokoto-from"></div>
         </div>
-       
+-->  
        
        <!-- 
         
@@ -263,7 +227,39 @@
         -->
         
         
-      
+       <h4 class="ui top attached block header"><i class="fad fa-quote-left"></i>感谢</h4>
+        <div class="ui bottom attached center aligned segment">
+        <table class="ui very basic center aligned table" style="table-layout: fixed; ">
+            <tbody>
+            <tr>
+            <td style="width: 15%">NAME</td>
+            <td style="width: 10%">￥</td>
+            <td style="width: 15%">渠道</td>
+            </tr>
+            <tr>
+            <td><a href="/user/102" target="_blank" rel="noopener noreferrer">one</a></td>
+            <td>0.01</td>
+            <td>微信</td>
+            </tr>
+            <tr>
+            <td><a href="/user/367" target="_blank" rel="noopener noreferrer">**举</a></td>
+            <td>10.00</td>
+            <td>支付宝</td>
+            </tr>
+            <tr>
+            <td>*迷</td>
+            <td>100.00</td>
+            <td>微信</td>
+            </tr>
+            <tr>
+            <td>*糕</td>
+            <td>1.88</td>
+            <td>微信</td>
+            </tr>
+            
+            </tbody>
+            </table>
+        </div>    
       
         
 
