@@ -32,7 +32,7 @@ app.get('/ranklist', async (req, res) => {
 
 app.get('/find_user', async (req, res) => {
   try {
-    let user = await User.fromName(req.query.nickname);
+    let user = await User.fromNick(req.query.nickname);
     if (!user) throw new ErrorMessage('无此用户。');
     res.redirect(syzoj.utils.makeUrl(['user', user.id]));
   } catch (e) {

@@ -29,7 +29,7 @@ app.get('/submissions', async (req, res) => {
 
     let inContest = false;
 
-    let user = await User.fromName(req.query.submitter || '');
+    let user = await User.fromNick(req.query.submitter || '');
     if (user) {
       query.andWhere('user_id = :user_id', { user_id: user.id });
       isFiltered = true;
