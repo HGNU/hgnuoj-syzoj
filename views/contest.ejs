@@ -192,7 +192,7 @@
                   <% } %>
                 <% } %>
                 </td>
-                <td><a href="<%= syzoj.utils.makeUrl(['contest', contest.id, 'problem', i]) %>"><%= syzoj.utils.removeTitleTag(problem.problem.title) %></a></td>
+                <td><a href="<%= syzoj.utils.makeUrl(['contest', contest.id, 'problem', i]) %>"><%= this.alpha(i) + '. ' + syzoj.utils.removeTitleTag(problem.problem.title) %></a></td>
                 <% if (hasStatistics) { %>
                     <% if(contest.type === 'noi') { %>
                     <% if (isSupervisior) { %>

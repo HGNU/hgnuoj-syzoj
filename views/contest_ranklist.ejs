@@ -6,6 +6,9 @@
   margin-top: 5px;
   color: #000;
 }
+.ui.table tr td{
+    border-top-style: none;
+}
 </style>
 
 <div class="">
@@ -25,12 +28,13 @@
   <i class="right arrow icon"></i>
 </button>
 </div>
-        <table id="ctlist-tb" class="ui very basic center aligned table" style="overflow-x: auto;overflow-y: hidden;display: block;">
+        <table id="ctlist-tb" class="ui very basic center aligned table" style="overflow-x: auto;overflow-y: hidden;display: block;border-collapse: separate!important;border-spacing: 2px;">
             <thead>
             <tr>
                 <th>排名</th>
                 
-                <th style="min-width:150px">姓名</th>
+                <th style="min-width:100px">姓名</th>
+                <th style="min-width:100px">班级</th>
                 <!-- mode by kaygb 20210315 --><!-- 总分 guke 0317 -->
                 <% if (contest.type === 'noi' || contest.type === 'ioi'  || contest.type === 'cur') { %>
                   <th>总分</th>
@@ -49,7 +53,8 @@
                 <% for (let i = 0; i < problems.length; i++) { %>
                 <th>
                   <a href="<%= syzoj.utils.makeUrl(['contest', contest.id, 'problem', i + 1]) %>">
-                    <%= syzoj.utils.removeTitleTag(problems[i].title) %>
+                    <%= //syzoj.utils.removeTitleTag(problems[i].title) %>
+                    <%= this.alpha(i+1) %>
                   </a>
                 </th>
                 <% } %>
@@ -101,7 +106,7 @@
                 
                 
                 
-                <td>
+                <td style="background-color: #f8f8f8">
                   <% if (rank == 1) { %>
                     <div class="ui yellow label">
                   <% } else if (rank == 2) { %>
@@ -115,11 +120,14 @@
                   </div>
                 </td>
                 <!-- nameplate 0320 nickname 0321 guke -->
-                <td>
-                <% if (item.user.nameplate) { %><div class="ui mini pink label"><%- item.user.nameplate %></div><% } %> 
+                <td style="background-color: #f8f8f8">
+                
                 
                 <% if(item.user.nickname) { %><a href="<%= syzoj.utils.makeUrl(['user', item.user.id]) %>" style="display:block"><%- item.user.nickname %><% }else { %>
                 <a href="<%= syzoj.utils.makeUrl(['user', item.user.id]) %>"><%= item.user.username %></a><% } %></td>
+                <td style="background-color: #f8f8f8">
+                <% if (item.user.nameplate) { %><div class="ui mini pink label"><%- item.user.nameplate %></div><% } %> 
+                </td>
                 <% if (contest.type === 'acm') { %>
                   <td>
                     <span class="score score_<%= parseInt((item.player.score / ranklist[0].player.score * 10) || 0) %>">
@@ -133,7 +141,7 @@
                 
                 <!-- mode by kaygb 20210315 --><!-- 总分 guke 0317 -->
                 <% if (contest.type === 'cur') { %>
-                  <td>
+                  <td style="background-color: #f8f8f8">
                     <span class="score score_<%= parseInt((item.player.score / ranklist[0].player.score * 10) || 0) %>">
                       <%= item.player.score %>
                     </span>
@@ -156,12 +164,24 @@
                   </td>
                 <% } %>
                 
+                <style>
+                    .rls a{ text-decoration:none;color: #333; }
+                    .rls a:hover{ color: #25bb9b; }
+                </style>
                 
                 <% for (let problem of problems) { %>
                   <% if (problem.min === i) { %>
-                    <td style="background: rgb(244, 255, 245); ">
+                    <td style="background: #3db03d; " class="rls">
                   <% } else { %>
+                    <% if (item.player.score_details[problem.id]) { %>
+                        <% if (item.player.score_details[problem.id].score === 100) { %>
+                            <td style="background: #e1ffb5; " class="rls">
+                        <% } else { %>
+                            <td style="background: #ffd0d0; " class="rls">
+                        <% } %>
+                    <% } else { %>
                     <td>
+                  <% } %>
                   <% } %>
                   <% if (!item.player.score_details[problem.id]) { %>
                     </td>
@@ -192,16 +212,15 @@
                     else if (contest.type === 'cur') { %>
                     
                     
-                    
                       <a href="<%= syzoj.utils.makeUrl(['submission', item.player.score_details[problem.id].judge_id]) %>">
                         <% if (item.player.score_details[problem.id].weighted_score != null) { %>
-                          <span class="score score_<%= parseInt((item.player.score_details[problem.id].score / 10) || 0) %>">
+                        
                             <%= Math.round(item.player.score_details[problem.id].weighted_score) %>
-                          </span>
+                          
                         <% } else { %>
-                          <span class="status compile_error">
+                        
                             0
-                          </span>
+                            
                         <% } %>
                       </a>
                       

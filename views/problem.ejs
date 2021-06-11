@@ -403,7 +403,11 @@ if (contest) {
   window.onEditorLoaded(function () {
     var editorElement = document.getElementById('editor');
     var content = '';
-    //<% //if (state) { %>content = <%- //serializejs(state.code) %>;<% //} %>
+    <% 
+    if (contest && (contest.type === 'acm' || contest.type === 'ioi' || contest.type === 'noi')){}else{
+    if (state) { %>content = <%- serializejs(state.code) %>;<% } 
+    }
+    %>
     editor = window.createCodeEditor(editorElement, $('#languages-menu .item.active').data('mode'), content);
     window.editor = editor;
   });
