@@ -259,8 +259,8 @@ if (contest) {
   </div>
   <br>
   <div class="ui grid">
-    <div class="ui large header" style="margin-bottom:12px">在线测试（请在此测试通过编译后再提交）</div>
-    <iframe src="https://tool.lu/coderunner/embed/aSr.html" width="100%" height="550" frameborder="0" mozallowfullscreen webkitallowfullscreen allowfullscreen></iframe>
+    <div class="ui large header" style="margin-bottom:12px">在线测试</div>
+    <iframe src="https://ide.eas1.cn" width="100%" height="550" frameborder="0" mozallowfullscreen webkitallowfullscreen allowfullscreen></iframe>
   </div>
   
   
@@ -403,7 +403,7 @@ if (contest) {
   window.onEditorLoaded(function () {
     var editorElement = document.getElementById('editor');
     var content = '';
-    <% if (state) { %>content = <%- serializejs(state.code) %>;<% } %>
+    //<% //if (state) { %>content = <%- //serializejs(state.code) %>;<% //} %>
     editor = window.createCodeEditor(editorElement, $('#languages-menu .item.active').data('mode'), content);
     window.editor = editor;
   });
